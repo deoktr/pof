@@ -1,4 +1,4 @@
-# POF
+# pof
 
 Python Obfuscation Framework.
 
@@ -44,6 +44,8 @@ pof inf.py -o out.py -f payload GzipPayload
 
 These are examples of obfuscators of the script `print('Hello, world')`.
 
+To select an obfuscator use the flag `-f obfuscator` and `-k ObfuscatorClassName`.
+
 To reproduce the examples you can use the following command:
 
 ```bash
@@ -55,6 +57,23 @@ To test the validity of the output you can simply pipe it to Python:
 ```bash
 echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 ```
+
+If no obfuscator is selected, a default chain obfuscator is used.
+
+```bash
+echo "print('Hello, world')" | pof
+```
+
+Output:
+
+```python
+from base64 import b64decode as CRT_ASSERT
+from base64 import b85decode as _45802
+UserClassSlots=__builtins__.__dict__.__getitem__(_45802(''[::-1]).decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'ukf'[::-1]]))(__builtins__.__getattribute__('\u006f\u0072\u0064')(i)-(__name__.__eq__.__call__(__name__)+__name__.__eq__.__call__(__name__)+__name__.__eq__(__name__)))for i in CRT_ASSERT('c3VscXc=').decode()]))
+UserClassSlots(CRT_ASSERT('').decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'parse_intermixed_argsu'.replace('parse_intermixed_args','fk')]))(__builtins__.__dict__.__getitem__(_45802('L}g}jVP{fhb9HQVa%2').decode().replace("".join([chr(ord(i)-3)for i in'GhiudjUhvxow']),'o'[::-1]))(i)-(__name__.__eq__.__call__(__name__)+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'])[::-1]].__dict__["".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'Wuxsimple_stmt'.replace('simple_stmt','h')])]+(type(1)==type(1))))for i in'gourz#/r_pfK'[::-1].replace(_45802('W^i9}').decode(),CRT_ASSERT('aG9vcg==').decode())]))
+```
+
+And yes, this is a valid Python script, that actually runs and only output `Hello world` !
 
 ### Obfuscator
 
