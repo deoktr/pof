@@ -1,0 +1,6 @@
+ruff
+black
+mypy
+pyinstrument
+pytest
+pytest-cov

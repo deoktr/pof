@@ -1,0 +1,204 @@
+"""Extract names.
+
+Extract names present in Python source files.
+"""
+
+import io
+import keyword
+from tokenize import NAME, generate_tokens
+
+BUILTINS = (
+    "__name__",
+    "__doc__",
+    "__package__",
+    "__loader__",
+    "__spec__",
+    "__build_class__",
+    "__import__",
+    "abs",
+    "all",
+    "any",
+    "ascii",
+    "bin",
+    "breakpoint",
+    "callable",
+    "chr",
+    "compile",
+    "delattr",
+    "dir",
+    "divmod",
+    "eval",
+    "exec",
+    "format",
+    "getattr",
+    "globals",
+    "hasattr",
+    "hash",
+    "hex",
+    "id",
+    "input",
+    "isinstance",
+    "issubclass",
+    "iter",
+    "aiter",
+    "len",
+    "locals",
+    "max",
+    "min",
+    "next",
+    "anext",
+    "oct",
+    "ord",
+    "pow",
+    "print",
+    "repr",
+    "round",
+    "setattr",
+    "sorted",
+    "sum",
+    "vars",
+    "None",
+    "Ellipsis",
+    "NotImplemented",
+    "False",
+    "True",
+    "bool",
+    "memoryview",
+    "bytearray",
+    "bytes",
+    "classmethod",
+    "complex",
+    "dict",
+    "enumerate",
+    "filter",
+    "float",
+    "frozenset",
+    "property",
+    "int",
+    "list",
+    "map",
+    "object",
+    "range",
+    "reversed",
+    "set",
+    "slice",
+    "staticmethod",
+    "str",
+    "super",
+    "tuple",
+    "type",
+    "zip",
+    "__debug__",
+    "BaseException",
+    "Exception",
+    "TypeError",
+    "StopAsyncIteration",
+    "StopIteration",
+    "GeneratorExit",
+    "SystemExit",
+    "KeyboardInterrupt",
+    "ImportError",
+    "ModuleNotFoundError",
+    "OSError",
+    "EnvironmentError",
+    "IOError",
+    "EOFError",
+    "RuntimeError",
+    "RecursionError",
+    "NotImplementedError",
+    "NameError",
+    "UnboundLocalError",
+    "AttributeError",
+    "SyntaxError",
+    "IndentationError",
+    "TabError",
+    "LookupError",
+    "IndexError",
+    "KeyError",
+    "ValueError",
+    "UnicodeError",
+    "UnicodeEncodeError",
+    "UnicodeDecodeError",
+    "UnicodeTranslateError",
+    "AssertionError",
+    "ArithmeticError",
+    "FloatingPointError",
+    "OverflowError",
+    "ZeroDivisionError",
+    "SystemError",
+    "ReferenceError",
+    "MemoryError",
+    "BufferError",
+    "Warning",
+    "UserWarning",
+    "EncodingWarning",
+    "DeprecationWarning",
+    "PendingDeprecationWarning",
+    "SyntaxWarning",
+    "RuntimeWarning",
+    "FutureWarning",
+    "ImportWarning",
+    "UnicodeWarning",
+    "BytesWarning",
+    "ResourceWarning",
+    "ConnectionError",
+    "BlockingIOError",
+    "BrokenPipeError",
+    "ChildProcessError",
+    "ConnectionAbortedError",
+    "ConnectionRefusedError",
+    "ConnectionResetError",
+    "FileExistsError",
+    "FileNotFoundError",
+    "IsADirectoryError",
+    "NotADirectoryError",
+    "InterruptedError",
+    "PermissionError",
+    "ProcessLookupError",
+    "TimeoutError",
+    "open",
+    "quit",
+    "exit",
+    "copyright",
+    "credits",
+    "license",
+    "help",
+)
+
+RESERVED_WORDS = (
+    "__init__",
+    "__eq__",
+    "__lt__",
+    "append",  # on list
+    "update",  # on dict
+    "copy",  # copy dict or list
+    "join",  # on string "".join()
+    "self",
+    "args",
+    "kwargs",
+)
+
+RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
+
+
+class NameExtract:
+    @staticmethod
+    def get_names(tokens):
+        names = []
+        for _index, (toknum, tokval, *_) in enumerate(tokens):
+            if (
+                toknum == NAME
+                and tokval not in RESERVED
+                and tokval not in names
+                and len(tokval) > 1
+            ):
+                names.append(tokval)
+        return names
+
+    @classmethod
+    def get_from_file(cls, file):
+        with open(file) as f:
+            code = f.read()
+        io_obj = io.StringIO(code)
+        tokens = list(generate_tokens(io_obj.readline))
+        return cls.get_names(tokens)

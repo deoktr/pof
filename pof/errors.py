@@ -1,0 +1,2 @@
+class PofError(Exception):
+    pass

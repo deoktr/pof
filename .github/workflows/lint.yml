@@ -1,0 +1,26 @@
+name: Lint POF
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.11
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install black
+          pip install ruff
+      - name: Lint the code with black
+        run: black .
+      - name: Lint with ruff
+        run: ruff .
