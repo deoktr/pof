@@ -7,10 +7,14 @@ Combine/chain obfuscation methods on a single Python source file.
 ## Install
 
 ```bash
+git clone https://github.com/2O4/pof
+cd pof
 python -m venv venv
 source ./venv/bin/activate
 ./setup.py install
 ```
+
+This will install POF inside a virtual env.
 
 ## Usage
 
