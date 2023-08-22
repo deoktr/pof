@@ -80,8 +80,8 @@ class AddCommentsObfuscator:
                 comment = " ".join([next(self.generator) for _ in range(number)])
             else:
                 comment = random.choice(comment_list)
-                if self.remove_used:
-                    comment_list.remove(comment)
+                # if self.remove_used:
+                #     comment_list.remove(comment)
             return f"# {comment}"
         return None
 
