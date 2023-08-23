@@ -2,6 +2,7 @@
 # - work with f"" strings, r"" strings etc.
 # - can't split `\` !!!
 # - add variable to import or not b64decode
+# TODO (2O4): replace eval with ast.literal_eval: https://beta.ruff.rs/docs/rules/suspicious-eval-usage/
 import logging
 import random
 from base64 import b64encode, b85encode
@@ -45,7 +46,7 @@ class StringsObfuscator:
         Strats.REVERSE,
     )
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         import_b64decode: bool = False,
         import_b85decode: bool = False,

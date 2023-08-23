@@ -14,8 +14,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from pof.main import Obfuscator
+from pof.main import BaseObfuscator, Obfuscator
 
-__version__ = "1.3.6"
+__version__ = "1.3.7"
 
-__all__ = ("Obfuscator", "__version__")
+__all__ = ("Obfuscator", "BaseObfuscator", "__version__")

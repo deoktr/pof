@@ -1,8 +1,6 @@
 import binascii
 from tokenize import NAME, NUMBER, OP, STRING
 
-UUID_LEN = 32
-
 
 class UUIDEncoding:
     """Encode the data in a list of valid UUID.
@@ -10,6 +8,7 @@ class UUIDEncoding:
     Idea from: https://github.com/Bl4ckM1rror/FUD-UUID-Shellcode
     """
 
+    UUID_LEN = 32
     padding_byte = b"0"
 
     @classmethod
@@ -19,13 +18,14 @@ class UUIDEncoding:
         hex_string = binascii.b2a_hex(string)
 
         string_chunks = [
-            hex_string[i : i + UUID_LEN] for i in range(0, len(hex_string), UUID_LEN)
+            hex_string[i : i + cls.UUID_LEN]
+            for i in range(0, len(hex_string), cls.UUID_LEN)
         ]
 
         for string_chunk in string_chunks:
             sc = string_chunk
-            if len(sc) < UUID_LEN:
-                padding = UUID_LEN - len(sc)
+            if len(sc) < cls.UUID_LEN:
+                padding = cls.UUID_LEN - len(sc)
                 # TODO (204): choose this randomly (anything BUT the padding_byte)
                 sc += b"1"
                 sc += cls.padding_byte * (padding - 1)

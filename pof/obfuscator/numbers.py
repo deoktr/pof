@@ -121,7 +121,8 @@ class NumberObfuscator:
         elif token_type is float:
             t = "float"
         else:
-            logging.error(f"{token_type=} not supported")
+            msg = f"{token_type=} not supported"
+            logging.error(msg)
         return [
             (NAME, t),
             (LPAR, "("),
@@ -184,7 +185,8 @@ class NumberObfuscator:
         # logging.debug("verifying that {}={}".format(tokval, result))
         if str(result) == tokval:
             return True
-        logging.error(f"error verifying that {tokval}={result}")
+        msg = f"error verifying that {tokval}={result}"
+        logging.error(msg)
         return False
 
     def obfuscate_number(self, toknum, tokval):

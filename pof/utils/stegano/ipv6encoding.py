@@ -6,6 +6,7 @@ from tokenize import NAME, NUMBER, OP, STRING
 class IPv6Encoding:
     """Encode the string in a list of valid IPv6."""
 
+    IPV6_LEN = 32
     padding_byte = b"0"
 
     @classmethod
@@ -14,12 +15,15 @@ class IPv6Encoding:
 
         hex_string = binascii.b2a_hex(string)
 
-        string_chunks = [hex_string[i : i + 32] for i in range(0, len(hex_string), 32)]
+        string_chunks = [
+            hex_string[i : i + cls.IPV6_LEN]
+            for i in range(0, len(hex_string), cls.IPV6_LEN)
+        ]
 
         for sc in string_chunks:
             string_chunk = sc
-            if len(string_chunk) < 32:
-                padding = 32 - len(string_chunk)
+            if len(string_chunk) < cls.IPV6_LEN:
+                padding = cls.IPV6_LEN - len(string_chunk)
                 # TODO (204): choose this randomly (anything BUT the padding_byte)
                 string_chunk += b"1"
                 string_chunk += cls.padding_byte * (padding - 1)

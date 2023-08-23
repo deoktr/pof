@@ -10,3 +10,10 @@ nqru = 0
 while True:
     nqru += 1
     print(nqru)
+
+
+class Hello:
+    pass
+
+
+h = Hello()

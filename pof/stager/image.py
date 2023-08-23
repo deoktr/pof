@@ -68,9 +68,12 @@ class ImageStager:
         return int(number_bin, 2)
 
     def encode(self, code, im_in, im_out):
-        """Code str: code to store
-        im_in str: path to image input
-        im_out str: path to image output.
+        """Encode into image.
+
+        Args:
+            code: code to store
+            im_in: path to image input
+            im_out: path to image output.
         """
         msg_bin = bin(int.from_bytes(code, "big")).replace("0b", "")
         # mark the end of the message

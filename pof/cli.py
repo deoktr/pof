@@ -161,7 +161,7 @@ def _cli():
     )
     parser.add_argument(
         "--logging",
-        help="obfuscation function",
+        help="logging level, INFO, DEBUG, ERROR, CRITICAL",
         default="INFO",
     )
     parser.add_argument(

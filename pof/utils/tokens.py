@@ -15,7 +15,7 @@ from tokenize import (
 class NoSpaceUntokenizer(Untokenizer):
     """Custom Untokenizer that remove useless spaces after every NAME or NUMBER."""
 
-    def compat(self, token, iterable):
+    def compat(self, token, iterable):  # noqa: C901
         indents = []
         toks_append = self.tokens.append
         startline = token[0] in (NEWLINE, NL)

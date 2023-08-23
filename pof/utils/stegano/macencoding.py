@@ -5,6 +5,7 @@ from tokenize import NAME, NUMBER, OP, STRING
 class MACEncoding:
     """Encode the string in a list of valid MAC."""
 
+    MAC_LEN = 12
     padding_byte = b"0"
 
     @classmethod
@@ -13,12 +14,15 @@ class MACEncoding:
 
         hex_string = binascii.b2a_hex(string)
 
-        string_chunks = [hex_string[i : i + 12] for i in range(0, len(hex_string), 12)]
+        string_chunks = [
+            hex_string[i : i + cls.MAC_LEN]
+            for i in range(0, len(hex_string), cls.MAC_LEN)
+        ]
 
         for sc in string_chunks:
             string_chunk = sc
-            if len(string_chunk) < 12:
-                padding = 12 - len(string_chunk)
+            if len(string_chunk) < cls.MAC_LEN:
+                padding = cls.MAC_LEN - len(string_chunk)
                 # TODO (204): choose this randomly (anything BUT the padding_byte)
                 string_chunk += b"1"
                 string_chunk += cls.padding_byte * (padding - 1)

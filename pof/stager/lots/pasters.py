@@ -17,9 +17,13 @@ class PasteRsStager(DownloadStager):
 
     def upload(self, code):
         req = request.Request("https://paste.rs", data=code)
+
         r = request.urlopen(req)
+
         raw_link = r.read().decode()
-        if r.code != 201:
+        valid_code = 201
+        if r.code != valid_code:
             msg = f"Failed to upload to paste.rs, got code {r.code}"
             raise PofError(msg)
+
         return raw_link

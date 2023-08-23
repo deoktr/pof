@@ -73,7 +73,9 @@ class Obfuscator(BaseObfuscator):
         # generators
         reserved_words_add = NameExtract.get_names(tokens)
         BaseGenerator.extend_reserved(reserved_words_add)
-        logging.info("reserved {lt} names", extra={"lt": len(tokens)})
+
+        msg = f"reserved {len(tokens)} names"
+        logging.info(msg)
 
         # clean input
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
@@ -207,7 +209,7 @@ class Obfuscator(BaseObfuscator):
         tokens = NewlineObfuscator().obfuscate_tokens(tokens)
         return self._untokenize(tokens)
 
-    def full_evasion(
+    def full_evasion(  # noqa: C901 PLR0913 PLR0912
         self,
         source,
         hostname: str | None = None,
@@ -312,7 +314,7 @@ class Obfuscator(BaseObfuscator):
         return self._untokenize(tokens)
 
     def advanced_image(self, source):
-        """Encrypt and store the payload code inside an image."""
+        """Obfuscate, encrypt, and store the payload code inside an image."""
         tokens = self._get_tokens(source)
         generator = BasicGenerator.alphabet_generator()
 

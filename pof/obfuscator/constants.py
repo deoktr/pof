@@ -234,42 +234,32 @@ class ConstantsObfuscator:
 
             # obfuscation
             if (
-                toknum == NAME
-                and tokval in self.BUILTINS
-                and prev_tokval != "."  # avoid changing class/imports functions
-                and (
-                    parenthesis_depth == 0
-                    or (parenthesis_depth > 0 and next_tokval != "=")
+                (
+                    toknum == NAME
+                    and tokval in self.BUILTINS
+                    and prev_tokval != "."  # avoid changing class/imports functions
+                    and (
+                        parenthesis_depth == 0
+                        or (parenthesis_depth > 0 and next_tokval != "=")
+                    )
+                    and (random.randint(0, 100) / 100) <= self.obf_builtins_rate
                 )
-                and (random.randint(0, 100) / 100) <= self.obf_builtins_rate
-            ):
-                new_tokens, variables = self.obfuscate_variable(
-                    toknum,
-                    tokval,
-                    variables,
+                or (
+                    # don't obfuscate docstrings
+                    toknum == STRING
+                    and prev_toknum
+                    not in [
+                        NEWLINE,
+                        DEDENT,
+                        INDENT,
+                        ENCODING,
+                    ]
+                    and (random.randint(0, 100) / 100) <= self.obf_string_rate
                 )
-
-            # don't obfuscate docstrings
-            elif (
-                toknum == STRING
-                and prev_toknum
-                not in [
-                    NEWLINE,
-                    DEDENT,
-                    INDENT,
-                    ENCODING,
-                ]
-                and (random.randint(0, 100) / 100) <= self.obf_string_rate
-            ):
-                new_tokens, variables = self.obfuscate_variable(
-                    toknum,
-                    tokval,
-                    variables,
+                or (
+                    toknum == NUMBER
+                    and (random.randint(0, 100) / 100) <= self.obf_number_rate
                 )
-
-            elif (
-                toknum == NUMBER
-                and (random.randint(0, 100) / 100) <= self.obf_number_rate
             ):
                 new_tokens, variables = self.obfuscate_variable(
                     toknum,

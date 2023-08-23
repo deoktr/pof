@@ -1,6 +1,7 @@
 import random
 from urllib import request
 
+from pof.errors import PofError
 from pof.stager import DownloadStager
 
 
@@ -15,7 +16,12 @@ class Cl1pNetStager(DownloadStager):
     No account is required to use cl1p.net, but it's limited to 10 paste per days.
     """
 
-    def __init__(self, api_token="EXAMPLE_TOKEN", *args, **kwargs) -> None:
+    def __init__(
+        self,
+        api_token="EXAMPLE_TOKEN",  # noqa: S107
+        *args,
+        **kwargs,
+    ) -> None:
         self.api_token = api_token
         super().__init__(*args, **kwargs)
 
@@ -33,8 +39,12 @@ class Cl1pNetStager(DownloadStager):
                 "Content-Type": "text/html; charset=UTF-8",
             },
         )
-        r = request.urlopen(req)
-        if r.code != 201:
+
+        r = request.urlopen(req)  # noqa: S310
+
+        success_code = 201
+        if r.code != success_code:
             msg = f"Failed to upload to cl1p.net, got code {r.code}"
-            raise Exception(msg)
+            raise PofError(msg)
+
         return url

@@ -2,7 +2,55 @@
 
 Python Obfuscation Framework.
 
-Combine/chain obfuscation methods on a single Python source file.
+Combine and chain obfuscation methods on a single Python source file.
+
+## Goals
+
+The goals of this project is to create a toolkit to obfuscate Python source code to create payload for offensive security:
+
+- **Payloads**: store the code inside images, have multiple stages, use LOTL techniques
+- **Stager**: easily create multi stages payloads
+- **Evasion**: AV, EDR, DPI, sandbox and other analysis techniques
+- **Human**: slow down human analysis of the payload
+- **Automation**: automate the whole process, to produce numerous variant of the payload
+- **Fun**: because it's always fun to see what's possible to do with Pythonnd
+
+Python is not exactly the best language to create payloads with, especially for Windows if it's not already installed. This project was made for learning, and discovering new ways of bypassing security, of obfuscating the same code, it's a great way to test obfuscations techniques.
+
+This project could also give you ideas to implement in other languages, such as powershell where it would make sens to obfuscate the source code. Or in C, C#, C++, Go or Rust where it would make sens to stage payloads, compress them, encrypt them and obfuscate strings.
+
+You could also use most of the stagers to stage payload that are not built in Python.
+
+## Usage
+
+You can either pipe or give a file for input, same for output.
+
+```bash
+echo "print('Hello, world')" | pof
+```
+
+Output:
+
+```python
+from base64 import b64decode as CRT_ASSERT
+from base64 import b85decode as _45802
+UserClassSlots=__builtins__.__dict__.__getitem__(_45802(''[::-1]).decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'ukf'[::-1]]))(__builtins__.__getattribute__('\u006f\u0072\u0064')(i)-(__name__.__eq__.__call__(__name__)+__name__.__eq__.__call__(__name__)+__name__.__eq__(__name__)))for i in CRT_ASSERT('c3VscXc=').decode()]))
+UserClassSlots(CRT_ASSERT('').decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'parse_intermixed_argsu'.replace('parse_intermixed_args','fk')]))(__builtins__.__dict__.__getitem__(_45802('L}g}jVP{fhb9HQVa%2').decode().replace("".join([chr(ord(i)-3)for i in'GhiudjUhvxow']),'o'[::-1]))(i)-(__name__.__eq__.__call__(__name__)+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'])[::-1]].__dict__["".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'Wuxsimple_stmt'.replace('simple_stmt','h')])]+(type(1)==type(1))))for i in'gourz#/r_pfK'[::-1].replace(_45802('W^i9}').decode(),CRT_ASSERT('aG9vcg==').decode())]))
+```
+
+And yes, this is a valid Python script, that actually runs and only output `Hello world` ! And you'll get a different output each times.
+
+Using a specific obfuscator:
+
+```bash
+pof in.py -o out.py -f obfuscator BuiltinsObfuscator
+```
+
+Using a specific payload:
+
+```bash
+pof inf.py -o out.py -f payload GzipPayload
+```
 
 ## Install
 
@@ -14,31 +62,7 @@ source ./venv/bin/activate
 ./setup.py install
 ```
 
-This will install POF inside a virtual env.
-
-## Usage
-
-```bash
-pof $SOURCE -o $OUT
-```
-
-Using the default chained obfuscator
-
-```bash
-pof in.py -o out.py
-```
-
-Using a specific obfuscator
-
-```bash
-pof in.py -o out.py -f obfuscator BuiltinsObfuscator
-```
-
-Using a specific payload
-
-```bash
-pof inf.py -o out.py -f payload GzipPayload
-```
+This will install pof inside a virtual env, so you'll need to activate it every times you want to use it.
 
 ## Examples
 
@@ -57,23 +81,6 @@ To test the validity of the output you can simply pipe it to Python:
 ```bash
 echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 ```
-
-If no obfuscator is selected, a default chain obfuscator is used.
-
-```bash
-echo "print('Hello, world')" | pof
-```
-
-Output:
-
-```python
-from base64 import b64decode as CRT_ASSERT
-from base64 import b85decode as _45802
-UserClassSlots=__builtins__.__dict__.__getitem__(_45802(''[::-1]).decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'ukf'[::-1]]))(__builtins__.__getattribute__('\u006f\u0072\u0064')(i)-(__name__.__eq__.__call__(__name__)+__name__.__eq__.__call__(__name__)+__name__.__eq__(__name__)))for i in CRT_ASSERT('c3VscXc=').decode()]))
-UserClassSlots(CRT_ASSERT('').decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'parse_intermixed_argsu'.replace('parse_intermixed_args','fk')]))(__builtins__.__dict__.__getitem__(_45802('L}g}jVP{fhb9HQVa%2').decode().replace("".join([chr(ord(i)-3)for i in'GhiudjUhvxow']),'o'[::-1]))(i)-(__name__.__eq__.__call__(__name__)+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'])[::-1]].__dict__["".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'Wuxsimple_stmt'.replace('simple_stmt','h')])]+(type(1)==type(1))))for i in'gourz#/r_pfK'[::-1].replace(_45802('W^i9}').decode(),CRT_ASSERT('aG9vcg==').decode())]))
-```
-
-And yes, this is a valid Python script, that actually runs and only output `Hello world` !
 
 ### Obfuscator
 
@@ -140,6 +147,8 @@ print(b85decode( b'NM&qnZ!92pZ*pv8').decode())
 
 #### RC4Obfuscator
 
+Warning: the RC4 obfuscator (and other cipher obfuscators) will combine both, the cipher text and the key in the same file, this is obviously not secure, and should never be used for security purposes. The idea behind this obfuscator is to fool humans, AV, EDR, network TAP etc. not to be secured and safe.
+
 ```python
 import codecs
 def rc4decrypt(key,ciphertext):
@@ -185,6 +194,8 @@ exec("".join([chr(ord(i)-3)for i in'sulqw+*Khoor/#zruog*,\r']))
 ```
 
 #### XORObfuscator
+
+Warning: like for the RC4 cipher the XOR obfuscator shouldn't be used for security purposes, its main goal is to evade common security tools, not protect the information! Plus the XOR cipher is really weak and easy to crack.
 
 ```python
 from base64 import b64decode
@@ -389,6 +400,81 @@ def quine():
 exec(b64decode(esource))
 ```
 
+## Python API
+
+The true power of pof is in chaining multiple different obfuscation techniques easily, there is a prety simple Python API to do so.
+
+For example this is a snippet of the default obfuscator:
+
+```python
+def obfuscate(source):
+    tokens = get_tokens(source)
+
+    # get all the names and add them to the RESERVED_WORDS for the
+    # generators
+    reserved_words_add = NameExtract.get_names(tokens)
+    BaseGenerator.extend_reserved(reserved_words_add)
+
+    tokens = CommentsObfuscator().obfuscate_tokens(tokens)
+    tokens = LoggingObfuscator().obfuscate_tokens(tokens)
+    tokens = PrintObfuscator().obfuscate_tokens(tokens)
+    ex_generator = BasicGenerator.number_name_generator()
+    tokens = ExceptionObfuscator(
+        add_codes=True,
+        generator=ex_generator,
+    ).obfuscate_tokens(tokens)
+
+    # configure generator
+    gen_dict = {
+        86: AdvancedGenerator.realistic_generator(),
+        10: BasicGenerator.alphabet_generator(),
+        4: BasicGenerator.number_name_generator(length=random.randint(2, 5)),
+    }
+    generator = AdvancedGenerator.multi_generator(gen_dict)
+
+    # core obfuscation
+    tokens = ConstantsObfuscator(
+        generator=generator,
+        obf_number_rate=0.7,
+        obf_string_rate=0.1,
+        obf_string_rate=0.1,
+        obf_builtins_rate=0.3,
+    ).obfuscate_tokens(tokens)
+
+    tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+
+    tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
+    tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+
+    b64decode_name = next(generator)
+    b85decode_name = next(generator)
+    string_obfuscator = StringsObfuscator(
+        import_b64decode=True,
+        import_b85decode=True,
+        b64decode_name=b64decode_name,
+        b85decode_name=b85decode_name,
+    )
+    tokens = string_obfuscator.obfuscate_tokens(tokens)
+    string_obfuscator.import_b64decode = False
+    string_obfuscator.import_b85decode = False
+
+    for _ in range(2):
+        tokens = NumberObfuscator().obfuscate_tokens(tokens)
+    tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+    for _ in range(2):
+        tokens = string_obfuscator.obfuscate_tokens(tokens)
+
+    return untokenize(tokens)
+```
+
+In this example we can see that first we remove comments, logging, print statements, and change the content of exceptions, and then we start to obfuscate constants, names, globals, builtins, strings, then strings and numbers multiple times, and we finnaly convert the tokens back to code.
+
+By chaining multiple ofuscations techniques we can create very complexe and custom output.
+
+Pof also provide evasions methods, detailed below, they are useful for quick and easy evasions, and can be used and customized to fit the need.
+
+For more example of how to use the pof Python API check the [examples/](./examples) directory.
+
 ## Yara
 
 Yara rules can be used to detect malware, they can also be used to find interesting strings in Python source code. To check rules against source files and/or obfuscated files run:
@@ -454,8 +540,6 @@ ruff .
 - Resolve every ruff errors
 - Increase test coverage
 - Add pre-commit hooks
-- Setup .gitignore
-- Create repository on GitHub
 - Setup package
 - Publish package on pypi
 - Write a doc
