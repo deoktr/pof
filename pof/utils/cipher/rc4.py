@@ -9,7 +9,7 @@ class RC4Cipher:
     """RC4 cipher.
 
     Pure Python RC4 implementation.
-    source: https://github.com/manojpandey/rc4
+    Source: https://github.com/manojpandey/rc4
     """
 
     MOD = 256
@@ -19,7 +19,7 @@ class RC4Cipher:
         if key is None:
             la = string.ascii_letters + string.digits
             key = "".join([random.choice(la) for _ in range(self.KEY_SIZE)])
-            logging.info("generated key: {key}", extra={"key": key})
+            logging.info(f"generated key: {key}")
         self.key = key
 
     @staticmethod

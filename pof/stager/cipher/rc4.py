@@ -7,8 +7,7 @@ from pof.utils.tokens import untokenize
 class RC4Stager(RC4Cipher):
     """Takes the key as first argument to decrypt and execute."""
 
-    @classmethod
-    def generate_stager(cls, tokens):
+    def generate_stager(self, tokens):
         code = untokenize(tokens)
         key_tokens = [
             (NAME, "sys"),
@@ -25,13 +24,13 @@ class RC4Stager(RC4Cipher):
             (NAME, "import"),
             (NAME, "sys"),
             (NEWLINE, "\n"),
-            *cls.import_tokens(),
+            *self.import_tokens(),
             (NEWLINE, "\n"),
-            *cls.definition_tokens(),
+            *self.definition_tokens(),
             (NEWLINE, "\n"),
             (NAME, "exec"),
             (LPAR, "("),
-            *cls.decode_tokens(cls.encode_tokens(code), key_tokens=key_tokens),
+            *self.decode_tokens(self.encode_tokens(code), key_tokens=key_tokens),
             (RPAR, ")"),
             (NEWLINE, "\n"),
         ]
