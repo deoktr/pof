@@ -8,6 +8,7 @@ from .compression.gzip import GzipObfuscator
 from .compression.lzma import LzmaObfuscator
 from .compression.zlib import ZlibObfuscator
 from .constants import ConstantsObfuscator
+from .definitions import DefinitionsObfuscator
 from .encoding.a85 import ASCII85Obfuscator
 from .encoding.b16 import Base16Obfuscator
 from .encoding.b32 import Base32Obfuscator
@@ -75,4 +76,5 @@ __all__ = [
     "IPv6Obfuscator",
     "MACObfuscator",
     "SpacenTabObfuscator",
+    "DefinitionsObfuscator",
 ]
