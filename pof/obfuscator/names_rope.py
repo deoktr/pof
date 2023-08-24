@@ -1,53 +1,21 @@
-# WORK IN PROGRESS !
 #
 # Names obfuscator using external package: rope
-#
-# TODO (204):
-# - collect every names BEFORE obfuscation to be sure never to add any that
-#   where present before the obfuscation, make that an option
-#
-# NOTES: You can't have a variable that takes the value of an import reused elsewhere
-#       for example:
-#       ```
-#       import os
-#       BASE = "/home/test/"
-#       path = os.path.join(BASE, "file.txt")
-#       print(path)
-#       def a(path):
-#           return a + ".txt"
-#       a("foo")
-#       ```
-#       In this example you should rename either `path` from the beginning code
-#       or from the function code.
-#
-# NOTES: You can't have variable equal to if statement with imported names
-#       Example;
-#       ```
-#       import os
-#       is_admin = os.getuid() == 0
-#       ```
-#       Solution:
-#       ```
-#       is_admin = bool(os.getuid() == 0)
-#       ```
+# rename variables names.
 #
 import ast
 import io
 import keyword
 import logging
+import shutil
 import os
-from tokenize import NAME, NEWLINE, NL, OP, generate_tokens, untokenize
+from tokenize import NAME, OP, generate_tokens, untokenize
+from pathlib import Path
 
-try:
-    from rope.base.project import Project
-    from rope.refactor.rename import Rename
-
-    HAS_ROPE = True
-except ImportError:
-    HAS_ROPE = False
+from rope.base.project import Project
+from rope.refactor.rename import Rename
 
 
-class NamesObfuscator:
+class NamesRopeObfuscator:
     """Obfuscate class/function/variables names."""
 
     # BUILTINS = list(__builtins__.__dict__.keys())
@@ -224,12 +192,20 @@ class NamesObfuscator:
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
     KEYWORDS = keyword.kwlist
 
-    def __init__(self, generator=None) -> None:
+    DEFAULT_TMP_DIR = ".pof_cache"
+
+    def __init__(self, generator=None, tmp_dir=None, clean=False) -> None:
         if generator is None:
             from pof.utils.generator import BasicGenerator
 
             generator = BasicGenerator.alphabet_generator()
         self.generator = generator
+
+        if tmp_dir is None:
+            tmp_dir = self.DEFAULT_TMP_DIR
+        self.tmp_dir = tmp_dir
+
+        self.clean = clean
 
     @classmethod
     def get_local(cls, tokens, imports):
@@ -296,15 +272,6 @@ class NamesObfuscator:
                 var_list.append(tokval)
         return var_list
 
-    def find_var_pos(self, tokens, var):
-        current_len = 1
-        for toknum, tokval, start, end, _line in tokens:
-            if toknum in [NEWLINE, NL]:
-                current_len += end[1]
-            if toknum == NAME and tokval not in self.RESERVED and tokval == var:
-                return current_len + start[1]
-        return None
-
     @classmethod
     def get_imports(cls, tokens):
         source = untokenize(tokens)
@@ -323,65 +290,75 @@ class NamesObfuscator:
     def generate_new_name(self):
         return next(self.generator)
 
-    def obfuscate_tokens(self, tokens):
-        """Name obfuscation tokens.
+    def create_tmp_dir(self):
+        root = Path(".")
+        tmp_dir_path = root / self.tmp_dir
+        if not tmp_dir_path.is_dir():
+            tmp_dir_path.mkdir()
 
-        TODO (204): Obfuscate `getattr` when calling a function/variable name
-        TODO (204): Obfuscate imports `import foo as bar`.
-        """
-        # try with it afterward
-        imports = self.get_imports(tokens)
-        local_names = self.get_local(tokens, imports)
-        # this one is bad, was just for testing
-        # local_names = self.list_vars(tokens, imports)
-        logging.debug(f"found {len(local_names)} local names")
-
-        # TODO (204): create the directory if it doesn't exist
-        # TODO (204): choose a local directory
-        # TODO (204): add . in front of the directory name
-        # TODO (204): directory should be an option of the class
-        tmp_dir = "/tmp/test"
-        file_name = "tmp.py"
-        tmp_file_path = os.path.join(tmp_dir, file_name)
-
+    def create_tmp_file(self, tokens, file_name):
+        file_full_name = file_name + ".py"
+        tmp_file_path = Path(self.tmp_dir) / file_full_name
         code = untokenize(tokens)
         with open(tmp_file_path, "w") as f:
             f.write(code)
+        return tmp_file_path
 
-        def _get_tokens(code):
-            io_obj = io.StringIO(code)
-            return list(generate_tokens(io_obj.readline))
+    def clean_tmp_dir(self):
+        root = Path(".")
+        tmp_dir_path = root / self.tmp_dir
+        if tmp_dir_path.is_dir():
+            shutil.rmtree(tmp_dir_path)
 
-        # TODO (204): find a way better way, this is SO ugly, opening and closing the
-        # file to get the new position is so bad... but he I got no other
-        # options right now, especially not enough time
-        project = Project(tmp_dir)
-        file = project.get_resource(file_name)
-        # TODO (204): = len(local_names)
+    def obfuscate_tokens(self, tokens):
+        """Definitions obfuscation tokens."""
+        imports = self.get_imports(tokens)
+        local_names = self.get_local(tokens, imports)
+
+        msg = f"found {len(local_names)} local names"
+        logging.debug(msg)
+
+        self.create_tmp_dir()
+
+        mod_name = "tmp"
+        tmp_file_path = self.create_tmp_file(tokens, mod_name)
+
+        # TODO (204): find a way better way, do everything in memory
+        proj = Project(self.tmp_dir)
+        mod = proj.get_module(mod_name)
+
+        todo = len(local_names)
         done = 0
         for name in local_names:
             new_name = self.generate_new_name()
-            logging.debug(
-                "{done}/{todo} changing var {n} to {nn}",
-                extra={"don": done, "todo": todo, "n": name, "nn": new_name},
-            )
+            logging.debug(f"{done}/{todo} changing var {name} to {new_name}")
             try:
-                try:
-                    with open(tmp_file_path) as f:
-                        tokens = _get_tokens(f.read())
-                except OSError:
-                    break
-                index = self.find_var_pos(tokens, name)
-                changes = Rename(project, file, index).get_changes(new_name)
-                project.do(changes)
-            except Exception as exc:
-                logging.exception(
-                    "error trying to obfuscate var {n}: {e}",
-                    extra={"n": name, "e": str(exc)},
+                old_name = mod.get_attribute(name)
+
+                pymod, lineno = old_name.get_definition_location()
+                lineno_start, lineno_end = pymod.logical_lines.logical_line_in(lineno)
+
+                offset = pymod.resource.read().index(
+                    old_name.pyobject.get_name(),
+                    pymod.lines.get_line_start(lineno),
                 )
+
+                changes = Rename(proj, pymod.get_resource(), offset).get_changes(
+                    new_name,
+                )
+
+                proj.do(changes)
+            except Exception as exc:
+                logging.exception(f"error trying to obfuscate var {name}: {exc!s}")
             done += 1
-        project.close()
+        proj.close()
 
         # finish by reading the file one last time
         with open(tmp_file_path) as f:
-            return _get_tokens(f.read())
+            io_obj = io.StringIO(f.read())
+            tokens = list(generate_tokens(io_obj.readline))
+
+        if self.clean:
+            self.clean_tmp_dir()
+
+        return tokens

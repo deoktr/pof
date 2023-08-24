@@ -32,9 +32,9 @@ class CLIObfuscator(Obfuscator):
             msg = f"obfuscator {obfuscator} not found in: {lobf}"
             raise PofCliError(msg) from err
 
-        logging.info("using '{n}' obfuscator", extra={"n": obf.__name__})
-        logging.debug("args={a}", extra={"a": args})
-        logging.debug("kwargs={k}", extra={"k": kwargs})
+        logging.info(f"using '{obf.__name__}' obfuscator")
+        logging.debug(f"args={args}")
+        logging.debug(f"kwargs={kwargs}")
         tokens = globals()[obfuscator](*args, **kwargs).obfuscate_tokens(tokens)
         return self._untokenize(tokens)
 

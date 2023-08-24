@@ -23,6 +23,7 @@ from .extract_variables import ExtractVariablesObfuscator
 from .junk.add_comments import AddCommentsObfuscator
 from .junk.add_newlines import AddNewlinesObfuscator
 from .names import NamesObfuscator
+from .names_rope import NamesRopeObfuscator
 from .numbers import NumberObfuscator
 from .other.tokens import TokensObfuscator
 from .remove.comments import CommentsObfuscator
@@ -77,4 +78,5 @@ __all__ = [
     "MACObfuscator",
     "SpacenTabObfuscator",
     "DefinitionsObfuscator",
+    "NamesRopeObfuscator",
 ]
