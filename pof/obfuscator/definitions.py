@@ -6,8 +6,10 @@ import ast
 import io
 import keyword
 import logging
+import shutil
 import os
 from tokenize import NAME, generate_tokens, untokenize
+from pathlib import Path
 
 from rope.base.project import Project
 from rope.refactor.rename import Rename
@@ -190,12 +192,20 @@ class DefinitionsObfuscator:
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
     KEYWORDS = keyword.kwlist
 
-    def __init__(self, generator=None) -> None:
+    DEFAULT_TMP_DIR = ".pof_cache"
+
+    def __init__(self, generator=None, tmp_dir=None, clean=False) -> None:
         if generator is None:
             from pof.utils.generator import BasicGenerator
 
             generator = BasicGenerator.alphabet_generator()
         self.generator = generator
+
+        if tmp_dir is None:
+            tmp_dir = self.DEFAULT_TMP_DIR
+        self.tmp_dir = tmp_dir
+
+        self.clean = clean
 
     @classmethod
     def get_local(cls, tokens):
@@ -246,36 +256,41 @@ class DefinitionsObfuscator:
     def generate_new_name(self):
         return next(self.generator)
 
-    def obfuscate_tokens(self, tokens):
-        """Name obfuscation tokens.
+    def create_tmp_dir(self):
+        root = Path(".")
+        tmp_dir_path = root / self.tmp_dir
+        if not tmp_dir_path.is_dir():
+            tmp_dir_path.mkdir()
 
-        TODO (204): Obfuscate `getattr` when calling a function/variable name
-        TODO (204): Obfuscate imports `import foo as bar`.
-        """
+    def create_tmp_file(self, tokens, file_name):
+        file_full_name = file_name + ".py"
+        tmp_file_path = Path(self.tmp_dir) / file_full_name
+        code = untokenize(tokens)
+        with open(tmp_file_path, "w") as f:
+            f.write(code)
+        return tmp_file_path
+
+    def clean_tmp_dir(self):
+        root = Path(".")
+        tmp_dir_path = root / self.tmp_dir
+        if tmp_dir_path.is_dir():
+            shutil.rmtree(tmp_dir_path)
+
+    def obfuscate_tokens(self, tokens):
+        """Definitions obfuscation tokens."""
         local_names = self.get_local(tokens)
 
         msg = f"found {len(local_names)} local names"
         logging.debug(msg)
 
-        # TODO (204): create the directory if it doesn't exist
-        # TODO (204): choose a local directory
-        # TODO (204): add . in front of the directory name
-        # TODO (204): directory should be an option of the class
-        tmp_dir = "/tmp/test"
-        file_name = "tmp.py"
-        tmp_file_path = os.path.join(tmp_dir, file_name)
+        self.create_tmp_dir()
 
-        code = untokenize(tokens)
-        with open(tmp_file_path, "w") as f:
-            f.write(code)
-
-        def _get_tokens(code):
-            io_obj = io.StringIO(code)
-            return list(generate_tokens(io_obj.readline))
+        mod_name = "tmp"
+        tmp_file_path = self.create_tmp_file(tokens, mod_name)
 
         # TODO (204): find a way better way, do everything in memory
-        proj = Project(tmp_dir)
-        mod = proj.get_module(file_name.replace(".py", ""))
+        proj = Project(self.tmp_dir)
+        mod = proj.get_module(mod_name)
 
         todo = len(local_names)
         done = 0
@@ -283,11 +298,6 @@ class DefinitionsObfuscator:
             new_name = self.generate_new_name()
             logging.debug(f"{done}/{todo} changing var {name} to {new_name}")
             try:
-                try:
-                    with open(tmp_file_path) as f:
-                        tokens = _get_tokens(f.read())
-                except OSError:
-                    break
                 old_name = mod.get_attribute(name)
 
                 pymod, lineno = old_name.get_definition_location()
@@ -310,4 +320,10 @@ class DefinitionsObfuscator:
 
         # finish by reading the file one last time
         with open(tmp_file_path) as f:
-            return _get_tokens(f.read())
+            io_obj = io.StringIO(f.read())
+            tokens = list(generate_tokens(io_obj.readline))
+
+        if self.clean:
+            self.clean_tmp_dir()
+
+        return tokens
