@@ -1,6 +1,6 @@
 # TODO (204): obfuscate `format` but only when not after `"".`
 # TODO (204): add `__name__.__class__.__class__.__base__.__subclasses__()` variant
-#
+
 import logging
 import random
 from tokenize import LPAR, LSQB, NAME, NUMBER, OP, RPAR, RSQB, STRING

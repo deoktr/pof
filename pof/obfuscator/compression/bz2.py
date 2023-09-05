@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class Bz2Obfuscator(Bz2Compression):
+    """BZ2 compression obfuscator."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         """Generate payload to execute the bz2 encoded code."""

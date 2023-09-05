@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class Base32Obfuscator(Base32Encoding):
+    """Obfuscate with encoding format Base32."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         code = untokenize(tokens)

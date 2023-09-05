@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class GzipObfuscator(GzipCompression):
+    """GZIP compression obfuscator."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         """Generate payload to execute the gzip encoded code."""

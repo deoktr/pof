@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class LzmaObfuscator(LzmaCompression):
+    """LZMA compression obfuscator."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         """Generate payload to execute the lzma encoded code."""

@@ -3,6 +3,7 @@
 The main purpose of xor is to produce radically different outputs when obfuscating a
 file.
 """
+
 import random
 from base64 import b64encode
 from tokenize import DEDENT, INDENT, NAME, NEWLINE, NL, NUMBER, OP, STRING
@@ -11,7 +12,7 @@ from pof.utils.tokens import untokenize
 
 
 class XORObfuscator:
-    """XOR payload generator."""
+    """XOR obfuscator."""
 
     # TODO (204): move code to utils/encryption/xor.py
     def get_exec_tokens(self, key, ciphertext):

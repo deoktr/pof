@@ -1,10 +1,12 @@
 """Extract constants and put them at the top of the script.
 
 Can extract:
-    - string
-    - number (int, float...)
-    - builtins (str, exec, hex...)
+
+- string
+- number (int, float...)
+- builtins (str, exec, hex...)
 """
+
 #
 # Add variables for certain values
 # ex:
@@ -18,6 +20,7 @@ Can extract:
 # TODO (204): add variables inside functions
 # TODO (204): add exclusions for strings and numbers
 #
+
 import random
 from tokenize import DEDENT, ENCODING, INDENT, NAME, NEWLINE, NUMBER, OP, STRING
 

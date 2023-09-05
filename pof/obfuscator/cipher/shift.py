@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class ShiftObfuscator(ShiftCipher):
+    """Shift cipher obfuscator."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         code = untokenize(tokens)

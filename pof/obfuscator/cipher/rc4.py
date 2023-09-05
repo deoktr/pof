@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class RC4Obfuscator(RC4Cipher):
+    """RC4 cipher obfuscator."""
+
     def obfuscate_tokens(self, tokens):
         code = untokenize(tokens)
         return [

@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class BinasciiObfuscator(BinasciiEncoding):
+    """Obfuscate with encoding format Binascii."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         """Generate payload to execute the binascii encoded code."""

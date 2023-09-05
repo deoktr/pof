@@ -1,7 +1,8 @@
-#
-# Names obfuscator using external package: rope
-# rename variables names.
-#
+"""Names obfuscator.
+
+Rename variables names using external package: rope.
+"""
+
 import ast
 import io
 import keyword

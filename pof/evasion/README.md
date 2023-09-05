@@ -4,6 +4,7 @@
 
 ## TODO
 
+- Disk size evasion
 - File size evasion
 - File content evasion
 - Screen resolution size

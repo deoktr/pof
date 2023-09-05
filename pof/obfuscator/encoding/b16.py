@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class Base16Obfuscator(Base16Encoding):
+    """Obfuscate with encoding format Base16."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         code = untokenize(tokens)

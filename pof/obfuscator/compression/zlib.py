@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class ZlibObfuscator(ZlibCompression):
+    """ZLIB compression obfuscator."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         """Generate payload to execute the zlib encoded code."""

@@ -5,6 +5,8 @@ from pof.utils.tokens import untokenize
 
 
 class SpacenTabObfuscator(SpacenTabEncoding):
+    """Obfuscate with encoding format SpacenTab/white spaces encoding."""
+
     @classmethod
     def obfuscate_tokens(cls, tokens):
         code = untokenize(tokens)

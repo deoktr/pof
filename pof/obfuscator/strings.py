@@ -1,8 +1,8 @@
-# TODO (204):
-# - work with f"" strings, r"" strings etc.
-# - can't split `\` !!!
-# - add variable to import or not b64decode
+# TODO (2O4): work with f"" strings, r"" strings etc.
+# TODO (2O4): can't split `\` !!!
+# TODO (2O4): add variable to import or not b64decode
 # TODO (2O4): replace eval with ast.literal_eval: https://beta.ruff.rs/docs/rules/suspicious-eval-usage/
+
 import logging
 import random
 from base64 import b64encode, b85encode

@@ -1,7 +1,8 @@
-#
-# Definitions obfuscator using external package: rope
-# rename function and classes names.
-#
+"""Definitions obfuscator.
+
+Rename function and classes names using external package: rope
+"""
+
 import ast
 import io
 import keyword

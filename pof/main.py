@@ -117,7 +117,7 @@ class Obfuscator(BaseObfuscator):
             obf_builtins_rate=0.3,
         ).obfuscate_tokens(tokens)
 
-        # FIXME (204): breaks pysurt !
+        # FIXME (204): breaks !
         # for detailed explanation just consider the following:
         #   ```
         #   import module
@@ -136,7 +136,7 @@ class Obfuscator(BaseObfuscator):
         # imported attribute for itself and all the parameters given to it
         # this is because we don't keep track of the level of the imported
         #
-        # FIXME (204): breaks pysurt !
+        # FIXME (204): breaks !
         # Another problem is related to result of function, this is, ofc very
         # hard to deal with, but if a function returns an object, such has for
         # example an object of an imported class, which attribute are not
