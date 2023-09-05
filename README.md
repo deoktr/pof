@@ -17,7 +17,7 @@ pof will allow you to:
 - enable **automation**: automate the whole process, to produce numerous variant of the payload
 - have **fun**: because it's always fun to see what's possible to do with Python
 
-Python is not exactly the best language to create payloads with, especially for Windows if the interpreter is not already installed. This project was made for learning, and discovering new ways of bypassing security, of obfuscating the same code, it's a great way to test obfuscations techniques.
+Python is not exactly the best language to create payloads with, especially for Windows if the interpreter is not already installed. This project was made for learning, and discovering new ways of bypassing security, it's a great way to test obfuscations techniques.
 
 This project could also give you ideas to implement in other languages, such as powershell where it would make sens to obfuscate the source code. Or in C, C#, C++, Go or Rust where it would make sens to stage payloads, compress them, encrypt them and obfuscate strings.
 
@@ -25,7 +25,7 @@ You could also use most of the stagers to stage payload that are not built in Py
 
 ## Shortcomings
 
-Note that any obfuscation techniques that adds code complexity will make the code run slower. For most applications this won't have an impact, and no one is using Python for speed anyway.
+Any obfuscation techniques that adds code complexity will make the code run slower. For most usage this won't have an impact, and no one is using Python for speed anyway (at least I hope).
 
 Encoding, compression, encryption will slow the start of the programs, because it will first have to decode, de-compress, or decrypt it.
 
