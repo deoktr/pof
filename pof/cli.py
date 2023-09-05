@@ -25,7 +25,7 @@ class CLIObfuscator(Obfuscator):
         try:
             if "Obfuscator" not in obfuscator:
                 msg = "this is not an obfuscator"
-                raise KeyError(msg)
+                raise KeyError(msg)  # noqa: TRY301
             obf = globals()[obfuscator]
         except KeyError as err:
             lobf = ", ".join([e for e in all_obfuscator if "Obfuscator" in e])
@@ -45,12 +45,12 @@ class CLIObfuscator(Obfuscator):
         try:
             if "Stager" not in stager:
                 msg = "this is not a stager"
-                raise KeyError(msg)
+                raise KeyError(msg)  # noqa: TRY301
             obf = globals()[stager]
-        except KeyError:
+        except KeyError as err:
             lpl = ", ".join([e for e in all_stager if "Stager" in e])
             msg = f"stager '{stager}' not found in: {lpl}"
-            raise PofCliError(msg)
+            raise PofCliError(msg) from err
 
         logging.info(f"using '{obf.__name__}' stager")
         logging.debug(f"{args=}")
@@ -65,12 +65,12 @@ class CLIObfuscator(Obfuscator):
         try:
             if "Evasion" not in evasion:
                 msg = "this is not an evasion method"
-                raise KeyError(msg)
+                raise KeyError(msg)  # noqa: TRY301
             obf = globals()[evasion]
-        except KeyError:
+        except KeyError as err:
             lobf = ", ".join([e for e in all_evasion if "Evasion" in e])
             msg = f"evasion {evasion} not found in: {lobf}"
-            raise PofCliError(msg)
+            raise PofCliError(msg) from err
 
         logging.info(f"using '{obf.__name__}' evasion")
         logging.debug(f"{args=}")
@@ -96,7 +96,7 @@ logging.basicConfig(level=logging.INFO, handlers=[handler])
 
 def _handle(args):
     if args.version:
-        print(__version__)
+        print(__version__)  # noqa: T201
         return 0
 
     level = getattr(logging, args.logging)
@@ -176,7 +176,7 @@ def _cli():
     try:
         return _handle(args)
     except Exception as e:
-        logging.error(str(e))
+        logging.error(str(e))  # noqa: TRY400
         if args.raise_exceptions:
             raise
         logging.debug("use `--raise-exceptions` to see full trace back.")

@@ -13,7 +13,7 @@ long_description = (root / "README.md").read_text()
 
 setup(
     name="pof",
-    version="1.3.7",
+    version="1.3.9",
     author="2O4",
     author_email="",
     description="Python Obfuscation Framework.",
@@ -25,8 +25,8 @@ setup(
         "Bug Tracker": "https://github.com/2O4/pof/issues",
     },
     classifiers=[
-        "Development Status :: 5 - Production/Stable",
-        "Intended Audience :: End Users/Desktop",
+        "Development Status :: 4 - Beta",
+        "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
         "Natural Language :: English",
         "Programming Language :: Python :: 3",
@@ -37,6 +37,7 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
         "Topic :: Security",
     ],
     packages=find_packages(include=["pof", "pof.*"]),

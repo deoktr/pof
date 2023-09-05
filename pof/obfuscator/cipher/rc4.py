@@ -5,17 +5,16 @@ from pof.utils.tokens import untokenize
 
 
 class RC4Obfuscator(RC4Cipher):
-    @classmethod
-    def obfuscate_tokens(cls, tokens):
+    def obfuscate_tokens(self, tokens):
         code = untokenize(tokens)
         return [
-            *cls.import_tokens(),
+            *self.import_tokens(),
             (NEWLINE, "\n"),
-            *cls.definition_tokens(),
+            *self.definition_tokens(),
             (NEWLINE, "\n"),
             (NAME, "exec"),
             (LPAR, "("),
-            *cls.decode_tokens(cls.encode_tokens(code)),
+            *self.decode_tokens(self.encode_tokens(code)),
             (RPAR, ")"),
             (NEWLINE, "\n"),
         ]

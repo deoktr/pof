@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from tokenize import LPAR, NAME, NUMBER, OP, RPAR
 
 from pof.evasion.base import BaseEvasion
@@ -8,13 +8,13 @@ class ExpireEvasion(BaseEvasion):
     def __init__(self, under_datetime=None, over_datetime=None) -> None:
         """Expire after a certain time (default 15 minutes)."""
         if under_datetime is None:
-            under_datetime = datetime.utcnow() + timedelta(minutes=15)
+            under_datetime = datetime.now(tz=UTC) + timedelta(minutes=15)
         self.under_datetime = under_datetime
 
         # TODO (204): remove random timedelta to now, as to not give the date/time of
         # payload creation
         if over_datetime is None:
-            over_datetime = datetime.utcnow()
+            over_datetime = datetime.now(tz=UTC)
         self.over_datetime = over_datetime
 
     def import_tokens(self):

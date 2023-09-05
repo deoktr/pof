@@ -7,6 +7,7 @@ from pof.utils.tokens import untokenize
 class UUIDObfuscator(UUIDEncoding):
     """Encode the source code in a list of valid UUID."""
 
+    @classmethod
     def obfuscate_tokens(cls, tokens):
         code = untokenize(tokens)
         return [

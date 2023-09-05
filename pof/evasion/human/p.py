@@ -34,8 +34,12 @@ def promt_unix():
 
 
 if __name__ == "__main__":
+    import sys
+
     if not promt_unix():
         msg = "did not click"
-        raise Exception(msg)
+        sys.stdout(msg)
+        sys.exit(1)
 
-    print("Hello, world!")
+    sys.stdout("Hello, world!")
+    sys.exit(0)

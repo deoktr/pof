@@ -18,7 +18,7 @@ class PasteRsStager(DownloadStager):
     def upload(self, code):
         req = request.Request("https://paste.rs", data=code)
 
-        r = request.urlopen(req)
+        r = request.urlopen(req)  # noqa: S310
 
         raw_link = r.read().decode()
         valid_code = 201

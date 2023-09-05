@@ -218,7 +218,7 @@ class NameExtract:
 
     @classmethod
     def get_from_file(cls, file):
-        with open(file) as f:
+        with file.open() as f:
             code = f.read()
         io_obj = io.StringIO(code)
         tokens = list(generate_tokens(io_obj.readline))

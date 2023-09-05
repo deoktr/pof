@@ -7,9 +7,8 @@ import io
 import keyword
 import logging
 import shutil
-import os
-from tokenize import NAME, generate_tokens, untokenize
 from pathlib import Path
+from tokenize import NAME, generate_tokens, untokenize
 
 from rope.base.project import Project
 from rope.refactor.rename import Rename
@@ -257,7 +256,7 @@ class DefinitionsObfuscator:
         return next(self.generator)
 
     def create_tmp_dir(self):
-        root = Path(".")
+        root = Path()
         tmp_dir_path = root / self.tmp_dir
         if not tmp_dir_path.is_dir():
             tmp_dir_path.mkdir()
@@ -266,12 +265,12 @@ class DefinitionsObfuscator:
         file_full_name = file_name + ".py"
         tmp_file_path = Path(self.tmp_dir) / file_full_name
         code = untokenize(tokens)
-        with open(tmp_file_path, "w") as f:
+        with tmp_file_path.open("w") as f:
             f.write(code)
         return tmp_file_path
 
     def clean_tmp_dir(self):
-        root = Path(".")
+        root = Path()
         tmp_dir_path = root / self.tmp_dir
         if tmp_dir_path.is_dir():
             shutil.rmtree(tmp_dir_path)
@@ -296,7 +295,8 @@ class DefinitionsObfuscator:
         done = 0
         for name in local_names:
             new_name = self.generate_new_name()
-            logging.debug(f"{done}/{todo} changing var {name} to {new_name}")
+            msg = f"{done}/{todo} changing var {name} to {new_name}"
+            logging.debug(msg)
             try:
                 old_name = mod.get_attribute(name)
 
@@ -314,12 +314,13 @@ class DefinitionsObfuscator:
 
                 proj.do(changes)
             except Exception as exc:
-                logging.exception(f"error trying to obfuscate var {name}: {exc!s}")
+                msg = f"error trying to obfuscate var {name}: {exc!s}"
+                logging.exception(msg)
             done += 1
         proj.close()
 
         # finish by reading the file one last time
-        with open(tmp_file_path) as f:
+        with tmp_file_path.open() as f:
             io_obj = io.StringIO(f.read())
             tokens = list(generate_tokens(io_obj.readline))
 

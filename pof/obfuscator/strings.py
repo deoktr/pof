@@ -66,8 +66,8 @@ class StringsObfuscator:
 
     def obf_shift(self, tokval: str):
         # TODO (204): choose random padding here
-        raw_string = eval(tokval)
-        if type(raw_string) is bytes:
+        raw_string = eval(tokval)  # noqa: S307 PGH001
+        if isinstance(raw_string, bytes):
             raw_string = raw_string.decode()
         encoded = self.shift_cipher_class_obj.encode_tokens(raw_string)
         return self.shift_cipher_class_obj.decode_tokens(encoded)
@@ -79,8 +79,8 @@ class StringsObfuscator:
         b64decode(b'...').decode()
         ```
         """
-        raw_string = eval(tokval)
-        if type(raw_string) is str:
+        raw_string = eval(tokval)  # noqa: S307 PGH001
+        if isinstance(raw_string, str):
             raw_string = raw_string.encode()
         b64encoded_string = b64encode(raw_string).decode()
         return [
@@ -101,8 +101,8 @@ class StringsObfuscator:
         b85decode(b'...').decode()
         ````
         """
-        raw_string = eval(tokval)
-        if type(raw_string) is str:
+        raw_string = eval(tokval)  # noqa: S307 PGH001
+        if isinstance(raw_string, str):
             raw_string = raw_string.encode()
         b85encoded_string = b85encode(raw_string).decode()
         return [
@@ -119,8 +119,8 @@ class StringsObfuscator:
     @staticmethod
     def unicode(tokval: str):
         # Hell --> \u0048\u0065\u006C\u006C
-        raw_string = eval(tokval)
-        if type(raw_string) is bytes:
+        raw_string = eval(tokval)  # noqa: S307 PGH001
+        if isinstance(raw_string, bytes):
             raw_string = raw_string.decode()
         encoded = ""
         for c in raw_string:
@@ -188,7 +188,7 @@ class StringsObfuscator:
 
     @staticmethod
     def string_replace(tokval: str):
-        raw_string = eval(tokval)
+        raw_string = eval(tokval)  # noqa: S307 PGH001
 
         if raw_string == "":
             return [(STRING, tokval)]
@@ -224,7 +224,7 @@ class StringsObfuscator:
 
     @staticmethod
     def string_reverse(tokval: str):
-        raw_string = eval(tokval)
+        raw_string = eval(tokval)  # noqa: S307 PGH001
         reversed_string = raw_string[::-1]
         return [
             (STRING, repr(reversed_string)),

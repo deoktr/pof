@@ -18,7 +18,7 @@ class ExceptionObfuscator:
     def get_code(self):
         return next(self.generator)
 
-    def obfuscate_tokens(self, tokens):
+    def obfuscate_tokens(self, tokens):  # noqa: C901
         result = []  # obfuscated tokens
         parenthesis_depth = 0  # parenthesis depth
         prev_tokval = None

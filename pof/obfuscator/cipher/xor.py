@@ -1,5 +1,7 @@
-"""This is not a secure encryption method ! The main purpose of xor is to produce
-radically different outputs when obfuscating a file.
+"""This is not a secure encryption method!
+
+The main purpose of xor is to produce radically different outputs when obfuscating a
+file.
 """
 import random
 from base64 import b64encode
@@ -107,10 +109,10 @@ class XORObfuscator:
             ki += 1
         return b64encode(bcipher)
 
-    def obfuscate_tokens(self, tokens):
+    def obfuscate_tokens(self, tokens, key: str | None = None):
         code = untokenize(tokens).encode()
-        # TODO (204): add option to choose the key
-        key = str(random.randint(0, 100000000)).encode()
+        if key is None:
+            key = str(random.randint(0, 100000000)).encode()
         ciphertext = self.encrypt_code(code, key)
         return self.get_exec_tokens(
             key=key,

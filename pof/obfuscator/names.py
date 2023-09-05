@@ -267,7 +267,7 @@ class NamesObfuscator:
                 # variable or function of Python, we need to change it has well
                 # to keep the code working
                 try:
-                    s = eval(tokval)
+                    s = eval(tokval)  # noqa: S307 PGH001
                     if s in new_names:
                         new_name = new_names[s]
                         # when adding unicode variables they are first
@@ -279,7 +279,8 @@ class NamesObfuscator:
                         new_tokens = [(STRING, repr(new_name))]
                 except Exception as exc:
                     logging.warning(
-                        "failed to obfuscate string {e}", extra={"e": str(exc)},
+                        "failed to obfuscate string {e}",
+                        extra={"e": str(exc)},
                     )
 
             prev_tokval = tokval
@@ -355,7 +356,7 @@ class NamesObfuscator:
             new_names.update({name: new_name})
         return new_names, new_names[name]
 
-    def obfuscate_tokens(self, tokens):
+    def obfuscate_tokens(self, tokens):  # noqa: C901 PLR0912
         imports = self.get_imports(tokens)
         # declared = self.get_local(tokens, imports)
         # new_names = self.generate_new_names(declared)
@@ -376,7 +377,7 @@ class NamesObfuscator:
             next_tokval = None
             next_toknum = None
             if len(tokens) > index + 1:
-                next_toknum, next_tokval, *_ = tokens[index + 1]
+                next_toknum, next_tokval, *__ = tokens[index + 1]
 
             if toknum == OP and tokval == "(":
                 parenthesis_depth += 1
@@ -422,7 +423,7 @@ class NamesObfuscator:
                 new_names, new_name = self.get_new_name(new_names, tokval)
                 new_tokens = [(NAME, new_name)]
 
-            if (
+            if (  # noqa: SIM102
                 not imutable_args
                 and tokval == "="
                 and toknum == OP
@@ -443,7 +444,9 @@ class NamesObfuscator:
                     imports.append(prev_tokval)
 
             # TODO (204): find a better way ? really hard to tell
-            if toknum == NAME and prev_tokval == "as" and next_tokval == ":":
+            if (  # noqa: SIM102
+                toknum == NAME and prev_tokval == "as" and next_tokval == ":"
+            ):
                 # consider the following
                 # with open(file_path) as f:
                 # f is '_io.TextIOWrapper' and we can't obfuscate it's functions

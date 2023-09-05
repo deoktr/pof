@@ -208,7 +208,7 @@ class ConstantsObfuscator:
         self.obf_string_rate = obf_string_rate
 
     def obfuscate_variable(self, toknum, tokval, variables):
-        if tokval not in variables.keys():
+        if tokval not in variables:
             var_name = next(self.generator)
             variables.update({tokval: [var_name, toknum]})
         return [(NAME, variables[tokval][0])], variables

@@ -28,6 +28,7 @@ when using unicode variables the entropy is around 6.2
 """
 import collections
 import math
+from pathlib import Path
 
 
 def entropy(data: str) -> float:
@@ -44,9 +45,9 @@ def entropy(data: str) -> float:
 if __name__ == "__main__":
     import sys
 
-    file = sys.argv[1]
+    file = Path(sys.argv[1])
 
-    with open(file) as f:
+    with file.open() as f:
         content = f.read()
 
     e = entropy(content)

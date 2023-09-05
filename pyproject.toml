@@ -23,10 +23,14 @@ exclude = [
     "build",
     "venv",
     "docs",
-    "tests/obfuscator/test_names/code/",
-    "wip/"
+    "wip/",
+    "examples/",
+    "hello.py",
 ]
 extend-ignore = ["ERA001", "BLE001", "S311", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "FBT001", "FBT002"]
+
+[tool.ruff.extend-per-file-ignores]
+"pof/cli.py" = ["G004"]
 
 [tool.ruff.pydocstyle]
 convention = "google"

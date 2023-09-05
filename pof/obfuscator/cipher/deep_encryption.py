@@ -1,3 +1,4 @@
+# FIXME (2O4): work in progress !
 import logging
 from base64 import b64encode
 from tokenize import DEDENT, INDENT, LPAR, NAME, NEWLINE, OP, RPAR, STRING, untokenize
@@ -7,7 +8,7 @@ class DeepEncryptionObfuscator:
     def __init__(self, encryption_depth=0) -> None:
         self.encryption_depth = encryption_depth
 
-    def obfuscate_tokens(self, tokens):
+    def obfuscate_tokens(self, tokens):  # noqa: C901 PLR0912
         """Encrypt every function's source code.
 
         Encrypt every function's source code with different keys, and decrypt

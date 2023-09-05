@@ -1,7 +1,6 @@
 """Advanced random names generators."""
-import os
-import pathlib
 import random
+from pathlib import Path
 
 from .base import BaseGenerator
 from .basic import BasicGenerator
@@ -10,8 +9,8 @@ from .basic import BasicGenerator
 class AdvancedGenerator(BaseGenerator):
     @classmethod
     def realistic_generator(cls):
-        file_path = os.path.join(pathlib.Path(__file__).parent.absolute(), "names.txt")
-        with open(file_path) as file:
+        file = Path(__file__).parent / "names.txt"
+        with file.open() as file:
             name_list = [line.rstrip() for line in file]
         previous = []
         while True:

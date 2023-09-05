@@ -178,10 +178,10 @@ class NumberObfuscator:
     @staticmethod
     def verify_number_obfuscation(tokval, tokens):
         # if only one token then it's the same
-        if type(tokens) is not list or len(tokens) < 1:
+        if len(tokens) < 1:
             return False
         code = untokenize(tokens)
-        result = eval(code)
+        result = eval(code)  # noqa: PGH001 S307
         # logging.debug("verifying that {}={}".format(tokval, result))
         if str(result) == tokval:
             return True
@@ -189,7 +189,7 @@ class NumberObfuscator:
         logging.error(msg)
         return False
 
-    def obfuscate_number(self, toknum, tokval):
+    def obfuscate_number(self, toknum, tokval):  # noqa: C901 PLR0912
         unobfuscated = [(toknum, tokval)]
 
         # get token type
@@ -221,7 +221,11 @@ class NumberObfuscator:
         elif not tok_positiv and token_type is float:
             strategies = self.NEG_FLOAT_STRATS
 
-        if token_type is int and tok_positiv and 2 < tok_actual_val < 100:
+        if (
+            token_type is int
+            and tok_positiv
+            and 2 < tok_actual_val < 100  # noqa: PLR2004
+        ):
             strategies = list(strategies)
             strategies.append(self.NStrats.BOOLEAN)
 
@@ -240,17 +244,16 @@ class NumberObfuscator:
                 tokens = self.obf_len_random(tokval)
             else:
                 msg = f"Strategy {strategy} not found"
-                raise PofError(msg)
+                raise PofError(msg)  # noqa: TRY301
 
             if self.verify_number_obfuscation(tokval, tokens):
                 return tokens
+
             msg = f"unable to verify obfuscation with: {tokens}."
-            raise PofError(msg)
+            raise PofError(msg)  # noqa: TRY301
         except Exception as e:
-            logging.exception(
-                "unable to obfuscate number {tokval} with {strategy}: {e}",
-                extra={"tokval": tokval, "strategy": strategy, "e": str(e)},
-            )
+            msg = f"unable to obfuscate number {tokval} with {strategy}: {e!s}"
+            logging.exception(msg)
             # just in case we can't obfuscate it, for example if we have tokval
             # 0o755 all obfuscation method will fail
             return unobfuscated

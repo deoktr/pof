@@ -245,7 +245,7 @@ class Obfuscator(BaseObfuscator):
             tokens = FileExistEvasion(file=file_exist).add_evasion(tokens)
         if file_list_missing:
             # TODO (204):
-            idk = ["/tmp/a", "/tmp/b"]
+            idk = ["/tmp/a", "/tmp/b"]  # noqa: S108
             tokens = FileListExistEvasion(file_list=idk).add_evasion(tokens)
         if domain:
             tokens = DomainEvasion(domain=domain).add_evasion(tokens)

@@ -1,12 +1,10 @@
-# test with:
-# echo "print('he')" | python3 payload/obfuscator/obfuscator/builtins.py
-#
 # TODO (204): obfuscate `format` but only when not after `"".`
 # TODO (204): add `__name__.__class__.__class__.__base__.__subclasses__()` variant
 #
 import logging
 import random
 from tokenize import LPAR, LSQB, NAME, NUMBER, OP, RPAR, RSQB, STRING
+from typing import ClassVar
 
 
 class BuiltinsObfuscator:
@@ -169,7 +167,7 @@ class BuiltinsObfuscator:
         "help",
     )
 
-    HARD_CODED = {
+    HARD_CODED: ClassVar[dict[list[list[tuple[int, str]]]]] = {
         "True": [
             # __name__.__eq__(__name__)
             [
@@ -407,8 +405,9 @@ class BuiltinsObfuscator:
         ]
 
     @staticmethod
-    def globals(tokval):
-        # TODO (204): maybe obfuscate __builtins__ to `globals()['__builtins__']` instead ?
+    def globals_obf(tokval):
+        # TODO (204): maybe obfuscate __builtins__ to `globals()['__builtins__']`
+        # instead?
         # this would provide more alternative, but __builtins__ can't be
         # obfuscated like other builtins, for ex this doesn't work:
         # __builtins__.__getattribute__("__builtins__")
@@ -422,7 +421,7 @@ class BuiltinsObfuscator:
             (LPAR, "("),
             (RPAR, ")"),
             (OP, "["),
-            (STRING, "'__builtins__'"),
+            (STRING, repr("__builtins__")),
             (OP, "]"),
             (OP, "."),
             (NAME, "__dict__"),
@@ -431,23 +430,25 @@ class BuiltinsObfuscator:
             (RSQB, "]"),
         ]
 
-    def obfuscate_builtins(self, toknum, tokval):
-        if tokval in self.HARD_CODED:
-            if random.randint(1, 4) != 1:  # 75% to choose hard coded
-                return random.choice(self.HARD_CODED[tokval])
+    def obfuscate_builtins(self, tokval):
+        # 75% to choose hard coded
+        if tokval in self.HARD_CODED and random.randint(1, 4) != 1:
+            return random.choice(self.HARD_CODED[tokval])
 
         method = random.randint(1, 4)
         if method == 1:
             return self.getattribute(tokval)
-        elif method == 2:
+        if method == 2:  # noqa: PLR2004
             return self.dict_getitem(tokval)
-        elif method == 3:
+        if method == 3:  # noqa: PLR2004
             return self.dict_sqb(tokval)
-        elif method == 4:
-            return self.globals(tokval)
-        else:
-            logging.error(f"unsupported builtin obfuscation method {method}")
-            return None
+        if method == 4:  # noqa: PLR2004
+            return self.globals_obf(tokval)
+
+        # should never happen, but we never know
+        msg = f"unsupported builtin obfuscation method {method}"
+        logging.error(msg)
+        return None
 
     def obfuscate_tokens(self, tokens):
         result = []
@@ -457,7 +458,7 @@ class BuiltinsObfuscator:
             new_tokens = [(toknum, tokval)]
             next_tokval = None
             if len(tokens) > index + 1:
-                _, next_tokval, *_ = tokens[index + 1]
+                _, next_tokval, *__ = tokens[index + 1]
 
             if toknum == OP and tokval == "(":
                 parenthesis_depth += 1
@@ -473,7 +474,7 @@ class BuiltinsObfuscator:
                     or (parenthesis_depth > 0 and next_tokval != "=")
                 )
             ):
-                new_tokens = self.obfuscate_builtins(toknum, tokval)
+                new_tokens = self.obfuscate_builtins(tokval)
 
             if new_tokens:
                 result.extend(new_tokens)

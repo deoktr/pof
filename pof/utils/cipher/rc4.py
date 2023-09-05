@@ -19,7 +19,8 @@ class RC4Cipher:
         if key is None:
             la = string.ascii_letters + string.digits
             key = "".join([random.choice(la) for _ in range(self.KEY_SIZE)])
-            logging.info(f"generated key: {key}")
+            msg = f"generated key: {key}"
+            logging.info(msg)
         self.key = key
 
     @staticmethod
@@ -345,7 +346,7 @@ class RC4Cipher:
         ]
 
     def encode(self, string):
-        if type(string) is bytes:
+        if isinstance(string, bytes):
             string = string.decode()
 
         def KSA(key):

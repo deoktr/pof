@@ -10,7 +10,7 @@ class BasicGenerator(BaseGenerator):
         cls,
         min_length: int = 3,
         max_length: int = 10,
-        chars: str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_____",
+        chars: str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890__",
         first_chars: str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
     ):
         """Random words that can be variables."""
@@ -68,3 +68,39 @@ class BasicGenerator(BaseGenerator):
         while True:
             name = next(ag)
             yield name_format.format(name)
+
+    @classmethod
+    def function_generator(
+        cls,
+        *args,
+        **kwargs,
+    ):
+        """Generate class names."""
+        chars: str = "abcdefghijklmnopqrstuvwxyz__"
+        first_chars: str = "abcdefghijklmnopqrstuvwxyz"
+        ag = cls.alphabet_generator(
+            *args,
+            chars=chars,
+            first_chars=first_chars,
+            **kwargs,
+        )
+        while True:
+            yield next(ag)
+
+    @classmethod
+    def class_generator(
+        cls,
+        *args,
+        **kwargs,
+    ):
+        """Generate class names."""
+        chars: str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        first_chars: str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        ag = cls.alphabet_generator(
+            *args,
+            chars=chars,
+            first_chars=first_chars,
+            **kwargs,
+        )
+        while True:
+            yield next(ag)

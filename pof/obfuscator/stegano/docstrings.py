@@ -1,3 +1,4 @@
+import ast
 import io
 from tokenize import LPAR, NAME, NEWLINE, OP, RPAR, STRING, generate_tokens
 
@@ -54,7 +55,7 @@ class DocstringObfuscator:
         ]
 
     def get_docstring(self, code, indent="    "):
-        encode_tokens = eval(
+        encode_tokens = ast.literal_eval(
             untokenize(self.encoding_class.encode_tokens(code.encode())),
         )
 

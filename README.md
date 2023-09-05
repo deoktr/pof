@@ -463,9 +463,99 @@ def quine():
 exec(b64decode(esource))
 ```
 
+### Generators
+
+Generators are used to generate new names, they can be used to classes, variables, functions, constants or any other.
+
+`BasicGenerator.alphabet_generator`
+
+```
+kMX94Fcb
+mff0ERu3V
+lNRxu3hk
+b5PK35uR_t
+```
+
+`AdvancedGenerator.realistic_generator`
+
+Useful to create variables that look realistic.
+
+```
+raise_src
+expected_message
+ContextInputValidation
+is_auth
+```
+
+`AdvancedGenerator.fixed_length_generator`
+
+Inspired by: [pyob.oxyry.com](https://pyob.oxyry.com/).
+
+```
+O00OOOO00O0O00OOO
+O000OOOOO0O000O0O
+O0OOOO0000OO0OO00
+O000000OO0O0O0OO0
+```
+
+`UnicodeGenerator.katakana_generator`
+
+```
+シ
+ビラ
+ポワ
+ヌバ
+```
+
+Yes they are valid Python variable name.
+
+Usage
+
+```python
+
+from pof.utils.generator import UnicodeGenerator
+
+gen = UnicodeGenerator().katakana_generator()
+for _ in range(4):
+    print(next(gen))
+```
+
+### Homoglyphs
+
+[Homoglyphs](https://en.wikipedia.org/wiki/Homoglyph) are glyphs that have the same shape and appear identical. There is a generator to help create them.
+
+Example of homoglyphs for `Hello, world!`:
+
+```
+H𝐞llo, world!
+Hello, ᴡorld!
+Hello, worldǃ
+Hello, world！
+Hеllo, world!
+Hello, woгld!
+Hello, woꭈld!
+Hello, world!
+Hello, worldǃ
+Hello¸ world!
+Hello, world!
+```
+
+Usage:
+
+```python
+from pof.utils.se import HomoglyphsGenerator
+
+def get_homoglyphs():
+    generator = HomoglyphsGenerator()
+    text = "Hello, world!"
+    for _ in range(10):
+        homoglyph = generator.get_single_homoglyph(text)
+        print(homoglyph)
+```
+
 ## Python API
 
-The true power of pof is in chaining multiple different obfuscation techniques easily, there is a prety simple Python API to do so.
+The true power of pof is in chaining multiple different obfuscation techniques easily, there is a pretty simple Python API to do so.
 
 For example this is a snippet of the default obfuscator:
 
@@ -530,9 +620,9 @@ def obfuscate(source):
     return untokenize(tokens)
 ```
 
-In this example we can see that first we remove comments, logging, print statements, and change the content of exceptions, and then we start to obfuscate constants, names, globals, builtins, strings, then strings and numbers multiple times, and we finnaly convert the tokens back to code.
+In this example we can see that first we remove comments, logging, print statements, and change the content of exceptions, and then we start to obfuscate constants, names, globals, builtins, strings, then strings and numbers multiple times, and we finally convert the tokens back to code.
 
-By chaining multiple ofuscations techniques we can create very complexe and custom output.
+By chaining multiple obfuscations techniques we can create very complex and custom output.
 
 Pof also provide evasions methods, detailed below, they are useful for quick and easy evasions, and can be used and customized to fit the need.
 
@@ -571,7 +661,7 @@ pip install -r requirements.txt
 pip install -r requirements.dev.txt
 ```
 
-Run POF
+Run pof
 
 ```bash
 ./pof.py --help
@@ -589,7 +679,7 @@ pytest
 make format
 ```
 
-or
+Or
 
 ```bash
 black .
@@ -600,13 +690,11 @@ ruff .
 
 - When installing (in setup.py) add txt files, homoglyphs.txt and names.txt
 - Get the version (in setup.py) from `__init``.py`
-- Resolve every ruff errors
 - Increase test coverage
 - Add pre-commit hooks
 - Setup package
 - Publish package on pypi
 - Write a doc
-- Make project open-source
 
 ## License
 

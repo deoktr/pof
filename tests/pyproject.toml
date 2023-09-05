@@ -1,0 +1,7 @@
+[tool.ruff]
+exclude = [
+    ".ruff_cache",
+    "__pypackages__",
+    "obfuscator/test_names/code/",
+]
+extend-ignore = ["ERA001", "BLE001", "S311", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "FBT001", "FBT002", "S101", "S102", "E501"]

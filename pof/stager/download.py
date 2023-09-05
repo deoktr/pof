@@ -1,4 +1,5 @@
 import random
+from pathlib import Path
 from tokenize import NAME, NEWLINE, OP, STRING
 
 from pof.utils.tokens import untokenize
@@ -24,11 +25,12 @@ class DownloadStager:
             "".join([random.choice("abcdefghjiklmnopqrstuvwxyz") for _ in range(6)])
             + ".py"
         )
-        path = "/tmp/" + name
-        with open(path, "w") as f:
+        path = "/tmp/" + name  # noqa: S108
+        file = Path(path)
+        with file.open("w") as f:
             f.write(code.decode())
-        print(f"tmp file at: {path}")
-        print("upload the code to any platform (or even locally)")
+        print(f"tmp file at: {path}")  # noqa: T201
+        print("upload the code to any platform (or even locally)")  # noqa: T201
         raw_link = self.url
         if not raw_link:
             raw_link = input("url = ")
