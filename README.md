@@ -96,6 +96,98 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 
 ### Obfuscator
 
+#### StringsObfuscator
+
+Reverse.
+
+```python
+print('dlrow ,olleH'[::-1])
+```
+
+Replace.
+
+```python
+rint('Helnelemd'.replace('nelem','lo, worl'))
+```
+
+Unicode.
+
+```python
+print('\u0048\u0065\u006c\u006c\u006f\u002c\u0020\u0077\u006f\u0072\u006c\u0064')
+```
+
+Shift cipher.
+
+```python
+print("".join([chr(ord(i)-3)for i in'Khoor/#zruog']))
+```
+
+Base 64 encoding.
+
+```python
+from base64 import b64decode
+print(b64decode( b'SGVsbG8sIHdvcmxk').decode())
+```
+
+Base 85.
+
+```python
+from base64 import b85decode
+print(b85decode( b'NM&qnZ!92pZ*pv8').decode())
+```
+
+#### NumberObfuscator
+
+Source: `print(42)`
+
+String.
+
+```python
+print(int('42'))
+```
+
+Addition.
+
+```python
+print((int(35+7)))
+```
+
+Hex.
+
+```python
+print(int('0x2a',0))
+```
+
+Len.
+
+```python
+print(len('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'))
+```
+
+Boolean.
+
+```python
+print((True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True))
+```
+
+#### DefinitionsObfuscator
+
+Source:
+
+```python
+def p(t):
+    print(t)
+p("Hello, world")
+```
+
+Obfuscated:
+
+```python
+def sczCWV(t):
+  print(t)
+sczCWV('Hello, world')
+```
+
 #### BuiltinsObfuscator
 
 Obfuscate builtins functions using one of the following methods.
@@ -137,24 +229,41 @@ var='Hello, world'
 print(var)
 ```
 
-#### StringsObfuscator
+#### CallObfuscator
 
 ```python
-print("".join([chr(ord(i)-3)for i in'Khoor/#zruog']))
+print.__call__('Hello, world')
 ```
+
+#### ShiftObfuscator
+
+```python
+exec("".join([chr(ord(i)-3)for i in'sulqw+*Khoor/#zruog*,\r']))
+```
+
+#### DocstringObfuscator
 
 ```python
 from base64 import b64decode
-print(b64decode( b'SGVsbG8sIHdvcmxk').decode())
+class Foo:
+    """
+    cHJpbnQoJ0hlbGxvLCB3b3JsZCcpCg==
+    """
+    pass
+
+
+exec(b64decode(Foo.__doc__.replace('\n','').replace(' ','')))
 ```
 
-```python
-print('\u0048\u0065\u006c\u006c\u006f\u002c\u0020\u0077\u006f\u0072\u006c\u0064')
-```
+#### SpacenTabObfuscator
 
 ```python
-from base64 import b84decode
-print(b85decode( b'NM&qnZ!92pZ*pv8').decode())
+def sntdecode(encoded):
+    msg_bin=encoded.replace(" ","0").replace("\t","1")
+    n=int(msg_bin,2)
+    return n.to_bytes((n.bit_length()+7)//8,"big")
+
+exec(sntdecode('\t\t\t     \t\t\t  \t  \t\t \t  \t \t\t \t\t\t  \t\t\t \t    \t \t     \t  \t\t\t \t  \t    \t\t  \t \t \t\t \t\t   \t\t \t\t   \t\t \t\t\t\t  \t \t\t    \t      \t\t\t \t\t\t \t\t \t\t\t\t \t\t\t  \t  \t\t \t\t   \t\t  \t    \t  \t\t\t  \t \t  \t    \t \t '))
 ```
 
 #### RC4Obfuscator
@@ -197,12 +306,6 @@ def rc4decrypt(key,ciphertext):
     return codecs.decode(res,"hex_codec").decode("utf-8")
 
 exec(rc4decrypt('7zSRE6YHmdwpx2zT1Q2xPoPwzztXRZNQSKeX2LFIKBhl7uJMAs9jj0Hlec6y3wjuNgqgdD1XjnqZSzkWhRldoWwn625Bw56r105zQg5KRE5ugmVOUy2adMWKH2hod0CfxW72XLGFDTt38OH5nDYcr2bXrokKDKCaie56agxxHmSwv4nwTNQlxjyrixBgeyjaDV8CLvdmS4ANRXXVs5HxhxlFiBBUoHadf1wLq0wDi5c0e93fmqqNCRHAMAoTkGJJPCfXc9kTHmW38NJcjnVgvAgrBIcJX66E8pLwUniQB0yvoHapq2RCxaV8PrhU0jFy9RWTrwDfoE3G7whrE8uobVUgFLiJsiH6eV63RvH03gUEi1EHo0YGrRo12yShLG0P8pfSawTjTkJlQOFQ2PsubnQm8fhZ6en7nHI2L2xpC88yNScapMnsRaYUHZFWdecVfOaq9QaMf76RzYpQ7F5LWKgcEG3WGiXReCU1hr5pAoomAcXMZftcYuJu5AuOsXSR','647F6846CBEF6C270D853D3F76650D51DE1CAD760C17'))
-```
-
-#### ShiftObfuscator
-
-```python
-exec("".join([chr(ord(i)-3)for i in'sulqw+*Khoor/#zruog*,\r']))
 ```
 
 #### XORObfuscator
@@ -249,12 +352,6 @@ exec(marshal.loads(lzma.decompress( b"\xfd7zXZ\x00\x00\x04\xe6\xd6\xb4F\x02\x00!
 ```python
 import zlib,marshal
 exec(marshal.loads(zlib.decompress( b'x\x9c\xfb,\xc6\xc0\xc0PP\x94\x99W\xa2\xa1\xee\x91\x9a\x93\x93\xaf\xa3P\x9e_\x94\x93\xa2\xae\xc9\x05\x00va\x08H')))
-```
-
-#### CallObfuscator
-
-```python
-print.__call__('Hello, world')
 ```
 
 #### ASCII85Obfuscator
@@ -306,36 +403,11 @@ import binascii,marshal
 exec(marshal.loads(binascii.a2b_base64( b'8xYAAABwcmludCgnSGVsbG8sIHdvcmxkJykK\n')))
 ```
 
-#### SpacenTabObfuscator
-
-```python
-def sntdecode(encoded):
-    msg_bin=encoded.replace(" ","0").replace("\t","1")
-    n=int(msg_bin,2)
-    return n.to_bytes((n.bit_length()+7)//8,"big")
-
-exec(sntdecode('\t\t\t     \t\t\t  \t  \t\t \t  \t \t\t \t\t\t  \t\t\t \t    \t \t     \t  \t\t\t \t  \t    \t\t  \t \t \t\t \t\t   \t\t \t\t   \t\t \t\t\t\t  \t \t\t    \t      \t\t\t \t\t\t \t\t \t\t\t\t \t\t\t  \t  \t\t \t\t   \t\t  \t    \t  \t\t\t  \t \t  \t    \t \t '))
-```
-
 #### TokensObfuscator
 
 ```python
 from tokenize import untokenize
 exec(untokenize([(1,'print'),(54,'('),(3,"'Hello, world'"),(54,')'),(4,'\n'),(0,''),]))
-```
-
-#### DocstringObfuscator
-
-```python
-from base64 import b64decode
-class Foo:
-    """
-    cHJpbnQoJ0hlbGxvLCB3b3JsZCcpCg==
-    """
-    pass
-
-
-exec(b64decode(Foo.__doc__.replace('\n','').replace(' ','')))
 ```
 
 #### IPv6Obfuscator
