@@ -18,6 +18,7 @@ from .encoding.b85 import Base85Obfuscator
 from .encoding.binascii import BinasciiObfuscator
 from .encoding.snt import SpacenTabObfuscator
 from .esoteric.call import CallObfuscator
+from .esoteric.doc import CharFromDocObfuscator
 from .esoteric.globals import GlobalsObfuscator
 from .extract_variables import ExtractVariablesObfuscator
 from .junk.add_comments import AddCommentsObfuscator
@@ -79,4 +80,5 @@ __all__ = [
     "SpacenTabObfuscator",
     "DefinitionsObfuscator",
     "NamesRopeObfuscator",
+    "CharFromDocObfuscator",
 ]
