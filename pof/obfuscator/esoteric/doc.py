@@ -159,8 +159,6 @@ class CharFromDocObfuscator:
         "EnvironmentError",
         "IOError",
         "open",
-        "quit",
-        "exit",
         "copyright",
         "credits",
         "license",
@@ -176,7 +174,7 @@ class CharFromDocObfuscator:
         # take a random builtin doc and search for index in it
         builtin = random.choice(cls.BUILTINS)
         doc = __builtins__[builtin].__doc__
-        if type(doc) != str:
+        if not doc:
             msg = f"doc for {builtin} is not a string"
             raise PofError(msg)
         indexes = cls.get_char_indexes(doc, char)
@@ -230,6 +228,8 @@ class CharFromDocObfuscator:
                         new_tokens = self.obfuscate_char(string)
                     except PofError as e:
                         logging.debug(str(e))
+                    except Exception:
+                        logging.exception("Unexpected error")
 
             if new_tokens:
                 result.extend(new_tokens)
