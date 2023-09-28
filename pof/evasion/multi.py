@@ -1,11 +1,10 @@
 from tokenize import NEWLINE, OP
 
-from pof.evasion.base import BaseEvasion
-
 from .cpu.cpu_count import CPUCountEvasion
 from .hooks.debugger import DebuggerEvasion
 from .time.expire import ExpireEvasion
 from .time.utc import UTCEvasion
+from pof.evasion.base import BaseEvasion
 
 
 class MultiEvasion(BaseEvasion):

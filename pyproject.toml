@@ -2,11 +2,6 @@
 target-version = ["py311"]
 extend-exclude = "tests/obfuscator/test_names/code/"
 
-[tool.isort]
-profile = "black"
-src_paths = ["pof", "test"]
-extend_skip = ["tests/obfuscator/test_names/code/"]
-
 [tool.ruff]
 fix = true
 target-version = "py311"
@@ -34,6 +29,9 @@ extend-ignore = ["ERA001", "BLE001", "S311", "D100", "D101", "D102", "D103", "D1
 
 [tool.ruff.pydocstyle]
 convention = "google"
+
+[tool.ruff.isort]
+known-local-folder = ["pof", "test"]
 
 [tool.mypy]
 ignore_missing_imports = true
