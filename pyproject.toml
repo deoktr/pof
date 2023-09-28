@@ -5,7 +5,8 @@ extend-exclude = "tests/obfuscator/test_names/code/"
 [tool.ruff]
 fix = true
 target-version = "py311"
-select = ["A", "B", "C", "D", "E", "F", "G", "I", "N", "Q", "S", "T", "W", "ARG", "BLE", "COM", "DJ", "DTZ", "EM", "EXE", "FBT", "ICN", "INP", "ISC", "NPY", "PD", "PGH", "PIE", "PL", "PT", "PTH", "PYI", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "UP", "YTT"]
+select = ["ALL"]
+ignore = ["ANN", "FIX"]
 include = ["*.py"]
 exclude = [
     ".eggs",
@@ -23,7 +24,7 @@ exclude = [
     "hello.py",
     "examples/out/",
 ]
-extend-ignore = ["ERA001", "BLE001", "S311", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "FBT001", "FBT002"]
+extend-ignore = ["ERA001", "BLE001", "S311", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "FBT001", "FBT002", "TD003", "TD001"]
 
 [tool.ruff.extend-per-file-ignores]
 "pof/cli.py" = ["G004"]

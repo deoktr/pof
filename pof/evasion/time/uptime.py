@@ -1,5 +1,4 @@
-# TODO
-# - windows version: https://www.geeksforgeeks.org/getting-the-time-since-os-startup-using-python/
+# TODO (2O4): windows version: https://www.geeksforgeeks.org/getting-the-time-since-os-startup-using-python/
 from tokenize import LPAR, NAME, NUMBER, OP, RPAR, STRING
 
 from pof.evasion.base import BaseEvasion

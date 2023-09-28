@@ -81,7 +81,7 @@ class DeepEncryptionObfuscator:
                 # [2:-1] is to remove indent/dedent
 
                 fixed_function_tokens = []
-                # FIXME
+                # FIXME (2O4): fix
                 fixed_depth = -1  # should it be - (self.encryption_depth) ??
                 for ftnum, ftval in function_tokens:
                     ftval_d = ftval

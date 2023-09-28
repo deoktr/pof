@@ -244,7 +244,7 @@ class Obfuscator(BaseObfuscator):
         if file_exist:
             tokens = FileExistEvasion(file=file_exist).add_evasion(tokens)
         if file_list_missing:
-            # TODO (204):
+            # TODO (204): remove
             idk = ["/tmp/a", "/tmp/b"]  # noqa: S108
             tokens = FileListExistEvasion(file_list=idk).add_evasion(tokens)
         if domain:
@@ -352,7 +352,7 @@ class Obfuscator(BaseObfuscator):
         # tokens = ConstantsObfuscator(generator=generator).obfuscate_tokens(tokens)
 
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
-        # tokens = DeepEncryptionEvasion().add_evasion(tokens)  # TODO
+        # tokens = DeepEncryptionEvasion().add_evasion(tokens)  # TODO (2O4): fix
         tokens = NamesObfuscator(
             generator=AdvancedGenerator.fixed_length_generator(),
         ).obfuscate_tokens(tokens)

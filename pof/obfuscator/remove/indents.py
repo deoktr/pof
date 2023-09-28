@@ -1,8 +1,7 @@
-# TODO
-# - support multi symbols indents (mix spaces and tabs)
-#   this might be extremly difficult because we'll have to keep track of the
-#   current function/class declaration, we can't mix inside the same function be
-#   between multiple we can
+# TODO (2O4): support multi symbols indents (mix spaces and tabs)
+# this might be extremly difficult because we'll have to keep track of the
+# current function/class declaration, we can't mix inside the same function be
+# between multiple we can
 from tokenize import DEDENT, INDENT
 
 

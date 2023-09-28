@@ -280,7 +280,7 @@ class NamesRopeObfuscator:
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for n in node.names:
-                    import_list.append(n.name)
+                    import_list.append(n.name)  # noqa: PERF401
             elif isinstance(node, ast.ImportFrom):
                 for n in node.names:
                     import_name = n.asname if n.asname is not None else n.name

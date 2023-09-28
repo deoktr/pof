@@ -1,6 +1,5 @@
-# TODO:
-# - calculate frequency based on the number of lines to distribute
-#   the comment evenly across the code
+# TODO (204): calculate frequency based on the number of lines to distribute
+# the comment evenly across the code
 import random
 from tokenize import COMMENT, DEDENT, INDENT, NEWLINE
 
