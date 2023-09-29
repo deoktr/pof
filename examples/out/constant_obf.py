@@ -1,8 +1,8 @@
-TB_="My pet is name: "
-LoIC1lyQ=1
-Mm9IyM=print
-tkBdI=8
-B6iSi8_=range
+Bttq=print
+fBZ=range
+ywb5=8
+DfO="My pet is name: "
+tcsjsCoF=1
 # source file that will be obfuscated
 import random
 import string
@@ -16,15 +16,15 @@ def get_random_letter():
 def get_random_name(name_len):
 # this is a comment
     name=get_random_letter().upper()
-    for _ in B6iSi8_(name_len-LoIC1lyQ):
+    for _ in fBZ(name_len-tcsjsCoF):
         name+=get_random_letter()
     return name
 
 
 def present_my_pet():
-    pet_name=get_random_name(tkBdI)
-    message=TB_+pet_name
-    Mm9IyM(message)
+    pet_name=get_random_name(ywb5)
+    message=DfO+pet_name
+    Bttq(message)
 
 
 present_my_pet()
