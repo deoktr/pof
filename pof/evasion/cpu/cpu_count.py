@@ -7,7 +7,8 @@ class CPUCountEvasion(BaseEvasion):
     def __init__(self, min_cpu_count: int = 2) -> None:
         self.min_cpu_count = min_cpu_count
 
-    def import_tokens(self) -> list[tuple[int, str]]:
+    @staticmethod
+    def import_tokens() -> list[tuple[int, str]]:
         return [
             (NAME, "import"),
             (NAME, "multiprocessing"),

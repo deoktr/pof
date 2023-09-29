@@ -7,7 +7,8 @@ class HostnameEvasion(BaseEvasion):
     def __init__(self, hostname) -> None:
         self.hostname = hostname
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "socket"),

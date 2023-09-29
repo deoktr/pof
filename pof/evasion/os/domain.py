@@ -7,7 +7,8 @@ class DomainEvasion(BaseEvasion):
     def __init__(self, domain) -> None:
         self.domain = domain
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "socket"),

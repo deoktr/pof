@@ -4,13 +4,15 @@ from pof.evasion.base import BaseEvasion
 
 
 class DebuggerEvasion(BaseEvasion):
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "sys"),
         ]
 
-    def check_tokens(self):
+    @staticmethod
+    def check_tokens():
         """Detect Python debugger.
 
         `hasattr(sys, 'gettrace') and sys.gettrace() is not None`

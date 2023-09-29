@@ -8,7 +8,8 @@ class DirectoryListExistEvasion(BaseEvasion):
     def __init__(self, directory_list) -> None:
         self.directory_list = directory_list
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

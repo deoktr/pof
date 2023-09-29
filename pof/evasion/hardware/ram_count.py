@@ -9,7 +9,8 @@ class LinuxRAMCountEvasion(BaseEvasion):
         """Min RAM in Gib."""
         self.min_ram = min_ram
 
-    def import_tokens(self) -> list[tuple[int, str]]:
+    @staticmethod
+    def import_tokens() -> list[tuple[int, str]]:
         return [
             (NAME, "import"),
             (NAME, "os"),

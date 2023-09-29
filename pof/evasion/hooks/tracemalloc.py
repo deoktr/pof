@@ -4,13 +4,15 @@ from pof.evasion.base import BaseEvasion
 
 
 class TracemallocEvasion(BaseEvasion):
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "tracemalloc"),
         ]
 
-    def check_tokens(self):
+    @staticmethod
+    def check_tokens():
         """`tracemalloc.is_tracing()`."""
         return [
             (NAME, "tracemalloc"),

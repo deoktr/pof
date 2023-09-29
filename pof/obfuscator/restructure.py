@@ -7,7 +7,8 @@ class RestructureObfuscator:
     This is done by moving functions and classes around.
     """
 
-    def obfuscate_tokens(self, tokens):
+    @staticmethod
+    def obfuscate_tokens(tokens):
         # TODO (204): test if ast include decorators into function definition or if
         # it's easy to get, and move stuff using it, it's probably easier than
         # using tokens

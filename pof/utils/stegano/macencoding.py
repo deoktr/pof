@@ -15,7 +15,7 @@ class MACEncoding:
         hex_string = binascii.b2a_hex(string)
 
         string_chunks = [
-            hex_string[i : i + cls.MAC_LEN]
+            hex_string[i: i + cls.MAC_LEN]
             for i in range(0, len(hex_string), cls.MAC_LEN)
         ]
 
@@ -30,7 +30,7 @@ class MACEncoding:
             string_chunk = string_chunk.decode()
 
             mac_chunks = [
-                string_chunk[i : i + 2] for i in range(0, len(string_chunk), 2)
+                string_chunk[i: i + 2] for i in range(0, len(string_chunk), 2)
             ]
             mac = "-".join(mac_chunks)
 
@@ -44,8 +44,7 @@ class MACEncoding:
 
         tokens = [(OP, "[")]
         for mac_element in mac_list:
-            tokens.append((STRING, repr(mac_element)))
-            tokens.append((OP, ","))
+            tokens.extend(((STRING, repr(mac_element)), (OP, ",")))
         tokens.append((OP, "]"))
 
         return tokens

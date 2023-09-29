@@ -4,7 +4,8 @@ from pof.evasion.base import BaseEvasion
 
 
 class IntegrityEvasion(BaseEvasion):
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "hashlib"),
@@ -12,7 +13,8 @@ class IntegrityEvasion(BaseEvasion):
             (NAME, "inspect"),
         ]
 
-    def integrity_function_tokens(self):
+    @staticmethod
+    def integrity_function_tokens():
         """Integrity check tokens.
 
         ```
@@ -101,13 +103,14 @@ class IntegrityEvasion(BaseEvasion):
             (DEDENT, ""),
         ]
 
-    def add_evasion(self, tokens):
+    @classmethod
+    def add_evasion(cls, tokens):
         """Detect if the source code has been tampered.
 
         Only works when executing from a file.
         """
         return [
-            *self.import_tokens(),
+            *cls.import_tokens(),
             (NEWLINE, "\n"),
             (NAME, "if"),
             (LPAR, "("),
@@ -119,7 +122,7 @@ class IntegrityEvasion(BaseEvasion):
             (OP, ":"),
             (NEWLINE, "\n"),
             (INDENT, "    "),
-            *self.fail_call_tokens(),
+            *cls.fail_call_tokens(),
             (NEWLINE, "\n"),
             (DEDENT, ""),
             *tokens,

@@ -9,7 +9,8 @@ class TmpCountEvasion(BaseEvasion):
     def __init__(self, tmp_count=5) -> None:
         self.tmp_count = tmp_count
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),
@@ -49,7 +50,8 @@ class LinuxTmpCountEvasion(BaseEvasion):
     def __init__(self, tmp_count=5) -> None:
         self.tmp_count = tmp_count
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),
@@ -81,7 +83,8 @@ class WinTmpCountEvasion(BaseEvasion):
     def __init__(self, tmp_count=5) -> None:
         self.tmp_count = tmp_count
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

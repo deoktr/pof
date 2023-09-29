@@ -46,7 +46,8 @@ from pof.utils.tokens import untokenize
 
 
 class BaseObfuscator:
-    def _get_tokens(self, source: str):
+    @staticmethod
+    def _get_tokens(source: str):
         if "\r" in source:
             source = source.replace("\r\n", "\n").replace("\r", "\n")
         if not source.endswith("\n"):
@@ -54,7 +55,8 @@ class BaseObfuscator:
         io_obj = io.StringIO(source)
         return list(generate_tokens(io_obj.readline))
 
-    def _untokenize(self, tokens):
+    @staticmethod
+    def _untokenize(tokens):
         return untokenize(tokens)
 
 

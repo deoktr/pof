@@ -190,7 +190,7 @@ class StringsObfuscator:
     def string_replace(tokval: str):
         raw_string = eval(tokval)  # noqa: S307 PGH001
 
-        if raw_string == "":
+        if not raw_string:
             return [(STRING, tokval)]
 
         i = random.randint(0, len(raw_string) - 1)

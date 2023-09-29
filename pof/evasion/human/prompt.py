@@ -26,7 +26,8 @@ class LinuxPromptEvasion(BaseEvasion, PromptBase):
     library. Run either `apt-get install tk`, `pacman -S tk` or `dnf install tk`.
     """
 
-    def check_tokens(self):
+    @staticmethod
+    def check_tokens():
         """Evasion is triggered if the message box is not pressed.
 
         ``
@@ -37,7 +38,8 @@ class LinuxPromptEvasion(BaseEvasion, PromptBase):
 
 
 class WinPromptEvasion(BaseEvasion, PromptBase):
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "ctypes"),

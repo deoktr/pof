@@ -8,7 +8,8 @@ class FileListExistEvasion(BaseEvasion):
     def __init__(self, file_list) -> None:
         self.file_list = file_list
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

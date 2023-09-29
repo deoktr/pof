@@ -22,7 +22,8 @@ class ExecPathEvasion(BaseEvasion):
     def __init__(self, contain_list=DEFAULT_CONTAIN_LIST) -> None:
         self.contain_list = contain_list
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "pathlib"),

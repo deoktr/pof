@@ -18,7 +18,7 @@ class UUIDEncoding:
         hex_string = binascii.b2a_hex(string)
 
         string_chunks = [
-            hex_string[i : i + cls.UUID_LEN]
+            hex_string[i: i + cls.UUID_LEN]
             for i in range(0, len(hex_string), cls.UUID_LEN)
         ]
 
@@ -50,8 +50,7 @@ class UUIDEncoding:
 
         tokens = [(OP, "[")]
         for uuid_element in uuid_list:
-            tokens.append((STRING, repr(uuid_element)))
-            tokens.append((OP, ","))
+            tokens.extend(((STRING, repr(uuid_element)), (OP, ",")))
         tokens.append((OP, "]"))
 
         return tokens

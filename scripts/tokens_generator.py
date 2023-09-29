@@ -162,7 +162,7 @@ TOKENS_TABLE = {
 def tokens_of_tokens(tokens, indent: str = "    "):
     out = ""
     out += "[\n"
-    for _, (toknum, tokval, *_) in enumerate(tokens):
+    for (toknum, tokval, *_) in tokens:
         if toknum in TOKENS_TABLE:
             toknum_str = TOKENS_TABLE[toknum]
         out += f"{indent}({toknum_str}, {tokval!r}),\n"

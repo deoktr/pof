@@ -15,7 +15,8 @@ class XORObfuscator:
     """XOR obfuscator."""
 
     # TODO (204): move code to utils/encryption/xor.py
-    def get_exec_tokens(self, key, ciphertext):
+    @staticmethod
+    def get_exec_tokens(key, ciphertext):
         return [
             [NAME, "from"],
             [NAME, "base64"],
@@ -102,7 +103,8 @@ class XORObfuscator:
             [NEWLINE, "\n"],
         ]
 
-    def encrypt_code(self, text, key):
+    @staticmethod
+    def encrypt_code(text, key):
         bcipher = bytearray()
         ki = 0
         for i in text:

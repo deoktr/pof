@@ -4,13 +4,15 @@ from pof.evasion.base import BaseEvasion
 
 
 class UTCEvasion(BaseEvasion):
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "time"),
         ]
 
-    def check_tokens(self):
+    @staticmethod
+    def check_tokens():
         """Validates system does not use UTC timezone.
 
         `"UTC" in time.tzname`

@@ -8,7 +8,8 @@ class LinuxProcCountEvasion(BaseEvasion):
     def __init__(self, proc_count=100) -> None:
         self.proc_count = proc_count
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

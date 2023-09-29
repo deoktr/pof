@@ -206,7 +206,7 @@ class NameExtract:
     @staticmethod
     def get_names(tokens):
         names = []
-        for _index, (toknum, tokval, *_) in enumerate(tokens):
+        for (toknum, tokval, *_) in tokens:
             if (
                 toknum == NAME
                 and tokval not in RESERVED

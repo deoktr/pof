@@ -15,7 +15,8 @@ class PasteRsStager(DownloadStager):
     No account is required to use paste.rs.
     """
 
-    def upload(self, code):
+    @staticmethod
+    def upload(code):
         req = request.Request("https://paste.rs", data=code)
 
         r = request.urlopen(req)  # noqa: S310

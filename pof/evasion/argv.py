@@ -11,7 +11,8 @@ class ArgvEvasion(BaseEvasion):
         # can put -1 in position to select the last argument
         self.position = position
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "sys"),

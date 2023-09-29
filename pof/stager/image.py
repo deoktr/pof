@@ -47,7 +47,8 @@ class ImageStager:
     def __init__(self, encoding_class=None) -> None:
         self.encoding_class = encoding_class
 
-    def get_file_path_tokens(self):
+    @staticmethod
+    def get_file_path_tokens():
         # TODO (204): add other ways, for example hardcode the path, or base64 the path
         # or from env vars
         return [
@@ -61,7 +62,8 @@ class ImageStager:
             (OP, ")"),
         ]
 
-    def set_last_bit(self, number, last_bit):
+    @staticmethod
+    def set_last_bit(number, last_bit):
         number_bin = bin(number)
         number_bin = number_bin[:-1] + last_bit
         return int(number_bin, 2)

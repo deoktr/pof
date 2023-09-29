@@ -7,7 +7,8 @@ class DirectoryMissingEvasion(BaseEvasion):
     def __init__(self, directory) -> None:
         self.directory = directory
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

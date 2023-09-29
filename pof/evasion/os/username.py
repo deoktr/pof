@@ -7,7 +7,8 @@ class UsernameEvasion(BaseEvasion):
     def __init__(self, username) -> None:
         self.username = username
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "getpass"),

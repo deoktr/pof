@@ -8,7 +8,8 @@ class ExecMethodEvasion(BaseEvasion):
         # "file" or "memory"
         self.exec_method = method
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "time"),

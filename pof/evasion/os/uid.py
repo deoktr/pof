@@ -8,7 +8,8 @@ class LinuxUIDEvasion(BaseEvasion):
     def __init__(self, uid) -> None:
         self.uid = uid
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

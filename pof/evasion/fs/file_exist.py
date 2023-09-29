@@ -7,7 +7,8 @@ class FileExistEvasion(BaseEvasion):
     def __init__(self, file) -> None:
         self.file = file
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "import"),
             (NAME, "os"),

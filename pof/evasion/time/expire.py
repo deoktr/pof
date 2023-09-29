@@ -17,7 +17,8 @@ class ExpireEvasion(BaseEvasion):
             over_datetime = datetime.now(tz=UTC)
         self.over_datetime = over_datetime
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "from"),
             (NAME, "datetime"),

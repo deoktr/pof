@@ -10,7 +10,8 @@ class LinuxUptimeEvasion(BaseEvasion):
         # default: 12 minutes
         self.uptime = uptime
 
-    def import_tokens(self):
+    @staticmethod
+    def import_tokens():
         return [
             (NAME, "from"),
             (NAME, "pathlib"),
