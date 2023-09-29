@@ -57,7 +57,7 @@ class AddCommentsObfuscator:
         "Made with love <3",
     )
 
-    def __init__(self, frequency=0.03, remove_used=True, generator=None) -> None:
+    def __init__(self, frequency=0.03, generator=None, *, remove_used=True) -> None:
         self.frequency = frequency
         self.generator = generator
 

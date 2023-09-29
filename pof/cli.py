@@ -175,7 +175,7 @@ def _cli():
 
     try:
         return _handle(args)
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         logging.error(str(e))  # noqa: TRY400
         if args.raise_exceptions:
             raise

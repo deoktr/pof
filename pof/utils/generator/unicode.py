@@ -32,7 +32,7 @@ class UnicodeGenerator(BaseGenerator):
                 # except AttributeError:
                 #     continue
 
-            except Exception:
+            except Exception:  # noqa: BLE001
                 logging.debug("Unicode {u} doesn't work", extra={"u": name})
                 continue
             previous.append(name)
@@ -140,7 +140,7 @@ class UnicodeGenerator(BaseGenerator):
         return cls._unicode_generator(latin_range)
 
     @classmethod
-    def cyrillic_generator(cls, supplement=False):
+    def cyrillic_generator(cls, supplement=False):  # noqa: FBT002
         # https://en.wikipedia.org/wiki/Cyrillic_script_in_Unicode
         cyrillic_range = list(map(chr, range(0x0400, 0x04FF)))
         if supplement:
@@ -156,7 +156,7 @@ class UnicodeGenerator(BaseGenerator):
         return cls._unicode_generator(cyrillic_range)
 
     @classmethod
-    def greek_generator(cls, supplement=False):
+    def greek_generator(cls, supplement=False):  # noqa: FBT002
         # https://en.wikipedia.org/wiki/Greek_script_in_Unicode
         greek_range = list(map(chr, range(0x0370, 0x03FF)))
         if supplement:

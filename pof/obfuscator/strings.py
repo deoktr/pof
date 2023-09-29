@@ -48,11 +48,12 @@ class StringsObfuscator:
 
     def __init__(  # noqa: PLR0913
         self,
-        import_b64decode: bool = False,
-        import_b85decode: bool = False,
+        shift_cipher_class_obj=None,
         b64decode_name: str = "b64decode",
         b85decode_name: str = "b85decode",
-        shift_cipher_class_obj=None,
+        *,
+        import_b64decode: bool = False,
+        import_b85decode: bool = False,
     ) -> None:
         self.import_b64decode = import_b64decode
         self.import_b85decode = import_b85decode

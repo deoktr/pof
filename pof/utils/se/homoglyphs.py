@@ -65,7 +65,7 @@ class HomoglyphsGenerator:
             index = random.randint(0, len(string) - 1)
             try:
                 homoglyph = cls.get_homoglyphs_char(string[index])
-            except Exception as err:
+            except Exception as err:  # noqa: BLE001
                 fails += 1
                 if fails > max_fails:
                     msg = "failed to find homoglyph"

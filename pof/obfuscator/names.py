@@ -277,7 +277,7 @@ class NamesObfuscator:
                         # https://docs.python.org/3/reference/lexical_analysis.html#identifiers
                         new_name = unicodedata.normalize("NFKC", new_name)
                         new_tokens = [(STRING, repr(new_name))]
-                except Exception as exc:
+                except Exception as exc:  # noqa: BLE001
                     logging.warning(
                         "failed to obfuscate string {e}",
                         extra={"e": str(exc)},

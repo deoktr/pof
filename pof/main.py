@@ -64,6 +64,7 @@ class Obfuscator(BaseObfuscator):
     def obfuscate(
         self,
         source,
+        *,
         remove_logs=False,
         remove_prints=False,
         remove_exceptions=False,
@@ -211,7 +212,7 @@ class Obfuscator(BaseObfuscator):
         tokens = NewlineObfuscator().obfuscate_tokens(tokens)
         return self._untokenize(tokens)
 
-    def full_evasion(  # noqa: C901 PLR0913 PLR0912
+    def full_evasion(  # noqa: C901, PLR0913, PLR0912
         self,
         source,
         hostname: str | None = None,
@@ -222,12 +223,13 @@ class Obfuscator(BaseObfuscator):
         file_missing=None,
         min_cpu_count: int | None = None,
         min_ram: int | None = None,
+        file_list_exist=None,
+        file_list_missing=None,
+        *,
+        expire: bool = False,
         check_tracemalloc: bool = False,
         check_debugger: bool = False,
-        file_list_exist=None,
         check_executable_path: bool = False,
-        expire: bool = False,
-        file_list_missing=None,
     ):
         tokens = self._get_tokens(source)
 

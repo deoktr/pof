@@ -194,7 +194,7 @@ class NamesRopeObfuscator:
 
     DEFAULT_TMP_DIR = ".pof_cache"
 
-    def __init__(self, generator=None, tmp_dir=None, clean=False) -> None:
+    def __init__(self, generator=None, tmp_dir=None, *, clean=False) -> None:
         if generator is None:
             from pof.utils.generator import BasicGenerator
 

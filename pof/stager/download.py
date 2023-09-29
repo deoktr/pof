@@ -14,7 +14,7 @@ class DownloadStager:
     - make it compatible with Python2
     """
 
-    def __init__(self, url=None, one_liner=False) -> None:
+    def __init__(self, url=None, *, one_liner=False) -> None:
         # the URL can eitehr be given has a parameter or given interactively when
         # executing the stager in an input
         self.url = url

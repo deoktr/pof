@@ -206,7 +206,7 @@ class NameExtract:
     @staticmethod
     def get_names(tokens):
         names = []
-        for (toknum, tokval, *_) in tokens:
+        for toknum, tokval, *_ in tokens:
             if (
                 toknum == NAME
                 and tokval not in RESERVED
@@ -241,7 +241,7 @@ if __name__ == "__main__":
             print("Checking:", full_path)
             try:
                 names.extend(NameExtract.get_from_file(full_path))
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 print(f"Error: {e!s}")
 
     # filter only unique names
