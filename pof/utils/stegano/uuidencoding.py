@@ -18,7 +18,7 @@ class UUIDEncoding:
         hex_string = binascii.b2a_hex(string)
 
         string_chunks = [
-            hex_string[i: i + cls.UUID_LEN]
+            hex_string[i : i + cls.UUID_LEN]
             for i in range(0, len(hex_string), cls.UUID_LEN)
         ]
 

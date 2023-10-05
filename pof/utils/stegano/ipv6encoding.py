@@ -16,7 +16,7 @@ class IPv6Encoding:
         hex_string = binascii.b2a_hex(string)
 
         string_chunks = [
-            hex_string[i: i + cls.IPV6_LEN]
+            hex_string[i : i + cls.IPV6_LEN]
             for i in range(0, len(hex_string), cls.IPV6_LEN)
         ]
 
@@ -31,7 +31,7 @@ class IPv6Encoding:
             string_chunk = string_chunk.decode()
 
             ipv6_chunks = [
-                string_chunk[i: i + 4] for i in range(0, len(string_chunk), 4)
+                string_chunk[i : i + 4] for i in range(0, len(string_chunk), 4)
             ]
             ipv6 = ":".join(ipv6_chunks)
 

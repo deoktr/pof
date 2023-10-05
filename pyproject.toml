@@ -1,6 +1,11 @@
 [tool.black]
 target-version = ["py311"]
-extend-exclude = "tests/obfuscator/test_names/code/"
+extend-exclude = """
+(
+  ^/tests/obfuscator/test_names/code/
+  | ^/examples/out/
+)
+"""
 
 [tool.ruff]
 fix = true

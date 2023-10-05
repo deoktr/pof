@@ -62,7 +62,7 @@ class DocstringObfuscator:
         docstring = "\n" + indent
         chunk_size = 74
         for i in range(0, len(encode_tokens), chunk_size):
-            chunk = encode_tokens[i: i + chunk_size]
+            chunk = encode_tokens[i : i + chunk_size]
             docstring += chunk + "\n" + indent
         return f'"""{docstring}"""'
 

@@ -73,7 +73,7 @@ class HomoglyphsGenerator:
                 continue
             else:
                 break
-        return string[:index] + homoglyph + string[index + 1:]
+        return string[:index] + homoglyph + string[index + 1 :]
 
     @classmethod
     def get_homoglyphs(cls, string: str, freq: float = 0.2) -> str:
