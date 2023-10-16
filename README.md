@@ -67,13 +67,13 @@ And yes, this is a valid Python script, that actually runs and only output `Hell
 Using a specific obfuscator:
 
 ```bash
-pof in.py -o out.py -f obfuscator BuiltinsObfuscator
+pof in.py -o out.py -f obfuscator -k BuiltinsObfuscator
 ```
 
 Using a specific payload:
 
 ```bash
-pof inf.py -o out.py -f payload GzipPayload
+pof inf.py -o out.py -f payload -k GzipPayload
 ```
 
 ## Examples
