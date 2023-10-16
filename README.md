@@ -4,6 +4,22 @@ Python Obfuscation Framework.
 
 Combine and chain obfuscation methods on a single Python source file.
 
+Source:
+
+```bash
+print('Hello, world')
+```
+
+Output:
+
+```python
+from base64 import b64decode as expected_data
+from base64 import b85decode as _5269
+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'[::-1]])].__dict__[_5269('').decode().join([chr(ord(i)-3)for i in"".join([chr(ord(i)-3)for i in'mruhgry'])])]()[_5269(''[::-1]).decode().join([globals()[''[::-1].join([chr(ord(i)-3)for i in expected_data('YmJleGxvd2xxdmJi').decode()])].__dict__["".join([chr(ord(i)-3)for i in"".join([chr(ord(i)-3)for i in'inx'])])](__builtins__.__dict__.__getitem__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in expected_data('cnVn').decode()]))(i)-(__name__.__len__().__class__(__builtins__.__dict__.__getitem__(_5269('X>N1').decode())("".join([chr(ord(i)-3)for i in'3\u007b5']),0)+__builtins__.__getattribute__('egapraeytamrofel'[::-1].replace('egapraeytamrof'[::-1],expected_data('bg==').decode()))(expected_data("".join([chr(ord(i)-3)for i in']j@@'])).decode()))))for i in"".join([chr(ord(i)-3)for i in'eeh{olsy7bdgguvtyee']).replace(_5269('X>fKlUtwfqa&r').decode(),_5269('Z+C0').decode())])].__dict__[''[::-1].join([chr(ord(i)-3)for i in''[::-1]]).join([globals()[expected_data('XordinalidWlsdGlucordinalf'.replace('ordinal','19')).decode()].__dict__[expected_data('yh2Y'[::-1]).decode()](globals()[_5269(expected_data('VXRlTiVYPjQ/OVpnWEU+').decode()).decode()].__dict__[_5269('fold_countV'.replace('fold_count','Z*p')).decode()](i)-__builtins__.__getattribute__(expected_data("".join([chr(ord(i)-3)for i in'dZ83'])).decode())('quaencode_7or8bits'.replace('encode_7or8bit','ntile').replace("".join([chr(ord(i)-3)for i in'txdqwlohv']),"".join([chr(ord(i)-3)for i in'6']))))for i in expected_data('').decode().join([chr(ord(i)-3)for i in'ztoxv'[::-1]])])](expected_data(_5269('Q%6>FVKQQ0ad38HZFp+').decode().replace('pq_b2a'[::-1],'\u0062\u00478\u0073\u0049\u0048\u0064')).decode())
+```
+
+More examples and usage can be found in `examples/` or in the section bellow.
+
 ## Goals
 
 The goals of this project is to create a toolkit to obfuscate Python source code, mainly to create payload for offensive security.
@@ -17,7 +33,7 @@ pof will allow you to:
 - enable **automation**: automate the whole process, to produce numerous variant of the payload
 - have **fun**: because it's always fun to see what's possible to do with Python
 
-This project also tries to combine all other Python obfuscation tools available, because most of them only provide a single method, and it's prety basic. So you should be able to do everything that those other tools do, but withotu having to use multiple.
+This project also tries to combine all other Python obfuscation tools available, because most of them only provide a single method, and it's pretty basic. So you should be able to do everything that those other tools do, but without having to use multiple.
 
 Python is not exactly the best language to create payloads with, especially for Windows if the interpreter is not already installed. This project was made for learning, and discovering new ways of bypassing security, it's a great way to test obfuscations techniques.
 
