@@ -17,6 +17,8 @@ pof will allow you to:
 - enable **automation**: automate the whole process, to produce numerous variant of the payload
 - have **fun**: because it's always fun to see what's possible to do with Python
 
+This project also tries to combine all other Python obfuscation tools available, because most of them only provide a single method, and it's prety basic. So you should be able to do everything that those other tools do, but withotu having to use multiple.
+
 Python is not exactly the best language to create payloads with, especially for Windows if the interpreter is not already installed. This project was made for learning, and discovering new ways of bypassing security, it's a great way to test obfuscations techniques.
 
 This project could also give you ideas to implement in other languages, such as powershell where it would make sens to obfuscate the source code. Or in C, C#, C++, Go or Rust where it would make sens to stage payloads, compress them, encrypt them and obfuscate strings.

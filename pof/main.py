@@ -153,7 +153,7 @@ class Obfuscator(BaseObfuscator):
         #   ```
         # In this context, `baz` would be obfuscated, but it shouldn't because
         # the function is part of the `foo` imported module
-        tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
 
         tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
         tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
