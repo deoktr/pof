@@ -6,7 +6,7 @@ Combine and chain obfuscation methods on a single Python source file.
 
 Source:
 
-```bash
+```python
 print('Hello, world')
 ```
 
