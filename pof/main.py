@@ -26,6 +26,7 @@ from pof.obfuscator import (
     BuiltinsObfuscator,
     CommentsObfuscator,
     ConstantsObfuscator,
+    DefinitionsObfuscator,
     DocstringObfuscator,
     ExceptionObfuscator,
     GlobalsObfuscator,
@@ -99,6 +100,8 @@ class Obfuscator(BaseObfuscator):
                 add_codes=True,
                 generator=ex_generator,
             ).obfuscate_tokens(tokens)
+
+        tokens = DefinitionsObfuscator().obfuscate_tokens(tokens)
 
         # configure generator
         # generator = alphabet_generator()
