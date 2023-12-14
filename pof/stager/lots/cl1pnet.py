@@ -1,3 +1,4 @@
+# ruff: noqa: S310
 import random
 from urllib import request
 
@@ -40,7 +41,7 @@ class Cl1pNetStager(DownloadStager):
             },
         )
 
-        r = request.urlopen(req)  # noqa: S310
+        r = request.urlopen(req)
 
         success_code = 201
         if r.code != success_code:
