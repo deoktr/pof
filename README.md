@@ -53,6 +53,10 @@ And finally the 'classical' techniques, names, definitions won't have an impact 
 
 ## Install
 
+There is 2 installation option, 1 inside a virtualenv, 2 inside a Docker container.
+
+### 1. Python
+
 ```bash
 git clone https://github.com/2O4/pof
 cd pof
@@ -62,6 +66,13 @@ source ./venv/bin/activate
 ```
 
 This will install pof inside a virtual env, so you'll need to activate it every times you want to use it.
+
+### 2. Docker
+
+```bash
+docker build -t pof .
+docker run --rm -it pof --help
+```
 
 ## Usage
 
@@ -731,7 +742,7 @@ For more example of how to use the pof Python API check the [examples/](./exampl
 Yara rules can be used to detect malware, they can also be used to find interesting strings in Python source code. To check rules against source files and/or obfuscated files run:
 
 ```bash
-yara --no-warning yara/python.yar file.py
+yara --no-warnings yara/python.yar file.py
 ```
 
 ## Development
