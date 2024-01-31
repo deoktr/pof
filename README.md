@@ -204,9 +204,9 @@ print((True+True+True+True+True+True+True+True+True+True+True+True+True+True+Tru
 Source:
 
 ```python
-def p(t):
+def say_hello(t):
     print(t)
-p("Hello, world")
+say_hello("Hello, world")
 ```
 
 Obfuscated:

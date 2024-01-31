@@ -28,19 +28,18 @@ class BaseEvasion:
     def check_tokens():
         return []
 
-    @classmethod
-    def add_evasion(cls, tokens):
+    def add_evasion(self, tokens):
         return [
-            *cls.import_tokens(),
+            *self.import_tokens(),
             (NEWLINE, "\n"),
             (NAME, "if"),
             (LPAR, "("),
-            *cls.check_tokens(),
+            *self.check_tokens(),
             (RPAR, ")"),
             (OP, ":"),
             (NEWLINE, "\n"),
             (INDENT, "    "),
-            *cls.fail_call_tokens(),
+            *self.fail_call_tokens(),
             (NEWLINE, "\n"),
             (DEDENT, ""),
             *tokens,
