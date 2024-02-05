@@ -2,7 +2,7 @@ from tokenize import LPAR, NAME, NEWLINE, OP, RPAR, STRING
 
 
 class ImportsObfuscator:
-    """Change a local function/class reference.
+    """Obfuscate the import statement.
 
     ```
     import pathlib
