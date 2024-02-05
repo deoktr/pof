@@ -459,6 +459,14 @@ exec(binascii.a2b_hex(''.join(['70-72-69-6e-74-28','27-48-65-6c-6c-6f','2c-20-77
 exec(binascii.a2b_hex("".join(['7072696e-7428-2748-656c-6c6f2c20776f','726c6427-290a-1000-0000-000000000000',]).replace("-","").strip('0')[:-1]))
 ```
 
+#### ImportsObfuscator
+
+Source: `import pathlib`
+
+```python
+pathlib=__import__('pathlib')
+```
+
 #### CharFromDocObfuscator
 
 Source: `print('h')`

@@ -20,6 +20,7 @@ from .encoding.snt import SpacenTabObfuscator
 from .esoteric.call import CallObfuscator
 from .esoteric.doc import CharFromDocObfuscator
 from .esoteric.globals import GlobalsObfuscator
+from .esoteric.imports import ImportsObfuscator
 from .extract_variables import ExtractVariablesObfuscator
 from .junk.add_comments import AddCommentsObfuscator
 from .junk.add_newlines import AddNewlinesObfuscator
@@ -71,6 +72,7 @@ __all__ = [
     "TokensObfuscator",
     "CallObfuscator",
     "GlobalsObfuscator",
+    "ImportsObfuscator",
     "RC4Obfuscator",
     "AddNewlinesObfuscator",
     "UUIDObfuscator",
