@@ -250,9 +250,7 @@ class NamesRopeObfuscator:
             # self.foo
             # add 'foo'
             if (
-                next_toknum == NAME
-                and tokval == "."
-                and prev_tokval in declared
+                next_toknum == NAME and tokval == "." and prev_tokval in declared
                 # and prev_tokval == "self"
             ):
                 declared.append(next_tokval)
@@ -328,8 +326,7 @@ class NamesRopeObfuscator:
         mod = proj.get_module(mod_name)
 
         todo = len(local_names)
-        done = 0
-        for name in local_names:
+        for done, name in enumerate(local_names):
             new_name = self.generate_new_name()
             msg = f"{done}/{todo} changing var {name} to {new_name}"
             logging.debug(msg)
@@ -352,7 +349,6 @@ class NamesRopeObfuscator:
             except Exception as exc:
                 msg = f"error trying to obfuscate var {name}: {exc!s}"
                 logging.exception(msg)
-            done += 1
         proj.close()
 
         # finish by reading the file one last time

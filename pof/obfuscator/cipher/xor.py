@@ -106,10 +106,8 @@ class XORObfuscator:
     @staticmethod
     def encrypt_code(text, key):
         bcipher = bytearray()
-        ki = 0
-        for i in text:
+        for ki, i in enumerate(text):
             bcipher.append(i ^ key[ki % len(key)])
-            ki += 1
         return b64encode(bcipher)
 
     def obfuscate_tokens(self, tokens, key: str | None = None):
