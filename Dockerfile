@@ -9,4 +9,6 @@ RUN pip install --upgrade -r requirements.txt
 
 ADD . .
 
-ENTRYPOINT ["python", "pof.py"]
+RUN ./setup.py install
+
+ENTRYPOINT ["pof"]
