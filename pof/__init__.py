@@ -16,6 +16,6 @@
 
 from pof.main import BaseObfuscator, Obfuscator
 
-__version__ = "1.3.9"
+__version__ = "1.3.10"
 
 __all__ = ("Obfuscator", "BaseObfuscator", "__version__")

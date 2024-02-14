@@ -313,9 +313,10 @@ class DefinitionsObfuscator:
                 )
 
                 proj.do(changes)
-            except Exception as exc:
-                msg = f"error trying to obfuscate var {name}: {exc!s}"
-                logging.exception(msg)
+            except Exception:  # noqa: S110 BLE001
+                pass
+                # msg = f"error trying to obfuscate var {name}: {exc!s}"
+                # logging.exception(msg)
         proj.close()
 
         # finish by reading the file one last time
