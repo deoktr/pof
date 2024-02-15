@@ -74,6 +74,12 @@ docker build -t pof .
 docker run --rm -it pof --help
 ```
 
+Run inside Docker from a file.
+
+```bash
+docker run --rm -v $(pwd):/tmp -it pof -o /tmp/output.py /tmp/input.py
+```
+
 ## Usage
 
 You can either pipe or give a file for input, same for output.
