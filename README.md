@@ -58,7 +58,7 @@ There is 2 installation option, 1 inside a virtualenv, 2 inside a Docker contain
 ### 1. Python
 
 ```bash
-git clone https://github.com/2O4/pof
+git clone https://github.com/deoktr/pof
 cd pof
 python -m venv venv
 source ./venv/bin/activate
