@@ -11,8 +11,13 @@ import shutil
 from pathlib import Path
 from tokenize import NAME, OP, generate_tokens, untokenize
 
-from rope.base.project import Project
-from rope.refactor.rename import Rename
+try:
+    from rope.base.project import Project
+    from rope.refactor.rename import Rename
+
+    ROPE_INSTALLED = True
+except ImportError:
+    ROPE_INSTALLED = False
 
 
 class NamesRopeObfuscator:
@@ -250,7 +255,9 @@ class NamesRopeObfuscator:
             # self.foo
             # add 'foo'
             if (
-                next_toknum == NAME and tokval == "." and prev_tokval in declared
+                next_toknum == NAME
+                and tokval == "."
+                and prev_tokval in declared
                 # and prev_tokval == "self"
             ):
                 declared.append(next_tokval)
@@ -310,6 +317,12 @@ class NamesRopeObfuscator:
 
     def obfuscate_tokens(self, tokens):
         """Definitions obfuscation tokens."""
+        if not ROPE_INSTALLED:
+            logging.error(
+                "'rope' is not installed, cannot obfuscate with NamesRopeObfuscator",
+            )
+            return tokens
+
         imports = self.get_imports(tokens)
         local_names = self.get_local(tokens, imports)
 

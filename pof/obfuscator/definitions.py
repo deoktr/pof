@@ -11,8 +11,13 @@ import shutil
 from pathlib import Path
 from tokenize import NAME, generate_tokens, untokenize
 
-from rope.base.project import Project
-from rope.refactor.rename import Rename
+try:
+    from rope.base.project import Project
+    from rope.refactor.rename import Rename
+
+    ROPE_INSTALLED = True
+except ImportError:
+    ROPE_INSTALLED = False
 
 
 class DefinitionsObfuscator:
@@ -278,6 +283,12 @@ class DefinitionsObfuscator:
 
     def obfuscate_tokens(self, tokens):
         """Definitions obfuscation tokens."""
+        if not ROPE_INSTALLED:
+            logging.error(
+                "'rope' is not installed, cannot obfuscate with DefinitionsObfuscator",
+            )
+            return tokens
+
         local_names = self.get_local(tokens)
 
         msg = f"found {len(local_names)} local names"

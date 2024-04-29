@@ -1,4 +1,4 @@
-.PHONY: virtualenv requirements format
+.PHONY: virtualenv requirements def test coverage format build_docker
 
 PYTHON ?= python3.10
 VENV ?= ./venv
@@ -15,13 +15,6 @@ requirements: virtualenv
 	$(VENV)/bin/pip install -r requirements.txt
 	$(VENV)/bin/pip install -r requirements.dev.txt
 
-install-pre-commit:
-	$(PYTHON) -m pip install --upgrade pre-commit
-	pre-commit install
-
-pre-commit:
-	pre-commit run --all-file
-
 dev: install-pre-commit requirements
 	@echo
 	@echo 'done setting dev environment'
@@ -36,4 +29,7 @@ coverage: test
 
 format: virtualenv
 	$(PYTHON) -m black .
-	$(PYTHON) -m ruff .
+	$(PYTHON) -m ruff check .
+
+build_docker:
+	docker build -t pof .
