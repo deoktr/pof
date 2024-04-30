@@ -1,4 +1,4 @@
-# TODO (2O4): WORK IN PROGRESS !
+# TODO (deoktr): WORK IN PROGRESS !
 #
 # No dependencies names obfuscator, works for almost everything
 #

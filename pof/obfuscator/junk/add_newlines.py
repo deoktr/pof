@@ -1,4 +1,4 @@
-# TODO (2O4): add parameter to disable spacing imports
+# TODO (deoktr): add parameter to disable spacing imports
 import random
 from tokenize import DEDENT, INDENT, NEWLINE
 

@@ -12,8 +12,8 @@ class HomoglyphsGenerator:
     https://en.wikipedia.org/wiki/Homoglyph
     """
 
-    # TODO (2O4): add ability to specify the homoglyphs file
-    # TODO (2O4): cache this function
+    # TODO (deoktr): add ability to specify the homoglyphs file
+    # TODO (deoktr): cache this function
     @classmethod
     def get_homoglyphs_dict(cls):
         homoglyphs = {}

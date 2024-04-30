@@ -1,4 +1,4 @@
-# TODO (2O4): store BUILTINS in another file to share it
+# TODO (deoktr): store BUILTINS in another file to share it
 BUILTINS = (
     "__file__",
     "__name__",

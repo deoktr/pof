@@ -28,7 +28,7 @@ class PastebinStager(DownloadStager):
         post_data = parse.urlencode(dumps_params).encode()
         req = request.Request("https://pastebin.com/api/api_post.php", data=post_data)
 
-        # TODO (2O4): check return code
+        # TODO (deoktr): check return code
         r = request.urlopen(req)  # noqa: S310
 
         link = r.read().decode()

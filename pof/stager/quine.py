@@ -1,10 +1,10 @@
 """Quine generator."""
 
-# TODO (2O4): add opttion to keep the source code, and simply add the quine function
+# TODO (deoktr): add opttion to keep the source code, and simply add the quine function
 # this has the advantage of not using `exec` but the disadvantage of having a
 # much heavier file (around double) because we store the source AND the
 # encrypted encoded esource
-# TODO (2O4): have another way to store the base64 code, for example in the comments
+# TODO (deoktr): have another way to store the base64 code, for example in the comments
 # using the other stagers. Or even have the original code still present, and hide the
 # quine 'source' inside the comments, and have the quine function hidden.
 

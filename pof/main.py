@@ -359,7 +359,7 @@ class Obfuscator(BaseObfuscator):
         # tokens = ConstantsObfuscator(generator=generator).obfuscate_tokens(tokens)
 
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
-        # tokens = DeepEncryptionEvasion().add_evasion(tokens)  # TODO (2O4): fix
+        # tokens = DeepEncryptionEvasion().add_evasion(tokens)  # TODO (deoktr): fix
         tokens = NamesObfuscator(
             generator=AdvancedGenerator.fixed_length_generator(),
         ).obfuscate_tokens(tokens)

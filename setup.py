@@ -14,15 +14,15 @@ long_description = (root / "README.md").read_text()
 setup(
     name="pof",
     version="1.3.10",
-    author="2O4",
+    author="deoktr",
     author_email="",
     description="Python Obfuscation Framework.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     license="GPLv3 license",
-    url="https://github.com/2O4/pof",
+    url="https://github.com/deoktr/pof",
     project_urls={
-        "Bug Tracker": "https://github.com/2O4/pof/issues",
+        "Bug Tracker": "https://github.com/deoktr/pof/issues",
     },
     classifiers=[
         "Development Status :: 4 - Beta",

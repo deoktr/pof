@@ -1,4 +1,4 @@
-# FIXME (2O4): work in progress !
+# FIXME (deoktr): work in progress !
 import logging
 from base64 import b64encode
 from tokenize import DEDENT, INDENT, LPAR, NAME, NEWLINE, OP, RPAR, STRING, untokenize
@@ -81,7 +81,7 @@ class DeepEncryptionObfuscator:
                 # [2:-1] is to remove indent/dedent
 
                 fixed_function_tokens = []
-                # FIXME (2O4): fix
+                # FIXME (deoktr): fix
                 fixed_depth = -1  # should it be - (self.encryption_depth) ??
                 for ftnum, ftval in function_tokens:
                     ftval_d = ftval

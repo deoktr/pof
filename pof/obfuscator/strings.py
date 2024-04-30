@@ -1,7 +1,7 @@
-# TODO (2O4): work with f"" strings, r"" strings etc.
-# TODO (2O4): can't split `\` !!!
-# TODO (2O4): add variable to import or not b64decode
-# TODO (2O4): replace eval with ast.literal_eval: https://beta.ruff.rs/docs/rules/suspicious-eval-usage/
+# TODO (deoktr): work with f"" strings, r"" strings etc.
+# TODO (deoktr): can't split `\` !!!
+# TODO (deoktr): add variable to import or not b64decode
+# TODO (deoktr): replace eval with ast.literal_eval: https://beta.ruff.rs/docs/rules/suspicious-eval-usage/
 
 import logging
 import random
