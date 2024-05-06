@@ -1,8 +1,8 @@
 # TODO (deoktr): create a Stegano class in utils to be able to use this stager technique
 # elsewhere, for example could be used to spread certain pieces of the source
 # code in different images
-# TODO (deoktr): spread the message in the image, and encode the "separation" between each
-# bits at the beginning
+# TODO (deoktr): spread the message in the image, and encode the "separation" between
+# each bits at the beginning
 # TODO (deoktr): encode a single bit within 2 bits of the image, instead of just using a
 # single LSB (Least Significant Bit) use the last 2 bits and pass it through a
 # modulus 2 to get a single bit:
