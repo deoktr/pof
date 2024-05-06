@@ -814,10 +814,8 @@ ruff .
 - When installing (in setup.py) add txt files, homoglyphs.txt and names.txt
 - Get the version (in setup.py) from `__init``.py`
 - Increase test coverage
-- Add pre-commit hooks
 - Setup package
 - Publish package on pypi
-- Write a doc
 
 ## License
 

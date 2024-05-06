@@ -23,4 +23,4 @@ jobs:
       - name: Lint the code with black
         run: black .
       - name: Lint with ruff
-        run: ruff .
+        run: ruff check .
