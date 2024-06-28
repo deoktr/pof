@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # POF, a free and open source Python obfuscation framework.
-# Copyright (C) 2022-2023  POF Team
+# Copyright (C) 2022-2024  POF Team
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@ a basic entropy of a Python source code is around 4.3
 when compressing the entropy is between 4.25 and 4.4
 when using unicode variables the entropy is around 6.2
 """
+
 import collections
 import math
 from pathlib import Path

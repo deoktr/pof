@@ -13,7 +13,7 @@ long_description = (root / "README.md").read_text()
 
 setup(
     name="pof",
-    version="1.3.10",
+    version="1.3.11",
     author="deoktr",
     author_email="",
     description="Python Obfuscation Framework.",

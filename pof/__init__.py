@@ -1,5 +1,5 @@
 # POF, a free and open source Python obfuscation framework.
-# Copyright (C) 2022-2023  POF Team
+# Copyright (C) 2022-2024  POF Team
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,6 +16,6 @@
 
 from pof.main import BaseObfuscator, Obfuscator
 
-__version__ = "1.3.10"
+__version__ = "1.3.11"
 
 __all__ = ("Obfuscator", "BaseObfuscator", "__version__")
