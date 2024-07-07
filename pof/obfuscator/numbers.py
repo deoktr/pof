@@ -75,14 +75,14 @@ class NumberObfuscator:
             (PLUS, "+"),
             *token_b,
         ]
-        if token_type == int:
+        if token_type is int:
             tokens = [
                 (NAME, "int"),
                 (LPAR, "("),
                 *tokens,
                 (RPAR, ")"),
             ]
-        elif token_type == float:
+        elif token_type is float:
             tokens = [
                 (NAME, "round"),
                 (LPAR, "("),
