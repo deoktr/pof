@@ -1,5 +1,7 @@
 # pof
 
+[![python-obfuscation-framework-pypi](https://img.shields.io/pypi/v/python-obfuscation-framework.svg)](https://pypi.org/project/python-obfuscation-framework)
+
 Python Obfuscation Framework.
 
 Combine and chain obfuscation methods on a single Python source file.
@@ -53,9 +55,17 @@ And finally the 'classical' techniques, names, definitions won't have an impact 
 
 ## Install
 
-There is 2 installation option, 1 inside a virtualenv, 2 inside a Docker container.
+There are 3 installation options, with PIP, a virtualenv, or a Docker container.
 
-### 1. Python
+### 1. PIP
+
+From [pypi](https://pypi.org/project/python-obfuscation-framework):
+
+```bash
+pip install python-obfuscation-framework
+```
+
+### 2. Python
 
 ```bash
 git clone https://github.com/deoktr/pof
@@ -67,7 +77,7 @@ source ./venv/bin/activate
 
 This will install pof inside a virtual env, so you'll need to activate it every time you want to use it.
 
-### 2. Docker
+### 3. Docker
 
 ```bash
 docker build -t pof .
