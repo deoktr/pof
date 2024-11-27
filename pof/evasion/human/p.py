@@ -16,7 +16,7 @@ def promt_unix():
     root.overrideredirect(1)  # hide window
 
     root.geometry(
-        "+%d+%d"
+        "+%d+%d"  # noqa: UP031
         % (
             (root.winfo_screenwidth() / 2) - (root.winfo_reqwidth() / 2),
             (root.winfo_screenheight() / 2) - (root.winfo_reqheight() / 2),
