@@ -7,8 +7,6 @@ from setuptools import find_packages, setup
 
 root = Path(__file__).parent.resolve()
 
-requirements = (root / "requirements.txt").read_text().splitlines()
-
 long_description = (root / "README.md").read_text()
 
 setup(
@@ -47,7 +45,6 @@ setup(
             "pof=pof.cli:_cli",
         ],
     },
-    install_requires=requirements,
     include_package_data=True,
     zip_safe=False,
 )
