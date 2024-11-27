@@ -23,7 +23,7 @@ class MACEncoding:
             string_chunk = sc
             if len(string_chunk) < cls.MAC_LEN:
                 padding = cls.MAC_LEN - len(string_chunk)
-                # TODO (204): choose this randomly (anything BUT the padding_byte)
+                # TODO (deoktr): choose this randomly (anything BUT the padding_byte)
                 string_chunk += b"1"
                 string_chunk += cls.padding_byte * (padding - 1)
 

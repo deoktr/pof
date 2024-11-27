@@ -14,7 +14,7 @@ from pof.utils.tokens import untokenize
 class XORObfuscator:
     """XOR obfuscator."""
 
-    # TODO (204): move code to utils/encryption/xor.py
+    # TODO (deoktr): move code to utils/encryption/xor.py
     @staticmethod
     def get_exec_tokens(key, ciphertext):
         return [

@@ -8,12 +8,12 @@ from .binascii import BinasciiEncoding
 from .snt import SpacenTabEncoding
 
 __all__ = [
-    "Base85Encoding",
-    "Base64Encoding",
     "ASCII85Encoding",
     "Base16Encoding",
     "Base32Encoding",
     "Base32HexEncoding",
+    "Base64Encoding",
+    "Base85Encoding",
     "BinasciiEncoding",
     "SpacenTabEncoding",
 ]

@@ -1,4 +1,4 @@
-# TODO (204): WORK IN PROGRESS !
+# TODO (deoktr): WORK IN PROGRESS !
 
 
 class RestructureObfuscator:
@@ -9,7 +9,7 @@ class RestructureObfuscator:
 
     @staticmethod
     def obfuscate_tokens(tokens):
-        # TODO (204): test if ast include decorators into function definition or if
+        # TODO (deoktr): test if ast include decorators into function definition or if
         # it's easy to get, and move stuff using it, it's probably easier than
         # using tokens
         return tokens

@@ -2,7 +2,7 @@ import keyword
 from tokenize import LPAR, NAME, OP, RPAR, STRING
 
 
-# TODO (204): add frequency
+# TODO (deoktr): add frequency
 class GlobalsObfuscator:
     """Change a local function/class reference.
 

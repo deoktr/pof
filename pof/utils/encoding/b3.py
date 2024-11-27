@@ -1,7 +1,7 @@
 from tokenize import DEDENT, INDENT, LPAR, NAME, NEWLINE, NUMBER, OP, RPAR, STRING
 
 
-# TODO (204): add 2 way of doing the encoding, one (the current) where you need the
+# TODO (deoktr): add 2 way of doing the encoding, one (the current) where you need the
 # function at the top of the file, and another where it's inline, so there would
 # be no need for a function definition
 class Base3Encoding:

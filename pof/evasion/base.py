@@ -13,9 +13,11 @@ class BaseEvasion:
             (LPAR, "("),
             (
                 STRING,
-                repr(cls.__class__.__name__)
-                if cls.ADD_CLASS_NAME
-                else repr("evasion check triggered"),
+                (
+                    repr(cls.__class__.__name__)
+                    if cls.ADD_CLASS_NAME
+                    else repr("evasion check triggered")
+                ),
             ),
             (RPAR, ")"),
         ]

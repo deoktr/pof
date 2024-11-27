@@ -8,9 +8,10 @@ this is invisible unicode ? in VIM the second unicdoe doesn't appear !
 ݻ
 ࡡ
 """
+
 from .advanced import AdvancedGenerator
 from .base import BaseGenerator
 from .basic import BasicGenerator
 from .unicode import UnicodeGenerator
 
-__all__ = ["BasicGenerator", "AdvancedGenerator", "UnicodeGenerator", "BaseGenerator"]
+__all__ = ["AdvancedGenerator", "BaseGenerator", "BasicGenerator", "UnicodeGenerator"]

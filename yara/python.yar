@@ -66,7 +66,7 @@ rule LOTLURL
         resources = "https://lots-project.com/"
 
     strings:
-        // TODO (204): complete the list
+        // TODO (deoktr): complete the list
         $githubusercontent = "githubusercontent"
         $github = "github"
         $pastebin = "pastebin"

@@ -191,7 +191,7 @@ class DefinitionsObfuscator:
         "update",  # on dict
         "copy",  # copy dict or list
         "join",  # on string "".join()
-        # TODO (204): add all the others
+        # TODO (deoktr): add all the others
     )
 
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
@@ -299,7 +299,7 @@ class DefinitionsObfuscator:
         mod_name = "tmp"
         tmp_file_path = self.create_tmp_file(tokens, mod_name)
 
-        # TODO (204): find a way better way, do everything in memory
+        # TODO (deoktr): find a way better way, do everything in memory
         proj = Project(self.tmp_dir)
         mod = proj.get_module(mod_name)
 

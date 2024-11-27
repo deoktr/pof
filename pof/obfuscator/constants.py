@@ -16,9 +16,9 @@ Can extract:
 #   a = int
 #   if u(x) is a: ...
 #
-# TODO (204): add variables under imports as an option
-# TODO (204): add variables inside functions
-# TODO (204): add exclusions for strings and numbers
+# TODO (deoktr): add variables under imports as an option
+# TODO (deoktr): add variables inside functions
+# TODO (deoktr): add exclusions for strings and numbers
 #
 
 import random

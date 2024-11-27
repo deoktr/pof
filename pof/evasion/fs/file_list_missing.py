@@ -20,7 +20,7 @@ class FileListMissingEvasion(BaseEvasion):
 
         `any([os.path.isfile(p) for p in ['/tmp/a', '/tmp/b', ...]])`
         """
-        # TODO (204): change
+        # TODO (deoktr): change
         io_obj = io.StringIO(repr(self.file_list))
         file_list_tokens = list(generate_tokens(io_obj.readline))
 

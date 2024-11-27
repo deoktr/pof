@@ -1,4 +1,4 @@
-# TODO (204): WORK IN PROGRESS !
+# TODO (deoktr): WORK IN PROGRESS !
 #
 # Look at `Ruff` for "variable extraction"
 #
@@ -24,7 +24,7 @@
 # print(x)
 # ```
 #
-# FIXME (204): parenthesis variables:
+# FIXME (deoktr): parenthesis variables:
 # ```
 # if (
 #    x < 1 and y > 2
@@ -33,7 +33,7 @@
 # this would break because the variables would be added INSIDE the parenthesis
 #
 #
-# FIXME (204): decorators:
+# FIXME (deoktr): decorators:
 # ```
 # class Foo:
 #     @classmethod
@@ -217,7 +217,7 @@ class ExtractVariablesObfuscator:
         "update",  # on dict
         "copy",  # copy dict or list
         "join",  # on string "".join()
-        # TODO (204): add all the others
+        # TODO (deoktr): add all the others
     )
 
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
@@ -269,15 +269,13 @@ class ExtractVariablesObfuscator:
                 )
                 new_tokens = [(NAME, random_name)]
 
-            # TODO (204): ensure that this works
+            # TODO (deoktr): ensure that this works
             has_decorator = any("@" in t[1] for t in line_buffer)
             newline_count = [t[1] for t in line_buffer].count("\n")
 
             if (
-                ((toknum in (NEWLINE, NL)) and tokval == "\n")
-                and not has_decorator
-                or (newline_count > 1)
-            ):
+                ((toknum in (NEWLINE, NL)) and tokval == "\n") and not has_decorator
+            ) or (newline_count > 1):
                 if has_decorator:
                     line_buffer = [(NEWLINE, "\n"), *line_buffer]
                     new_tokens = new_line_buffer + line_buffer + new_tokens

@@ -95,7 +95,7 @@ class Obfuscator(BaseObfuscator):
             # not fully tested
             ex_generator = (
                 BasicGenerator.number_name_generator()
-            )  # TODO (204): have multiple generator !!!
+            )  # TODO (deoktr): have multiple generator !!!
             tokens = ExceptionObfuscator(
                 add_codes=True,
                 generator=ex_generator,
@@ -117,13 +117,13 @@ class Obfuscator(BaseObfuscator):
             generator=generator,
             obf_number_rate=0.7,
             # obf_string_rate=0.1,
-            obf_string_rate=0,  # FIXME (204): when string obfuscation is enable and
+            obf_string_rate=0,  # FIXME (deoktr): when string obfuscation is enable and
             # name obfuscator comes next, the time delai of
             # http requests are very slow, idk why
             obf_builtins_rate=0.3,
         ).obfuscate_tokens(tokens)
 
-        # FIXME (204): breaks !
+        # FIXME (deoktr): breaks !
         # for detailed explanation just consider the following:
         #   ```
         #   import module
@@ -142,7 +142,7 @@ class Obfuscator(BaseObfuscator):
         # imported attribute for itself and all the parameters given to it
         # this is because we don't keep track of the level of the imported
         #
-        # FIXME (204): breaks !
+        # FIXME (deoktr): breaks !
         # Another problem is related to result of function, this is, ofc very
         # hard to deal with, but if a function returns an object, such has for
         # example an object of an imported class, which attribute are not
@@ -251,7 +251,7 @@ class Obfuscator(BaseObfuscator):
         if file_exist:
             tokens = FileExistEvasion(file=file_exist).add_evasion(tokens)
         if file_list_missing:
-            # TODO (204): remove
+            # TODO (deoktr): remove
             idk = ["/tmp/a", "/tmp/b"]  # noqa: S108
             tokens = FileListExistEvasion(file_list=idk).add_evasion(tokens)
         if domain:
@@ -284,13 +284,13 @@ class Obfuscator(BaseObfuscator):
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
         tokens = ExceptionObfuscator(generator=generator).obfuscate_tokens(tokens)
         tokens = LoggingObfuscator(generator=generator).obfuscate_tokens(tokens)
-        # FIXME (204): when placed BEFORE NamesObfuscator it breaks the code
+        # FIXME (deoktr): when placed BEFORE NamesObfuscator it breaks the code
         # tokens = ConstantsObfuscator(
         #     generator=generator,
         #     obf_number_rate=1,
-        #     # FIXME (204): if using obf_string_rate=1 with NamesObfuscator it breaks
+        #     # FIXME (deoktr): breaks if obf_string_rate=1 with NamesObfuscator
         #     obf_string_rate=0,
-        #     # FIXME (204): if using obf_builtins_rate=1 with NamesObfuscator it breaks
+        #     # FIXME (deoktr): breaks if obf_builtins_rate=1 with NamesObfuscator
         #     obf_builtins_rate=0,
         # ).obfuscate_tokens(tokens)
         tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
@@ -337,7 +337,7 @@ class Obfuscator(BaseObfuscator):
             img_in,
         )
 
-        # FIXME (204): break the image stager
+        # FIXME (deoktr): break the image stager
         # obfuscate stager
         # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
         # tokens = IndentsObfuscator().obfuscate_tokens(tokens)
@@ -345,7 +345,7 @@ class Obfuscator(BaseObfuscator):
         # encrypt stager
         tokens = RC4Stager().generate_stager(tokens)
 
-        # FIXME (204): break the decryption part because set 256 to a variable
+        # FIXME (deoktr): break the decryption part because set 256 to a variable
         # obfuscate decryption stager
         # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
         # tokens = IndentsObfuscator().obfuscate_tokens(tokens)

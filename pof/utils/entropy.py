@@ -8,6 +8,7 @@ a basic entropy of a Python source code is around 4.3
 when compressing the entropy is between 4.25 and 4.4
 when using unicode variables the entropy is around 6.2
 """
+
 import collections
 import math
 

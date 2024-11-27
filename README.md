@@ -22,7 +22,7 @@ More examples and usage can be found in `examples/` or in the section bellow.
 
 ## Goals
 
-The goals of this project is to create a toolkit to obfuscate Python source code, mainly to create payload for offensive security.
+The goals of this project are to create a toolkit to obfuscate Python source code, mainly to create payload for offensive security.
 
 pof will allow you to:
 
@@ -43,13 +43,13 @@ You could also use most of the stagers to stage payload that are not built in Py
 
 ## Shortcomings
 
-Any obfuscation techniques that adds code complexity will make the code run slower. For most usage this won't have an impact, and no one is using Python for speed anyway (at least I hope).
+Any obfuscation techniques that add code complexity will make the code run slower. For most usage this won't have an impact, and no one is using Python for speed anyway (at least I hope).
 
 Encoding, compression, encryption will slow the start of the programs, because it will first have to decode, de-compress, or decrypt it.
 
 Strings, numbers, builtin, obfuscators will make the code run slower, because they will add complexity to many parts of it.
 
-And finally the 'classical' techniques, names, definitions won't have an impact on the speed of the code, because they'll simply renames elements of the code.
+And finally the 'classical' techniques, names, definitions won't have an impact on the speed of the code, because they'll simply rename elements of the code.
 
 ## Install
 
@@ -65,7 +65,7 @@ source ./venv/bin/activate
 ./setup.py install
 ```
 
-This will install pof inside a virtual env, so you'll need to activate it every times you want to use it.
+This will install pof inside a virtual env, so you'll need to activate it every time you want to use it.
 
 ### 2. Docker
 
@@ -97,7 +97,7 @@ UserClassSlots=__builtins__.__dict__.__getitem__(_45802(''[::-1]).decode().join(
 UserClassSlots(CRT_ASSERT('').decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'parse_intermixed_argsu'.replace('parse_intermixed_args','fk')]))(__builtins__.__dict__.__getitem__(_45802('L}g}jVP{fhb9HQVa%2').decode().replace("".join([chr(ord(i)-3)for i in'GhiudjUhvxow']),'o'[::-1]))(i)-(__name__.__eq__.__call__(__name__)+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'])[::-1]].__dict__["".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'Wuxsimple_stmt'.replace('simple_stmt','h')])]+(type(1)==type(1))))for i in'gourz#/r_pfK'[::-1].replace(_45802('W^i9}').decode(),CRT_ASSERT('aG9vcg==').decode())]))
 ```
 
-And yes, this is a valid Python script, that actually runs and only output `Hello world` ! And you'll get a different output each times.
+And yes, this is a valid Python script, that actually runs and only output `Hello world` ! And you'll get a different output each time.
 
 Using a specific obfuscator:
 
@@ -245,7 +245,7 @@ __builtins__.__dict__.__getitem__('print')('Hello, world')
 
 #### ConstantsObfuscator
 
-Move every variables at the top of the file.
+Move every variable at the top of the file.
 
 ```python
 vVlJ='Hello, world'
@@ -527,7 +527,7 @@ The `PasteRsStager` and `Cl1pNetStager` are exactly the same, but the code is no
 
 #### RC4Stager
 
-The RC4 stager needs to be called with the key has it's first argument.
+The RC4 stager needs to be called with the key has its first argument.
 
 ```python
 import sys
@@ -763,28 +763,30 @@ yara --no-warnings yara/python.yar file.py
 
 ### Project
 
-- `pof` contains all the pof source code
-  - `pof/obfuscator` contains obfuscators
-  - `pof/stager` contains satgers
-  - `pof/evasion` contains evasions
-  - `pof/utils` all shared code between stager, obfuscator and evasion
-- `wip` work in progress code that will eventually make its way inside the main code base
-- `tests` unit tests for pof
-- `scripts` some useful scripts to develop or use pof
-- `yara` some yara rules to detect pof obfuscated code
+- `pof`: contains all the pof source code
+  - `pof/obfuscator`: contains obfuscators
+  - `pof/stager`: contains satgers
+  - `pof/evasion`: contains evasions
+  - `pof/utils`: all shared code between stager, obfuscator and evasion
+- `wip`: work in progress code that will eventually make its way inside the main code base
+- `tests`: unit tests for pof
+- `scripts`: some useful scripts to develop or use pof
+- `yara`: some yara rules to detect pof obfuscated code
 
 ### Setup
 
-Using make.
-
 ```bash
-python -m venv venv
+python3 -m venv venv
+
+# activate it (or equivalent for your shell)
 source ./venv/bin/activate
+
+# install dep
 pip install -r requirements.txt
 pip install -r requirements.dev.txt
 ```
 
-Run pof
+Run pof:
 
 ```bash
 ./pof.py --help
@@ -812,7 +814,7 @@ ruff .
 ## TODO
 
 - When installing (in setup.py) add txt files, homoglyphs.txt and names.txt
-- Get the version (in setup.py) from `__init``.py`
+- Get the version (in setup.py) from `__init__.py`
 - Increase test coverage
 - Setup package
 - Publish package on pypi

@@ -1,4 +1,5 @@
 """Basic random names generators."""
+
 import random
 
 from .base import BaseGenerator
@@ -44,7 +45,7 @@ class BasicGenerator(BaseGenerator):
 
     @classmethod
     def single_symbol_generator(cls, symbol="_"):
-        # TODO (204): generate a couple in a list, randomize the order and take them
+        # TODO (deoktr): generate a couple in a list, randomize the order and take them
         # instead of increasing it by one in order
         length = 1
         while True:

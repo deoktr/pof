@@ -92,13 +92,13 @@ class DeepEncryptionObfuscator:
                         fixed_depth -= 1
                     fixed_function_tokens.append((ftnum, ftval_d))
 
-                # TODO (204): need to change ALL indents tokens
+                # TODO (deoktr): need to change ALL indents tokens
                 source = untokenize(fixed_function_tokens[2:-1])
 
                 # obviously doesn't work with yield
                 if not any(i in source for i in ["yield", "super"]):
-                    # TODO (204): find a way better way
-                    # FIXME (204): this should replace empty return statements
+                    # TODO (deoktr): find a way better way
+                    # FIXME (deoktr): this should replace empty return statements
                     source = source.replace("return\n", "r=None")
                     source = source.replace("return", "r=")
 
@@ -109,7 +109,7 @@ class DeepEncryptionObfuscator:
                         (
                             INDENT,
                             "    " * (self.encryption_depth + 1),
-                        ),  # TODO (204): change me
+                        ),  # TODO (deoktr): change me
                         (NAME, globals_dict_name),
                         (OP, "="),
                         (NAME, "globals"),
@@ -163,7 +163,7 @@ class DeepEncryptionObfuscator:
                         (
                             INDENT,
                             "    " * (self.encryption_depth + 2),
-                        ),  # TODO (204): change me
+                        ),  # TODO (deoktr): change me
                         (NAME, "return"),
                         (NAME, "None"),
                         (DEDENT, ""),

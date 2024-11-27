@@ -1,4 +1,4 @@
-# TODO (204): make windows version
+# TODO (deoktr): make windows version
 from tokenize import LPAR, NAME, NUMBER, OP, RPAR, STRING
 
 from pof.evasion.base import BaseEvasion

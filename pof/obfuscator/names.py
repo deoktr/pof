@@ -2,7 +2,7 @@
 #
 # No dependencies names obfuscator, works for almost everything
 #
-# TODO (204): collect every names BEFORE obfuscation to be sure never to add any that
+# TODO (deoktr): collect every names BEFORE obfuscation to be sure never to add any that
 #   where present before the obfuscation, make that an option
 #
 # NOTES: You can't have a variable that takes the value of an import reused elsewhere
@@ -210,7 +210,7 @@ class NamesObfuscator:
         "copy",  # copy dict or list
         "join",  # on string "".join()
         "__dict__",
-        # TODO (204): add all the others
+        # TODO (deoktr): add all the others
     )
 
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
@@ -237,11 +237,11 @@ class NamesObfuscator:
         # check for getattr, setattr or any other that can be used to access
         # such things maybe globals()[""] and locals()[""] too and also
         # ClassName.__dict__[""]
-        # TODO (204): add "RESERVED_STRINGS_WORDS" to be able to disable this feature
+        # TODO (deoktr): add "RESERVED_STRINGS_WORDS" to be able to disable this feature
         # for some strings
-        # FIXME (204): it can be "getattr.__call__" in which case the entire thing
+        # FIXME (deoktr): it can be "getattr.__call__" in which case the entire thing
         # wouldn't be triggered
-        # FIXME (204): or getattr or the __dict__ of an object
+        # FIXME (deoktr): or getattr or the __dict__ of an object
         result = []
         depth = 0  # parenthesis depth
         inside_getattr = False
@@ -254,7 +254,7 @@ class NamesObfuscator:
             elif toknum == OP and tokval in [")", "]"]:
                 depth -= 1
 
-            # TODO (204): change inside_getattr context
+            # TODO (deoktr): change inside_getattr context
             if inside_getattr and depth < inside_getattr_depth:
                 inside_getattr_depth = None
                 inside_getattr = False
@@ -267,7 +267,7 @@ class NamesObfuscator:
                 # variable or function of Python, we need to change it has well
                 # to keep the code working
                 try:
-                    s = eval(tokval)  # noqa: S307 PGH001
+                    s = eval(tokval)  # noqa: S307
                     if s in new_names:
                         new_name = new_names[s]
                         # when adding unicode variables they are first
@@ -304,7 +304,7 @@ class NamesObfuscator:
         for key, value in new_names.items():
             inew_names.update({value: key})
 
-        # TODO (204): probably need to clean stuff here, idk if it "really" works
+        # TODO (deoktr): probably need to clean stuff here, idk if it "really" works
         source = untokenize(tokens)
         tree = ast.parse(source)
         for node in ast.walk(tree):
@@ -371,7 +371,7 @@ class NamesObfuscator:
         new_names = {}
         # fix included calls, imported_func(p=self.foo)
         # where `foo` if marked has 'imutable' because the func is imported
-        # imutable = list()  # TODO (204): ! keep list of all imutable
+        # imutable = list()  # TODO (deoktr): ! keep list of all imutable
         for index, (toknum, tokval, *_) in enumerate(tokens):
             new_tokens = [(toknum, tokval)]
             next_tokval = None
@@ -443,7 +443,7 @@ class NamesObfuscator:
                 if prev_tokval not in imports:
                     imports.append(prev_tokval)
 
-            # TODO (204): find a better way ? really hard to tell
+            # TODO (deoktr): find a better way ? really hard to tell
             if (  # noqa: SIM102
                 toknum == NAME and prev_tokval == "as" and next_tokval == ":"
             ):

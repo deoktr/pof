@@ -1,7 +1,7 @@
 from tokenize import NAME, OP, STRING
 
 
-# TODO (204): REFACTORING this class
+# TODO (deoktr): REFACTORING this class
 class LoggingObfuscator:
     """Keep logging and change them with a generated code."""
 

@@ -37,7 +37,7 @@ class NumberObfuscator:
         NStrats.ADDITION,
     )
 
-    # TODO (204): add frequency for each techniques, this may be a bit more difficult
+    # TODO (deoktr): add frequency for each techniques, this may be a bit more difficult
     # compare to other classes because in this case it depend on the format of
     # the number, so maybe have a "global_frequency" or something like that,
     # that would enable or disable the obfuscation for any given number, then
@@ -157,7 +157,7 @@ class NumberObfuscator:
         value = int(tokval)
         is_positiv = value >= 0
 
-        # TODO (204): make the obf_tokens fully random, could be list, dict
+        # TODO (deoktr): make the obf_tokens fully random, could be list, dict
         letter = random.choice("abcdefghijklmnopqrstuvwxyz")
         string = letter * abs(value)
         obf_tokens = [(STRING, repr(string))]
@@ -181,7 +181,7 @@ class NumberObfuscator:
         if len(tokens) < 1:
             return False
         code = untokenize(tokens)
-        result = eval(code)  # noqa: PGH001 S307
+        result = eval(code)  # noqa: S307
         # logging.debug("verifying that {}={}".format(tokval, result))
         if str(result) == tokval:
             return True

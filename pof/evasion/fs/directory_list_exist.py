@@ -20,7 +20,7 @@ class DirectoryListExistEvasion(BaseEvasion):
 
         `not all([os.path.isdir(p)for p in['/tmp/a','/tmp/b',...]])`
         """
-        # TODO (204): change
+        # TODO (deoktr): change
         io_obj = io.StringIO(repr(self.directory_list))
         directory_list_tokens = list(generate_tokens(io_obj.readline))
 

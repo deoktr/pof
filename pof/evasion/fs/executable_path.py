@@ -34,7 +34,7 @@ class ExecPathEvasion(BaseEvasion):
 
         `any([s in str(pathlib.Path(__file__).absolute()) for s in["virus",...]])`
         """
-        # TODO (204): generate tokens differently
+        # TODO (deoktr): generate tokens differently
         io_obj = io.StringIO(repr(self.contain_list))
         contain_list_tokens = list(generate_tokens(io_obj.readline))
 

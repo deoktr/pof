@@ -1,5 +1,5 @@
 [tool.black]
-target-version = ["py311"]
+target-version = ["py313"]
 extend-exclude = """
 (
   ^/tests/obfuscator/test_names/code/
@@ -9,7 +9,7 @@ extend-exclude = """
 
 [tool.ruff]
 fix = true
-target-version = "py311"
+target-version = "py313"
 include = ["*.py"]
 exclude = [
     ".eggs",
@@ -33,6 +33,7 @@ lint.extend-ignore = ["ERA001", "S311", "D100", "D101", "D102", "D103", "D104", 
 lint.isort.known-local-folder = ["pof", "test"]
 lint.pydocstyle.convention = "google"
 lint.extend-per-file-ignores."pof/cli.py" = ["G004"]
+lint.flake8-copyright.author = "deoktr"
 
 [tool.mypy]
 ignore_missing_imports = true

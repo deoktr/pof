@@ -1,4 +1,4 @@
-# TODO (204): make it compatible with windows: `ctypes.windll.shell32.IsUserAnAdmin()`
+# TODO (deoktr): add compat with windows: `ctypes.windll.shell32.IsUserAnAdmin()`
 from tokenize import LPAR, NAME, NUMBER, OP, RPAR
 
 from pof.evasion.base import BaseEvasion

@@ -32,7 +32,7 @@ class QuineStager:
     """
 
     def __init__(self, encoding_class=None, quine_function_name="quine") -> None:
-        # TODO (204): include generator to generate var names
+        # TODO (deoktr): include generator to generate var names
         # is this really a good idea ? if we can use the obfuscator function to
         # do the job
         if encoding_class is None:

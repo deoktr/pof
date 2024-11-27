@@ -1,4 +1,5 @@
 """Unicode random names generators."""
+
 import logging
 import random
 
@@ -10,7 +11,7 @@ class UnicodeGenerator(BaseGenerator):
     def _unicode_generator(cls, unicode_list, min_length: int = 1, max_length: int = 5):
         previous = []
         while True:
-            # TODO (204): add code to increase max_length if can't create new names
+            # TODO (deoktr): add code to increase max_length if can't create new names
             length = random.randint(min_length, max_length)
             name = ""
             for _ in range(length):

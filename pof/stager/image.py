@@ -49,7 +49,7 @@ class ImageStager:
 
     @staticmethod
     def get_file_path_tokens():
-        # TODO (204): add other ways, for example hardcode the path, or base64 the path
+        # TODO (deoktr): add other ways, for example hardcode the path, or base64
         # or from env vars
         return [
             (NAME, "sys"),
@@ -119,6 +119,8 @@ class ImageStager:
         ```
         import sys
         from PIL import Image
+
+
         def decode(im_in):
             msg_bin = ""
             im = Image.open(im_in)
@@ -135,6 +137,8 @@ class ImageStager:
             n = int(msg_bin, 2)
             msg = n.to_bytes((n.bit_length() + 7) // 8, "big").decode()
             return ms
+
+
         exec(decode(sys.argv[1]))
         ```
         """
@@ -143,7 +147,7 @@ class ImageStager:
         if image_input is None:
             image_input = input("path to image input: ")
 
-        # TODO (204): change that
+        # TODO (deoktr): change that
         image_output = image_input.replace(".png", "_out.png")
 
         file_path_tokens = self.get_file_path_tokens()

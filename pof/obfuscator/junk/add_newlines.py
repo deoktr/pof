@@ -19,7 +19,7 @@ class AddNewlinesObfuscator:
                     new_tokens.extend([(NEWLINE, "\n")])
 
                 else:
-                    # FIXME (204): add newlines BEFORE class/function decorators
+                    # FIXME (deoktr): add newlines BEFORE class/function decorators
                     next_non_indent_tokval = None
                     for i in range(index, len(tokens)):
                         tn, tv, *__ = tokens[i]

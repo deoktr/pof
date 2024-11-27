@@ -26,7 +26,7 @@ class UUIDEncoding:
             sc = string_chunk
             if len(sc) < cls.UUID_LEN:
                 padding = cls.UUID_LEN - len(sc)
-                # TODO (204): choose this randomly (anything BUT the padding_byte)
+                # TODO (deoktr): choose this randomly (anything BUT the padding_byte)
                 sc += b"1"
                 sc += cls.padding_byte * (padding - 1)
 

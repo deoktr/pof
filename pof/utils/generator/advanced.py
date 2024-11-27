@@ -1,4 +1,5 @@
 """Advanced random names generators."""
+
 import random
 from pathlib import Path
 

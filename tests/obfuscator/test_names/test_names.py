@@ -5,7 +5,7 @@ from tokenize import generate_tokens, untokenize
 from pof.obfuscator import NamesObfuscator
 
 
-# FIXME (204): mock the generator function inside NamesObfuscator
+# FIXME (deoktr): mock the generator function inside NamesObfuscator
 # to produce var_name__, because if we put generator "O" then it will break with
 def test_NamesObfuscator():
     def generator():

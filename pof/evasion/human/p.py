@@ -1,12 +1,12 @@
 def promt_unix():
-    # TODO (204): add try: except around tkinter imports
+    # TODO (deoktr): add try: except around tkinter imports
     from tkinter import E, S, Tk, ttk
 
     root = Tk()
 
     clicked = False
 
-    # FIXME (204): Doesn't work ...
+    # FIXME (deoktr): Doesn't work ...
     def click():
         root.destroy()
 

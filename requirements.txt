@@ -1,2 +1,2 @@
-rope
-Pillow
+rope>=1.0.0
+Pillow>=10.0.0

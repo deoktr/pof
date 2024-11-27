@@ -166,7 +166,7 @@ RESERVED_WORDS = (
     "update",  # on dict
     "copy",  # copy dict or list
     "join",  # on string "".join()
-    # TODO (204): add all the others
+    # TODO (deoktr): add all the others
 )
 
 

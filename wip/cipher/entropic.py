@@ -75,7 +75,7 @@ def end_decode(data, separator="-"):
 
 
 def entropy(data):
-    # TODO (204): import from the correct file
+    # TODO (deoktr): import from the correct file
     import collections
     import math
 

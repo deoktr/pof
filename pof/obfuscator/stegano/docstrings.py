@@ -9,10 +9,10 @@ from pof.utils.tokens import untokenize
 class DocstringObfuscator:
     """Hide code inside doc strings."""
 
-    # TODO (204): add ability to choose entry point (function) name without calling it
-    #   put the exec code inside this function
-    # TODO (204): add ability to choose the base code
-    # TODO (204): add the ability to split the docstring among multiple class/functions
+    # TODO (deoktr): add ability to choose entry point (function) name without calling
+    # it put the exec code inside this function
+    # TODO (deoktr): add ability to choose the base code
+    # TODO (deoktr): add ability to split the docstring among multiple class/functions
 
     def __init__(self, encoding_class=None, base_code=None) -> None:
         if encoding_class is None:
@@ -90,7 +90,7 @@ class DocstringObfuscator:
 
             # and name is None : used to add the docstring on only one
             # class/function definition
-            # FIXME (204): split it among multiple definitions
+            # FIXME (deoktr): split it among multiple definitions
             if prev_tokval in ["def", "class"] and name is None:
                 name = tokval
                 in_declaration = True

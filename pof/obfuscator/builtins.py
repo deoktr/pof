@@ -1,5 +1,5 @@
-# TODO (204): obfuscate `format` but only when not after `"".`
-# TODO (204): add `__name__.__class__.__class__.__base__.__subclasses__()` variant
+# TODO (deoktr): obfuscate `format` but only when not after `"".`
+# TODO (deoktr): add `__name__.__class__.__class__.__base__.__subclasses__()` variant
 
 import logging
 import random
@@ -406,7 +406,7 @@ class BuiltinsObfuscator:
 
     @staticmethod
     def globals_obf(tokval):
-        # TODO (204): maybe obfuscate __builtins__ to `globals()['__builtins__']`
+        # TODO (deoktr): maybe obfuscate __builtins__ to `globals()['__builtins__']`
         # instead?
         # this would provide more alternative, but __builtins__ can't be
         # obfuscated like other builtins, for ex this doesn't work:

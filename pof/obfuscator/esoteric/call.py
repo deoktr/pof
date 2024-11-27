@@ -2,7 +2,7 @@ import keyword
 from tokenize import NAME, OP
 
 
-# TODO (204): add frequency
+# TODO (deoktr): add frequency
 class CallObfuscator:
     """Add `.__call__` to any call.
 

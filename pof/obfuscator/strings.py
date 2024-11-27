@@ -30,7 +30,7 @@ class StringsObfuscator:
 
     class Strats(Enum):
         BASE64 = 1
-        ADDITION = 2  # FIXME (204): doesn't seems to work <
+        ADDITION = 2  # FIXME (deoktr): doesn't seems to work <
         ONLY_ADDITION = 3
         BASE85 = 4
         UNICODE = 5
@@ -46,7 +46,7 @@ class StringsObfuscator:
         Strats.REVERSE,
     )
 
-    def __init__(  # noqa: PLR0913
+    def __init__(
         self,
         shift_cipher_class_obj=None,
         b64decode_name: str = "b64decode",
@@ -66,8 +66,8 @@ class StringsObfuscator:
         self.shift_cipher_class_obj = shift_cipher_class_obj
 
     def obf_shift(self, tokval: str):
-        # TODO (204): choose random padding here
-        raw_string = eval(tokval)  # noqa: S307 PGH001
+        # TODO (deoktr): choose random padding here
+        raw_string = eval(tokval)  # noqa: S307
         if isinstance(raw_string, bytes):
             raw_string = raw_string.decode()
         encoded = self.shift_cipher_class_obj.encode_tokens(raw_string)
@@ -80,7 +80,7 @@ class StringsObfuscator:
         b64decode(b'...').decode()
         ```
         """
-        raw_string = eval(tokval)  # noqa: S307 PGH001
+        raw_string = eval(tokval)  # noqa: S307
         if isinstance(raw_string, str):
             raw_string = raw_string.encode()
         b64encoded_string = b64encode(raw_string).decode()
@@ -98,11 +98,11 @@ class StringsObfuscator:
     def obf_base85(self, tokval: str):
         """Obfuscate string with base85.
 
-        ````
+        ```
         b85decode(b'...').decode()
-        ````
+        ```
         """
-        raw_string = eval(tokval)  # noqa: S307 PGH001
+        raw_string = eval(tokval)  # noqa: S307
         if isinstance(raw_string, str):
             raw_string = raw_string.encode()
         b85encoded_string = b85encode(raw_string).decode()
@@ -120,7 +120,7 @@ class StringsObfuscator:
     @staticmethod
     def unicode(tokval: str):
         # Hell --> \u0048\u0065\u006C\u006C
-        raw_string = eval(tokval)  # noqa: S307 PGH001
+        raw_string = eval(tokval)  # noqa: S307
         if isinstance(raw_string, bytes):
             raw_string = raw_string.decode()
         encoded = ""
@@ -189,7 +189,7 @@ class StringsObfuscator:
 
     @staticmethod
     def string_replace(tokval: str):
-        raw_string = eval(tokval)  # noqa: S307 PGH001
+        raw_string = eval(tokval)  # noqa: S307
 
         if not raw_string:
             return [(STRING, tokval)]
@@ -198,7 +198,7 @@ class StringsObfuscator:
         j = random.randint(i + 1, len(raw_string))
         original = raw_string[i:j]
 
-        # TODO (204): add option to change the generator
+        # TODO (deoktr): add option to change the generator
         generator = AdvancedGenerator.realistic_generator()
         new = next(generator)
         retries = 0
@@ -225,7 +225,7 @@ class StringsObfuscator:
 
     @staticmethod
     def string_reverse(tokval: str):
-        raw_string = eval(tokval)  # noqa: S307 PGH001
+        raw_string = eval(tokval)  # noqa: S307
         reversed_string = raw_string[::-1]
         return [
             (STRING, repr(reversed_string)),
@@ -237,7 +237,7 @@ class StringsObfuscator:
         ]
 
     def obfuscate_string(self, tokval: str, next_tokval: str):
-        # TODO (204): consider f"" u"" ur"" b"" r"" strings
+        # TODO (deoktr): consider f"" u"" ur"" b"" r"" strings
         # consider empty strings
         # consider calling function on whole string "".format()
         strategies = self.ALL  # list(self.Strats._value2member_map_.values())

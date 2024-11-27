@@ -1,4 +1,4 @@
-# TODO (204): have chunks of random sizes to more closely mimic the IPv6
+# TODO (deoktr): have chunks of random sizes to more closely mimic the IPv6
 import binascii
 from tokenize import NAME, NUMBER, OP, STRING
 
@@ -24,7 +24,7 @@ class IPv6Encoding:
             string_chunk = sc
             if len(string_chunk) < cls.IPV6_LEN:
                 padding = cls.IPV6_LEN - len(string_chunk)
-                # TODO (204): choose this randomly (anything BUT the padding_byte)
+                # TODO (deoktr): choose this randomly (anything BUT the padding_byte)
                 string_chunk += b"1"
                 string_chunk += cls.padding_byte * (padding - 1)
 

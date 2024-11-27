@@ -14456,7 +14456,7 @@ ASPECIALS
 ATTRIBUTE_ENDS
 EXTENDED_ATTRIBUTE_ENDS
 quote_string
-rfc2047_matcher
+rfcdeoktr7_matcher
 TokenList
 syntactic_break
 ew_combine_allowed
@@ -14857,7 +14857,7 @@ encoders
 QP
 BASE64
 SHORTEST
-RFC2047_CHROME_LEN
+RFCdeoktr7_CHROME_LEN
 DEFAULT_CHARSET
 CHARSETS
 ALIASES
@@ -20982,7 +20982,7 @@ class_decorator
 cls196
 cls200
 cls203
-cls204
+clsdeoktr
 cls205
 cls207
 func212
