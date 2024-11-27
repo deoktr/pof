@@ -10,7 +10,7 @@ root = Path(__file__).parent.resolve()
 long_description = (root / "README.md").read_text()
 
 setup(
-    name="pof",
+    name="python-obfuscation-framework",
     version="1.4.1",
     author="deoktr",
     author_email="",
