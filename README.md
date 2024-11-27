@@ -80,6 +80,8 @@ This will install pof inside a virtual env, so you'll need to activate it every 
 ### 3. Docker
 
 ```bash
+git clone https://github.com/deoktr/pof
+cd pof
 docker build -t pof .
 docker run --rm -it pof --help
 ```
