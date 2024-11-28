@@ -6,10 +6,22 @@ Python Obfuscation Framework.
 
 Combine and chain obfuscation methods on a single Python source file.
 
+Install:
+
+```bash
+pip install python-obfuscation-framework
+```
+
 Source:
 
 ```python
 print('Hello, world')
+```
+
+Run:
+
+```bash
+pof src.py > out.py
 ```
 
 Output:
@@ -825,11 +837,7 @@ ruff .
 
 ## TODO
 
-- When installing (in setup.py) add txt files, homoglyphs.txt and names.txt
 - Get the version (in setup.py) from `__init__.py`
-- Increase test coverage
-- Setup package
-- Publish package on pypi
 
 ## License
 
