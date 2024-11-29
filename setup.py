@@ -9,11 +9,13 @@ root = Path(__file__).parent.resolve()
 
 long_description = (root / "README.md").read_text()
 
+with Path("requirements.txt").open() as f:
+    install_requires = f.read().splitlines()
+
 setup(
     name="python-obfuscation-framework",
-    version="1.4.1",
+    version="1.5.0",
     author="deoktr",
-    author_email="",
     description="Python Obfuscation Framework.",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -36,9 +38,12 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
+        "Programming Language :: Python :: 3.14",
         "Topic :: Security",
     ],
     packages=find_packages(include=["pof", "pof.*"]),
+    install_requires=install_requires,
     python_requires=">=3.5",
     entry_points={
         "console_scripts": [

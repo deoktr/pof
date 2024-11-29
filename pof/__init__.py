@@ -16,6 +16,11 @@
 
 from pof.main import BaseObfuscator, Obfuscator
 
-__version__ = "1.4.1"
+try:
+    from importlib.metadata import version
+
+    __version__ = version("python-obfuscation-framework")
+except Exception:
+    __version__ = "0.0.0"
 
 __all__ = ("BaseObfuscator", "Obfuscator", "__version__")
