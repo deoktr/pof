@@ -9,12 +9,14 @@ root = Path(__file__).parent.resolve()
 
 long_description = (root / "README.md").read_text()
 
-with Path("requirements.txt").open() as f:
-    install_requires = f.read().splitlines()
+install_requires = [
+    "rope>=1.0.0",
+    "Pillow>=10.0.0",
+]
 
 setup(
     name="python-obfuscation-framework",
-    version="1.5.0",
+    version="1.4.2",
     author="deoktr",
     description="Python Obfuscation Framework.",
     long_description=long_description,
