@@ -19,18 +19,17 @@ def obfuscate_to_file(obf_class, func_name, source):
 
 
 def run_all():
-    obf = ExampleObfuscator()
-    pof_obf = pof.Obfuscator()
-
     file = pathlib.Path(__file__).parent / "source.py"
     with file.open() as f:
         source = f.read()
 
-    # example
-    obfuscate_to_file(obf, "constant_obf", source)
-
     # defaults from pof
+    pof_obf = pof.Obfuscator()
     obfuscate_to_file(pof_obf, "obfuscate", source)
+
+    # custom example
+    obf = ExampleObfuscator()
+    obfuscate_to_file(obf, "constant_obf", source)
 
 
 if __name__ == "__main__":

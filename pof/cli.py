@@ -18,7 +18,7 @@ class PofCliError(PofError):
 
 
 class CLIObfuscator(Obfuscator):
-    def obfuscator(self, source, obfuscator, *args, **kwargs):
+    def obfuscator(self, source, obfuscator, *args, **kwargs) -> str:
         """Execute a single obfuscator."""
         tokens = self._get_tokens(source)
 
@@ -38,7 +38,7 @@ class CLIObfuscator(Obfuscator):
         tokens = globals()[obfuscator](*args, **kwargs).obfuscate_tokens(tokens)
         return self._untokenize(tokens)
 
-    def stager(self, source, stager, *args, **kwargs):
+    def stager(self, source, stager, *args, **kwargs) -> str:
         """Execute a single stager."""
         tokens = self._get_tokens(source)
 
@@ -58,7 +58,7 @@ class CLIObfuscator(Obfuscator):
         tokens = globals()[stager](*args, **kwargs).generate_stager(tokens)
         return self._untokenize(tokens)
 
-    def evasion(self, source, evasion, *args, **kwargs):
+    def evasion(self, source, evasion, *args, **kwargs) -> str:
         """Execute a single evasion method."""
         tokens = self._get_tokens(source)
 
@@ -94,7 +94,7 @@ handler.setFormatter(formatter)
 logging.basicConfig(level=logging.INFO, handlers=[handler])
 
 
-def _handle(args):
+def _handle(args) -> int:
     if args.version:
         print(__version__)  # noqa: T201
         return 0
@@ -115,11 +115,13 @@ def _handle(args):
 
     logging.info(f"starting obfuscation of {args.input.name}")
     source = args.input.read()
+
     start = time.time()
 
     out = CLIObfuscator().__getattribute__(args.function)(source, *a, **k)
 
     end = time.time()
+
     time_diff = round(end - start, 4)
     logging.info(f"took: {time_diff}s")
     args.output.write(out)
@@ -128,7 +130,7 @@ def _handle(args):
     return 0
 
 
-def _cli():
+def _cli() -> int:
     parser = argparse.ArgumentParser(
         prog="obfuscate",
         description="%(prog)s CLI tool to obfuscate Python source code.",
@@ -137,7 +139,7 @@ def _cli():
     parser.add_argument(
         "--raise-exceptions",
         action="store_true",
-        help="Raise exceptions instead of just printing them.",
+        help="raise exceptions instead of just printing them",
     )
     parser.add_argument(
         "input",
@@ -161,7 +163,7 @@ def _cli():
     )
     parser.add_argument(
         "--logging",
-        help="logging level, INFO, DEBUG, ERROR, CRITICAL",
+        help="logging level, DEBUG, INFO, ERROR, CRITICAL",
         default="INFO",
     )
     parser.add_argument(
@@ -179,7 +181,7 @@ def _cli():
         logging.error(str(e))  # noqa: TRY400
         if args.raise_exceptions:
             raise
-        logging.debug("use `--raise-exceptions` to see full trace back.")
+        logging.debug("use `--raise-exceptions` to see full trace back")
         return 1
 
 

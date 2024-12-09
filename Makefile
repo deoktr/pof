@@ -1,4 +1,4 @@
-.PHONY: test coverage format build_docker
+.PHONY: test coverage format lint build_docker
 
 
 test:
@@ -9,6 +9,9 @@ coverage: test
 
 format:
 	python3 -m black .
+	python3 -m ruff format .
+
+lint:
 	python3 -m ruff check .
 
 build_docker:

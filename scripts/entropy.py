@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/env python3
 # POF, a free and open source Python obfuscation framework.
 # Copyright (C) 2022-2024  POF Team
 #
@@ -32,15 +32,10 @@ import math
 from pathlib import Path
 
 
-def entropy(data: str) -> float:
+def shanon_entropy(data: str) -> float:
     count = collections.Counter(map(ord, data))
-
     pk = [x / sum(count.values()) for x in count.values()]
-
-    base = 2
-
-    # Shannon entropy
-    return -sum([p * math.log(p) / math.log(base) for p in pk])
+    return -sum([p * math.log(p) / math.log(2) for p in pk])
 
 
 if __name__ == "__main__":
@@ -51,6 +46,6 @@ if __name__ == "__main__":
     with file.open() as f:
         content = f.read()
 
-    e = entropy(content)
+    e = shanon_entropy(content)
 
     sys.stdout.write(f"{file} entropy: {e}\n")

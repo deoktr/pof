@@ -255,9 +255,7 @@ class NamesRopeObfuscator:
             # self.foo
             # add 'foo'
             if (
-                next_toknum == NAME
-                and tokval == "."
-                and prev_tokval in declared
+                next_toknum == NAME and tokval == "." and prev_tokval in declared
                 # and prev_tokval == "self"
             ):
                 declared.append(next_tokval)

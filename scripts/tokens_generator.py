@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/bin/env python3
 # POF, a free and open source Python obfuscation framework.
 # Copyright (C) 2022-2024  POF Team
 #

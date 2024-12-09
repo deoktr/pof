@@ -66,9 +66,9 @@ class Obfuscator(BaseObfuscator):
         self,
         source,
         *,
-        remove_logs=False,
-        remove_prints=False,
-        remove_exceptions=False,
+        remove_logs: bool = False,
+        remove_prints: bool = False,
+        remove_exceptions: bool = False,
     ):
         """Complete chained obfuscation."""
         tokens = self._get_tokens(source)

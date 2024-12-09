@@ -19,7 +19,7 @@ class ArgvEvasion(BaseEvasion):
         ]
 
     def check_tokens(self):
-        """Validates system does not use UTC timezone.
+        """Argument check tokens.
 
         `len(sys.argv)==1 or sys.argv[1]!="123"`
         """

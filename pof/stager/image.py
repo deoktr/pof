@@ -22,7 +22,12 @@
 import logging
 from tokenize import DEDENT, INDENT, NAME, NEWLINE, NUMBER, OP, STRING
 
-from PIL import Image
+try:
+    from PIL import Image
+
+    PIL_INSTALLED = True
+except ModuleNotFoundError:
+    PIL_INSTALLED = False
 
 from pof.errors import PofError
 from pof.utils.tokens import untokenize
@@ -142,6 +147,12 @@ class ImageStager:
         exec(decode(sys.argv[1]))
         ```
         """
+        if not PIL_INSTALLED:
+            logging.error(
+                "'pillow' is not installed, cannot user stager ImageStager",
+            )
+            return tokens
+
         code = untokenize(tokens)
 
         if image_input is None:

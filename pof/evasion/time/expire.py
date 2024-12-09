@@ -6,9 +6,9 @@ from pof.evasion.base import BaseEvasion
 
 class ExpireEvasion(BaseEvasion):
     def __init__(self, under_datetime=None, over_datetime=None) -> None:
-        """Expire after a certain time (default 15 minutes)."""
+        """Expire after a certain time (default 2 hours)."""
         if under_datetime is None:
-            under_datetime = datetime.now(tz=UTC) + timedelta(minutes=15)
+            under_datetime = datetime.now(tz=UTC) + timedelta(hours=2)
         self.under_datetime = under_datetime
 
         # TODO (deoktr): remove random timedelta to now, as to not give the date/time of
