@@ -1,2 +1,4 @@
 # install requirements from setup.py
 -e .
+
+setuptools

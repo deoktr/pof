@@ -68,7 +68,7 @@ From [pypi](https://pypi.org/project/python-obfuscation-framework):
 pip install python-obfuscation-framework
 ```
 
-### 2. Python
+### 2. Source
 
 ```bash
 git clone https://github.com/deoktr/pof
@@ -89,10 +89,10 @@ docker build -t pof .
 docker run --rm -it pof --help
 ```
 
-Run inside Docker from a file.
+Run inside Docker from a local file `in.py`:
 
 ```bash
-docker run --rm -v $(pwd):/tmp -it pof -o /tmp/output.py /tmp/input.py
+docker run --rm -v $(pwd):/tmp -it pof /tmp/in.py -o /tmp/out.py
 ```
 
 ### 4. Nix
