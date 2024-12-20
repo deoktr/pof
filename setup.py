@@ -16,7 +16,7 @@ install_requires = [
 
 setup(
     name="python-obfuscation-framework",
-    version="1.4.3",
+    version="1.5.0",
     author="deoktr",
     description="Python Obfuscation Framework.",
     long_description=long_description,

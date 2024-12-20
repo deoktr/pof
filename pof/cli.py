@@ -13,6 +13,21 @@ from pof.stager import *  # noqa: F403
 from pof.stager import __all__ as all_stager
 
 
+handler = logging.StreamHandler()
+formatter = logging.Formatter("%(levelname)s %(message)s\x1b[39m")
+
+# colored logging
+logging.addLevelName(logging.DEBUG, "\x1b[36m[*]")
+logging.addLevelName(logging.INFO, "\x1b[32m[+]")
+logging.addLevelName(logging.WARNING, "\x1b[33m[?]")
+logging.addLevelName(logging.ERROR, "\x1b[31m[!]")
+logging.addLevelName(logging.CRITICAL, "\x1b[31m[!!!]")
+
+handler.setFormatter(formatter)
+
+logging.basicConfig(level=logging.INFO, handlers=[handler])
+
+
 class PofCliError(PofError):
     pass
 
@@ -79,21 +94,6 @@ class CLIObfuscator(Obfuscator):
         return self._untokenize(tokens)
 
 
-handler = logging.StreamHandler()
-formatter = logging.Formatter("%(levelname)s %(message)s\x1b[39m")
-
-# colored logging
-logging.addLevelName(logging.DEBUG, "\x1b[36m[*]")
-logging.addLevelName(logging.INFO, "\x1b[32m[+]")
-logging.addLevelName(logging.WARNING, "\x1b[33m[?]")
-logging.addLevelName(logging.ERROR, "\x1b[31m[!]")
-logging.addLevelName(logging.CRITICAL, "\x1b[31m[!!!]")
-
-handler.setFormatter(formatter)
-
-logging.basicConfig(level=logging.INFO, handlers=[handler])
-
-
 def _handle(args) -> int:
     if args.version:
         print(__version__)  # noqa: T201
@@ -132,14 +132,13 @@ def _handle(args) -> int:
 
 def _cli() -> int:
     parser = argparse.ArgumentParser(
-        prog="obfuscate",
         description="%(prog)s CLI tool to obfuscate Python source code.",
     )
     parser.add_argument("-v", "--version", action="store_true")
     parser.add_argument(
         "--raise-exceptions",
         action="store_true",
-        help="raise exceptions instead of just printing them",
+        help="raise exceptions instead of just logging them",
     )
     parser.add_argument(
         "input",
