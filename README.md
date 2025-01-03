@@ -353,107 +353,74 @@ def decrypt(cipher,key):
 exec(decrypt( b'RkNfWkAcHnxTXVpbGBROW0RdUhMdPg==', b'61644494').decode())
 ```
 
-#### Bz2Obfuscator
+#### Compression
 
 ```python
+# Bz2Obfuscator
 import bz2,marshal
 exec(marshal.loads(bz2.decompress( b'BZh91AY&SY\xcf\xf8\xcd\xdc\x00\x00\ru\x80\xc0\x10\x01\x00@\xe4\x00@\x06%\xd4\x80\x08\x00 \x00"&\x80d\x196\xa1L&\x9a\x03LI\x99\\eR\x15\xcd\xb9\x04\xd4s\x1d\x08\x00\xf8\xbb\x92)\xc2\x84\x86\x7f\xc6n\xe0')))
-```
 
-#### GzipObfuscator
-
-```python
+# GzipObfuscator
 import gzip,marshal
 exec(marshal.loads(gzip.decompress( b'\x1f\x8b\x08\x00$p\x91d\x02\xff\xfb,\xc6\xc0\xc0PP\x94\x99W\xa2\xa1\xee\x91\x9a\x93\x93\xaf\xa3P\x9e_\x94\x93\xa2\xae\xc9\x05\x00\xf2\x90\x8eA\x1b\x00\x00\x00')))
-```
 
-#### LzmaObfuscator
-
-```python
+# LzmaObfuscator
 import lzma,marshal
 exec(marshal.loads(lzma.decompress( b"\xfd7zXZ\x00\x00\x04\xe6\xd6\xb4F\x02\x00!\x01\x16\x00\x00\x00t/\xe5\xa3\x01\x00\x1a\xf3\x16\x00\x00\x00print('Hello, world')\n\x00\x00\xd5\xa4\x00\xec\xfa;\x9c\xf1\x00\x013\x1b\xf7\x19\x88^\x1f\xb6\xf3}\x01\x00\x00\x00\x00\x04YZ")))
-```
 
-#### ZlibObfuscator
-
-```python
+# ZlibObfuscator
 import zlib,marshal
 exec(marshal.loads(zlib.decompress( b'x\x9c\xfb,\xc6\xc0\xc0PP\x94\x99W\xa2\xa1\xee\x91\x9a\x93\x93\xaf\xa3P\x9e_\x94\x93\xa2\xae\xc9\x05\x00va\x08H')))
 ```
 
-#### ASCII85Obfuscator
+#### Encoding
 
 ```python
+# ASCII85Obfuscator
 from base64 import a85decode
 exec(a85decode('E,oZ1F=8M-ASc1$/0K.TEbo86.1-'))
-```
 
-#### Base16Obfuscator
-
-```python
+# Base16Obfuscator
 from base64 import b16decode
 exec(b16decode('7072696E74282748656C6C6F2C20776F726C6427290A'))
-```
 
-#### Base32Obfuscator
-
-```python
+# Base32Obfuscator
 from base64 import b32decode
 exec(b32decode('OBZGS3TUFATUQZLMNRXSYIDXN5ZGYZBHFEFA===='))
-```
 
-#### Base32HexObfuscator
-
-```python
+# Base32HexObfuscator
 from base64 import b32hexdecode
 exec(b32hexdecode('E1P6IRJK50JKGPBCDHNIO83NDTP6OP175450===='))
-```
 
-#### Base64Obfuscator
-
-```python
+# Base64Obfuscator
 from base64 import b64decode
 exec(b64decode('cHJpbnQoJ0hlbGxvLCB3b3JsZCcpCg=='))
-```
 
-#### Base85Obfuscator
-
-```python
+# Base85Obfuscator
 from base64 import b85decode
 exec(b85decode('aB^vGbSNiCWo&G3EFgDpa%^NLDGC'))
-```
 
-#### BinasciiObfuscator
-
-```python
+# BinasciiObfuscator
 import binascii,marshal
 exec(marshal.loads(binascii.a2b_base64( b'8xYAAABwcmludCgnSGVsbG8sIHdvcmxkJykK\n')))
 ```
 
-#### TokensObfuscator
+#### Special Encoding
 
 ```python
+# TokensObfuscator
 from tokenize import untokenize
 exec(untokenize([(1,'print'),(54,'('),(3,"'Hello, world'"),(54,')'),(4,'\n'),(0,''),]))
-```
 
-#### IPv6Obfuscator
-
-```python
+# IPv6Obfuscator
 import binascii
 exec(binascii.a2b_hex(''.join(['7072:696e:7428:2748:656c:6c6f:2c20:776f','726c:6427:290a:1000:0000:0000:0000:0000',]).replace(':','').strip('0')[:-1]))
-```
 
-#### MACObfuscator
-
-```python
+# MACObfuscator
 import binascii
 exec(binascii.a2b_hex(''.join(['70-72-69-6e-74-28','27-48-65-6c-6c-6f','2c-20-77-6f-72-6c','64-27-29-0a-10-00',]).replace('-','').strip('0')[:-1]))
-```
 
-#### UUIDObfuscator
-
-```python
+# UUIDObfuscator
 exec(binascii.a2b_hex("".join(['7072696e-7428-2748-656c-6c6f2c20776f','726c6427-290a-1000-0000-000000000000',]).replace("-","").strip('0')[:-1]))
 ```
 
@@ -613,7 +580,7 @@ The `out2.py` and `out3.py` files are identical, they both contain the source co
 
 Generators are used to generate new names, they can be used to classes, variables, functions, constants or any other.
 
-`BasicGenerator.alphabet_generator`
+`BasicGenerator.alphabet_generator`:
 
 ```
 kMX94Fcb
@@ -622,7 +589,7 @@ lNRxu3hk
 b5PK35uR_t
 ```
 
-`AdvancedGenerator.realistic_generator`
+`AdvancedGenerator.realistic_generator`:
 
 Useful to create variables that look realistic.
 
@@ -633,7 +600,7 @@ ContextInputValidation
 is_auth
 ```
 
-`AdvancedGenerator.fixed_length_generator`
+`AdvancedGenerator.fixed_length_generator`:
 
 Inspired by: [pyob.oxyry.com](https://pyob.oxyry.com/).
 
@@ -644,7 +611,7 @@ O0OOOO0000OO0OO00
 O000000OO0O0O0OO0
 ```
 
-`UnicodeGenerator.katakana_generator`
+`UnicodeGenerator.katakana_generator`:
 
 ```
 シ
@@ -655,7 +622,7 @@ O000000OO0O0O0OO0
 
 Yes they are valid Python variable name.
 
-Usage
+Usage:
 
 ```python
 
@@ -841,6 +808,7 @@ No effort is made to support Python 2, most obfuscator, stagers, and evasion sho
 ## TODO
 
 - Add option to prepend a shebang, and add ability to customize it
+- Fix multi line strings
 
 ## License
 

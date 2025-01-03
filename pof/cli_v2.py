@@ -1,3 +1,5 @@
+# ruff: noqa: F405, C901, PLR0912, PLR0915
+
 import argparse
 import logging
 import sys
@@ -8,7 +10,6 @@ from pof.errors import PofError
 from pof.evasion import *  # noqa: F403
 from pof.obfuscator import *  # noqa: F403
 from pof.stager import *  # noqa: F403
-
 
 handler = logging.StreamHandler()
 formatter = logging.Formatter("%(levelname)s %(message)s\x1b[39m")
@@ -208,17 +209,18 @@ def add_evasion(tokens, args):
     if args.eva_directory_exist:
         logging.debug("staging directory_exist")
         if args.eva_directory_exist_dir is None:
-            raise PofCliFlagError("--eva-directory-exist-dir")
+            flag = "--eva-directory-exist-dir"
+            raise PofCliFlagError(flag)
         tokens = DirectoryExistEvasion(args.eva_directory_exist_dir).add_evasion(
             tokens,
         )
     if args.eva_directory_list_exist:
         logging.debug("staging directory_list_exist")
-        # TODO: split input list
+        # TODO (deoktr): split input list
         tokens = DirectoryListExistEvasion().add_evasion(tokens)
     if args.eva_directory_list_missing:
         logging.debug("staging directory_list_missing")
-        # TODO: split input list
+        # TODO (deoktr): split input list
         tokens = DirectoryListMissingEvasion().add_evasion(tokens)
     if args.eva_directory_missing:
         logging.debug("staging directory_missing")
@@ -243,7 +245,7 @@ def add_evasion(tokens, args):
         tokens = FileMissingEvasion().add_evasion(tokens)
     if args.eva_tmp:
         logging.debug("staging tmp")
-        # TODO: choose depending on target OS
+        # TODO (deoktr): choose depending on target OS
         # LinuxTmpCountEvasion
         # TmpCountEvasion
         # WinTmpCountEvasion
@@ -317,7 +319,7 @@ def _handle(args) -> int:
     logger = logging.getLogger()
     logger.setLevel(level)
 
-    logging.info(f"starting obfuscation of {args.input.name}")
+    logging.info("starting obfuscation of %s", args.input.name)
     source = args.input.read()
 
     start = time.time()
@@ -327,9 +329,9 @@ def _handle(args) -> int:
     end = time.time()
 
     time_diff = round(end - start, 4)
-    logging.info(f"took: {time_diff}s")
+    logging.info("took: %ds", time_diff)
     args.output.write(out)
-    logging.info(f"successfully obfuscated {args.input.name} to {args.output.name}")
+    logging.info("successfully obfuscated %s to %s", args.input.name, args.output.name)
     # no errors
     return 0
 
