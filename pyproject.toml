@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta" 
 
 [project]
-name = "pof" 
+name = "python-obfuscation-framework" 
 version = "1.5.1"
 description = "Python Obfuscation Framework"
 readme = "README.md"
