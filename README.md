@@ -673,64 +673,86 @@ The true power of pof is in chaining multiple different obfuscation techniques e
 For example this is a snippet of the default obfuscator:
 
 ```python
-def obfuscate(source):
-    tokens = get_tokens(source)
+import random
 
-    # get all the names and add them to the RESERVED_WORDS for the
-    # generators
-    reserved_words_add = NameExtract.get_names(tokens)
-    BaseGenerator.extend_reserved(reserved_words_add)
+from pof import BaseObfuscator
+from pof.obfuscator import (
+    BuiltinsObfuscator,
+    CommentsObfuscator,
+    ConstantsObfuscator,
+    ExceptionObfuscator,
+    GlobalsObfuscator,
+    LoggingObfuscator,
+    # NamesObfuscator,
+    NumberObfuscator,
+    PrintObfuscator,
+    StringsObfuscator,
+)
+from pof.utils.extract_names import NameExtract
+from pof.utils.generator import AdvancedGenerator, BaseGenerator, BasicGenerator
 
-    tokens = CommentsObfuscator().obfuscate_tokens(tokens)
-    tokens = LoggingObfuscator().obfuscate_tokens(tokens)
-    tokens = PrintObfuscator().obfuscate_tokens(tokens)
-    ex_generator = BasicGenerator.number_name_generator()
-    tokens = ExceptionObfuscator(
-        add_codes=True,
-        generator=ex_generator,
-    ).obfuscate_tokens(tokens)
 
-    # configure generator
-    gen_dict = {
-        86: AdvancedGenerator.realistic_generator(),
-        10: BasicGenerator.alphabet_generator(),
-        4: BasicGenerator.number_name_generator(length=random.randint(2, 5)),
-    }
-    generator = AdvancedGenerator.multi_generator(gen_dict)
+class ExampleObfuscator(BaseObfuscator):
+    def obfuscate(self, source):
+        tokens = self._get_tokens(source)
 
-    # core obfuscation
-    tokens = ConstantsObfuscator(
-        generator=generator,
-        obf_number_rate=0.7,
-        obf_string_rate=0.1,
-        obf_string_rate=0.1,
-        obf_builtins_rate=0.3,
-    ).obfuscate_tokens(tokens)
+        # get all the names and add them to the RESERVED_WORDS for the generators
+        reserved_words_add = NameExtract.get_names(tokens)
+        BaseGenerator.extend_reserved(reserved_words_add)
 
-    tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        tokens = CommentsObfuscator().obfuscate_tokens(tokens)
+        tokens = LoggingObfuscator().obfuscate_tokens(tokens)
+        tokens = PrintObfuscator().obfuscate_tokens(tokens)
+        ex_generator = BasicGenerator.number_name_generator()
+        tokens = ExceptionObfuscator(
+            add_codes=True,
+            generator=ex_generator,
+        ).obfuscate_tokens(tokens)
 
-    tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
-    tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+        # configure generator
+        gen_dict = {
+            86: AdvancedGenerator.realistic_generator(),
+            10: BasicGenerator.alphabet_generator(),
+            4: BasicGenerator.number_name_generator(length=random.randint(2, 5)),
+        }
+        generator = AdvancedGenerator.multi_generator(gen_dict)
 
-    b64decode_name = next(generator)
-    b85decode_name = next(generator)
-    string_obfuscator = StringsObfuscator(
-        import_b64decode=True,
-        import_b85decode=True,
-        b64decode_name=b64decode_name,
-        b85decode_name=b85decode_name,
-    )
-    tokens = string_obfuscator.obfuscate_tokens(tokens)
-    string_obfuscator.import_b64decode = False
-    string_obfuscator.import_b85decode = False
+        # core obfuscation
+        tokens = ConstantsObfuscator(
+            generator=generator,
+            obf_number_rate=0.7,
+            obf_string_rate=0.1,
+            obf_builtins_rate=0.3,
+        ).obfuscate_tokens(tokens)
 
-    for _ in range(2):
-        tokens = NumberObfuscator().obfuscate_tokens(tokens)
-    tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
-    for _ in range(2):
+        # FIXME: broken for the moment
+        # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+
+        tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
+        tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+
+        b64decode_name = next(generator)
+        b85decode_name = next(generator)
+        string_obfuscator = StringsObfuscator(
+            import_b64decode=True,
+            import_b85decode=True,
+            b64decode_name=b64decode_name,
+            b85decode_name=b85decode_name,
+        )
         tokens = string_obfuscator.obfuscate_tokens(tokens)
+        string_obfuscator.import_b64decode = False
+        string_obfuscator.import_b85decode = False
 
-    return untokenize(tokens)
+        for _ in range(2):
+            tokens = NumberObfuscator().obfuscate_tokens(tokens)
+        tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+        for _ in range(2):
+            tokens = string_obfuscator.obfuscate_tokens(tokens)
+
+        return self._untokenize(tokens)
+
+
+print(ExampleObfuscator().obfuscate(open("source.py", "r").read()))
 ```
 
 In this example we can see that first we remove comments, logging, print statements, and change the content of exceptions, and then we start to obfuscate constants, names, globals, builtins, strings, then strings and numbers multiple times, and we finally convert the tokens back to code.
