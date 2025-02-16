@@ -773,7 +773,7 @@ yara --no-warnings yara/python.yar file.py
 
 ## Development
 
-### Project
+Project:
 
 - `pof`: contains all the pof source code
   - `pof/obfuscator`: contains obfuscators
@@ -785,7 +785,7 @@ yara --no-warnings yara/python.yar file.py
 - `scripts`: some useful scripts to develop or use pof
 - `yara`: some yara rules to detect pof obfuscated code
 
-### Setup
+Setup:
 
 ```bash
 python3 -m venv venv
@@ -794,8 +794,9 @@ python3 -m venv venv
 source ./venv/bin/activate
 
 # install dep
-pip install -r requirements.txt
-pip install -r requirements.dev.txt
+pip install -e .
+pip install -e .[dev]
+pip install -e .[test]
 ```
 
 Run pof:
@@ -804,23 +805,32 @@ Run pof:
 ./pof.py --help
 ```
 
-### Run tests
+Run tests:
 
 ```bash
 pytest
 ```
 
-### Code quality
-
-```bash
-make format
-```
-
-Or
+Format:
 
 ```bash
 black .
-ruff .
+ruff format .
+```
+
+Lint:
+
+```bash
+ruff check .
+```
+
+Test build package:
+
+```bash
+pip install build twine check-manifest
+check-manifest --ignore "tests/**"
+python3 -m build
+python3 -m twine check dist/*
 ```
 
 ## Python 2

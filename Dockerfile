@@ -6,7 +6,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir --upgrade -r requirements.txt \
-	&& ./setup.py install
+RUN pip install --no-cache-dir --upgrade .
 
 ENTRYPOINT ["pof"]

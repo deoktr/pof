@@ -1,3 +1,67 @@
+[build-system]
+requires = ["setuptools"] 
+build-backend = "setuptools.build_meta" 
+
+[project]
+name = "pof" 
+version = "1.5.1"
+description = "Python Obfuscation Framework"
+readme = "README.md"
+requires-python = ">=3.5"
+license = { file = "LICENSE" }
+keywords = ["cybersecurity", "obfuscation", "obfuscator", "stager", "payload"]
+authors = [{ name = "deoktr", email = "35725720+deoktr@users.noreply.github.com" }]
+maintainers = [{ name = "deoktr", email = "35725720+deoktr@users.noreply.github.com" }]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.5",
+  "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Security",
+]
+dependencies = [
+  "rope>=1.0.0",
+  "Pillow>=10.0.0",
+]
+# dynamic = ["version"]
+
+[project.optional-dependencies]
+dev = [
+  "ruff==0.8.0",
+  "black==24.10.0",
+  "pyinstrument",
+]
+test = [
+  "pytest",
+  "pytest-cov",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/deoktr/pof"
+"Bug Reports" = "https://github.com/deoktr/pof/issues"
+"Source" = "https://github.com/deoktr/pof/"
+
+[project.scripts]
+pof = "pof.cli:_cli"
+
+[tool.setuptools]
+packages = ["pof"]
+package-data = { "pof" = ["*.txt"] }
+
+# [tool.setuptools.dynamic]
+# version = {attr = "pof.__version__"}
+
 [tool.black]
 target-version = ["py313"]
 extend-exclude = """

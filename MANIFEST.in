@@ -1,2 +1,13 @@
+recursive-include pof *.py
 include pof/utils/generator/names.txt
 include pof/utils/se/homoglyphs.txt
+
+recursive-include tests *
+recursive-exclude examples *
+recursive-exclude scripts *
+recursive-exclude wip *
+recursive-exclude yara *
+recursive-exclude pof *.md
+exclude Dockerfile
+exclude Makefile
+exclude pof.py
