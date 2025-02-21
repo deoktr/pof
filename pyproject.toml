@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python-obfuscation-framework" 
-version = "1.5.1"
+version = "1.5.2"
 description = "Python Obfuscation Framework"
 readme = "README.md"
 requires-python = ">=3.5"
@@ -15,7 +15,7 @@ maintainers = [{ name = "deoktr", email = "35725720+deoktr@users.noreply.github.
 classifiers = [
   "Development Status :: 4 - Beta",
   "Intended Audience :: Developers",
-  "License :: OSI Approved :: MIT License",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
   "Natural Language :: English",
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.5",
@@ -45,6 +45,11 @@ dev = [
 test = [
   "pytest",
   "pytest-cov",
+]
+build = [
+  "build",
+  "twine",
+  "check-manifest",
 ]
 
 [project.urls]

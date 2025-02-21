@@ -1,3 +1,19 @@
+# POF, a free and open source Python obfuscation framework.
+# Copyright (C) 2022 - 2025  POF Team
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 # Remove exception text, or replace it with a code.
 # Replace text with code to still be able to use exception message on error
 #       raise Exception("text...") --> raise Exception("42")
@@ -53,13 +69,7 @@ class ExceptionObfuscator:
                 if self.add_codes:
                     current_code = self.get_code()
                     new_tokens.extend([(STRING, f'"{current_code}"')])
-                    logging.debug(
-                        "Exception code {current_code} --> {next_tokval}",
-                        extra={
-                            "current_code": current_code,
-                            "next_tokval": next_tokval,
-                        },
-                    )
+                    logging.debug("Exception code %s --> %s", current_code, next_tokval)
 
             elif prev_tokval == "raise" and prev_toknum == NAME:
                 is_exception = True

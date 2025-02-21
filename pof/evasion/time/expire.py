@@ -1,3 +1,19 @@
+# POF, a free and open source Python obfuscation framework.
+# Copyright (C) 2022 - 2025  POF Team
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 from datetime import UTC, datetime, timedelta
 from tokenize import LPAR, NAME, NUMBER, OP, RPAR
 
@@ -29,8 +45,8 @@ class ExpireEvasion(BaseEvasion):
     def check_tokens(self):
         """Time expiry check tokens.
 
-        `datetime(2023,1,1,1,1)>datetime.utcnow()
-            or datetime.utcnow()>datetime(2023,1,2,1,1,1)`
+        `datetime(2023,1,1,1,1)>datetime.now()
+            or datetime.now()>datetime(2023,1,2,1,1,1)`
         """
         return [
             (NAME, "datetime"),
@@ -48,13 +64,13 @@ class ExpireEvasion(BaseEvasion):
             (OP, ">"),
             (NAME, "datetime"),
             (OP, "."),
-            (NAME, "utcnow"),
+            (NAME, "now"),
             (LPAR, "("),
             (RPAR, ")"),
             (NAME, "or"),
             (NAME, "datetime"),
             (OP, "."),
-            (NAME, "utcnow"),
+            (NAME, "now"),
             (LPAR, "("),
             (RPAR, ")"),
             (OP, ">"),

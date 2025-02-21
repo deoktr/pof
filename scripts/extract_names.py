@@ -1,6 +1,6 @@
 #!/bin/env python3
 # POF, a free and open source Python obfuscation framework.
-# Copyright (C) 2022-2024  POF Team
+# Copyright (C) 2022 - 2025  POF Team
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-#
+
 # ruff: noqa: T201
 """Extract names.
 

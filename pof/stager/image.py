@@ -1,3 +1,19 @@
+# POF, a free and open source Python obfuscation framework.
+# Copyright (C) 2022 - 2025  POF Team
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 # TODO (deoktr): create a Stegano class in utils to be able to use this stager technique
 # elsewhere, for example could be used to spread certain pieces of the source
 # code in different images
@@ -105,14 +121,8 @@ class ImageStager:
                 # modify pixels until the end of the message
                 if msg_i >= msg_len:
                     im.save(im_out)
-                    logging.info(
-                        "output image written to: {im_out}",
-                        extra={"im_out": im_out},
-                    )
-                    logging.info(
-                        "run with: python3 path/to/stager.py {im_out}",
-                        extra={"im_out": im_out},
-                    )
+                    logging.info("output image written to: %s", im_out)
+                    logging.info("run with: python3 path/to/stager.py %s", im_out)
                     return
 
         msg = "can't store message into the image because it's too big"

@@ -10,7 +10,7 @@ def get_random_letter():
 
 def get_random_name(name_len):
     # this is a comment
-    name = get_random_letter().upper()
+    name = get_random_letter()
     for _ in range(name_len - 1):
         name += get_random_letter()
     return name

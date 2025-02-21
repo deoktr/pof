@@ -21,7 +21,7 @@ print('Hello, world')
 Run:
 
 ```bash
-pof src.py > out.py
+pof in.py -o out.py
 ```
 
 Output:
@@ -86,13 +86,13 @@ This will install pof inside a virtual env, so you'll need to activate it every 
 git clone https://github.com/deoktr/pof
 cd pof
 docker build -t pof .
-docker run --rm -it pof --help
+docker run --rm pof --help
 ```
 
 Run inside Docker from a local file `in.py`:
 
 ```bash
-docker run --rm -v $(pwd):/tmp -it pof /tmp/in.py -o /tmp/out.py
+docker run --rm -v $(pwd):/tmp pof /tmp/in.py -o /tmp/out.py
 ```
 
 ### 4. Nix
@@ -693,31 +693,37 @@ from pof.utils.generator import AdvancedGenerator, BaseGenerator, BasicGenerator
 
 
 class ExampleObfuscator(BaseObfuscator):
-    def obfuscate(self, source):
+    def obfuscate(self, source: str):
+        # tokenize Python source code
         tokens = self._get_tokens(source)
 
         # get all the names and add them to the RESERVED_WORDS for the generators
         reserved_words_add = NameExtract.get_names(tokens)
         BaseGenerator.extend_reserved(reserved_words_add)
 
+        # remove comments
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
+
+        # replace logging message with reversable random code
         tokens = LoggingObfuscator().obfuscate_tokens(tokens)
+
+        # remove print statements
         tokens = PrintObfuscator().obfuscate_tokens(tokens)
-        ex_generator = BasicGenerator.number_name_generator()
+
+        # replace exceptions with reversable random names
         tokens = ExceptionObfuscator(
             add_codes=True,
-            generator=ex_generator,
+            generator=BasicGenerator.number_name_generator(),
         ).obfuscate_tokens(tokens)
 
-        # configure generator
-        gen_dict = {
+        # configure global generator
+        generator = AdvancedGenerator.multi_generator({
             86: AdvancedGenerator.realistic_generator(),
             10: BasicGenerator.alphabet_generator(),
             4: BasicGenerator.number_name_generator(length=random.randint(2, 5)),
-        }
-        generator = AdvancedGenerator.multi_generator(gen_dict)
+        })
 
-        # core obfuscation
+        # extract values and function to make them constant
         tokens = ConstantsObfuscator(
             generator=generator,
             obf_number_rate=0.7,
@@ -728,7 +734,10 @@ class ExampleObfuscator(BaseObfuscator):
         # FIXME: broken for the moment
         # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
 
+        # obfuscate function calls by calling `globals()` instead
         tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
+
+        # obfuscate builtins in many different ways
         tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
 
         b64decode_name = next(generator)
@@ -739,16 +748,26 @@ class ExampleObfuscator(BaseObfuscator):
             b64decode_name=b64decode_name,
             b85decode_name=b85decode_name,
         )
+
+        # obfuscate strings in many different ways
         tokens = string_obfuscator.obfuscate_tokens(tokens)
+
+        # for futur usage of `string_obfuscator` don't re-import base64 and 85
         string_obfuscator.import_b64decode = False
         string_obfuscator.import_b85decode = False
 
+        # obfuscate numbers twice in a row in many different ways
         for _ in range(2):
             tokens = NumberObfuscator().obfuscate_tokens(tokens)
+
+        # obfuscate builtins once again
         tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+
+        # obfuscate strings two more times
         for _ in range(2):
             tokens = string_obfuscator.obfuscate_tokens(tokens)
 
+        # and produce Python source code from tokens
         return self._untokenize(tokens)
 
 
@@ -827,7 +846,8 @@ ruff check .
 Test build package:
 
 ```bash
-pip install build twine check-manifest
+pip install -e .[build]
+
 check-manifest --ignore "tests/**"
 python3 -m build
 python3 -m twine check dist/*
@@ -839,6 +859,7 @@ No effort is made to support Python 2, most obfuscator, stagers, and evasion sho
 
 ## TODO
 
+- Fix `NamesObfuscator`
 - Add option to prepend a shebang, and add ability to customize it
 - Fix multi line strings
 
