@@ -355,7 +355,7 @@ class NamesRopeObfuscator:
         todo = len(local_names)
         for done, name in enumerate(local_names):
             new_name = self.generate_new_name()
-            msg = f"{done}/{todo} changing var {name} to {new_name}"
+            msg = f"{done + 1}/{todo} changing var {name} to {new_name}"
             logging.debug(msg)
             try:
                 old_name = mod.get_attribute(name)

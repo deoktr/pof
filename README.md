@@ -75,7 +75,7 @@ git clone https://github.com/deoktr/pof
 cd pof
 python -m venv venv
 source ./venv/bin/activate
-./setup.py install
+pip install .
 ```
 
 This will install pof inside a virtual env, so you'll need to activate it every time you want to use it.
@@ -249,12 +249,13 @@ t4Bo(vVlJ)
 
 Extract variables in the same context level, meaning if inside a function will add the variable at the beginning of it.
 
-Note that right now this function is broken and can fail.
-
 ```python
 var='Hello, world'
 print(var)
 ```
+
+> [!WARNING]
+> Right now this function is broken and can fail.
 
 #### CallObfuscator
 
@@ -337,8 +338,6 @@ exec(rc4decrypt('7zSRE6YHmdwpx2zT1Q2xPoPwzztXRZNQSKeX2LFIKBhl7uJMAs9jj0Hlec6y3wj
 
 #### XORObfuscator
 
-Warning: like for the RC4 cipher the XOR obfuscator shouldn't be used for security purposes, its main goal is to evade common security tools, not protect the information! Plus the XOR cipher is really weak and easy to crack.
-
 ```python
 from base64 import b64decode
 
@@ -352,6 +351,9 @@ def decrypt(cipher,key):
     return text
 exec(decrypt( b'RkNfWkAcHnxTXVpbGBROW0RdUhMdPg==', b'61644494').decode())
 ```
+
+> [!WARNING]
+> Like for the RC4 cipher the XOR obfuscator shouldn't be used for security purposes, its main goal is to evade common security tools, not protect the information! Plus the XOR cipher is really weak and easy to crack.
 
 #### Compression
 

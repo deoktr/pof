@@ -367,7 +367,7 @@ class StringsObfuscator:
                 try:
                     new_tokens = self.obfuscate_string(tokval, next_tokval)
                 except Exception:
-                    logging.exception()
+                    logging.exception("failed to get new token")
 
             if new_tokens:
                 result.extend(new_tokens)

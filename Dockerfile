@@ -6,6 +6,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install --no-cache-dir --upgrade .
+RUN pip install --no-cache-dir .
 
 ENTRYPOINT ["pof"]
