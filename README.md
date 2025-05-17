@@ -165,7 +165,10 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 print('dlrow ,olleH'[::-1])
 
 # Replace
-rint('Helnelemd'.replace('nelem','lo, worl'))
+print('Helnelemd'.replace('nelem','lo, worl'))
+
+# One on n
+print("".join([d if g%3==0 else""for g,d in enumerate('H9IesYlvJl5loU4,dK nDw51ovsrozl0UdoI!jL')]))
 
 # Unicode
 print('\u0048\u0065\u006c\u006c\u006f\u002c\u0020\u0077\u006f\u0072\u006c\u0064')

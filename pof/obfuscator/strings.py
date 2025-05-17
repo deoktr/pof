@@ -53,6 +53,7 @@ class StringsObfuscator:
         SHIFT = 6
         REPLACE = 7
         REVERSE = 8
+        ONE_ON_N = 9
 
     ALL = (
         Strats.BASE64,
@@ -252,7 +253,63 @@ class StringsObfuscator:
             (OP, "]"),
         ]
 
-    def obfuscate_string(self, tokval: str, next_tokval: str):
+    @staticmethod
+    def string_one_on_n(tokval: str):
+        """One on N.
+
+        "".join([l if x%2 ==0 else "" for x, l in
+            enumerate("Heeeleleoe,e eweoerelede!e")])
+        """
+        raw_string = eval(tokval)  # noqa: S307
+        if not raw_string:
+            return [(STRING, tokval)]
+
+        # steps between each actual characters
+        steps = random.randint(1, 7)
+
+        obf_string = raw_string
+        obf_string = ""
+        for char in raw_string:
+            t = "".join(
+                random.choices(
+                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890",
+                    k=(steps - 1),
+                ),
+            )
+            obf_string += char + t
+
+        var_x = random.choice("abcdefghijklmnopqrstuvwxyz")
+        var_l = random.choice("abcdefghijklmnopqrstuvwxyz")
+
+        return [
+            (STRING, '""'),
+            (OP, "."),
+            (NAME, "join"),
+            (LPAR, "("),
+            (OP, "["),
+            (NAME, var_l),
+            (NAME, "if"),
+            (NAME, var_x),
+            (OP, "%"),
+            (NUMBER, str(steps)),
+            (OP, "=="),
+            (NUMBER, "0"),
+            (NAME, "else"),
+            (STRING, '""'),
+            (NAME, "for"),
+            (NAME, var_x),
+            (OP, ","),
+            (NAME, var_l),
+            (NAME, "in"),
+            (NAME, "enumerate"),
+            (LPAR, "("),
+            (STRING, repr(obf_string)),
+            (RPAR, ")"),
+            (OP, "]"),
+            (OP, ")"),
+        ]
+
+    def obfuscate_string(self, tokval: str, next_tokval: str):  # NOQA: C901
         # TODO (deoktr): consider f"" u"" ur"" b"" r"" strings
         # consider empty strings
         # consider calling function on whole string "".format()
@@ -293,6 +350,8 @@ class StringsObfuscator:
             tokens = self.string_replace(tokval)
         elif strategy == self.Strats.REVERSE:
             tokens = self.string_reverse(tokval)
+        elif strategy == self.Strats.ONE_ON_N:
+            tokens = self.string_one_on_n(tokval)
         else:
             logging.error("unsupported strategy %s", strategy)
             return None
