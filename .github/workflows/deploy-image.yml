@@ -1,9 +1,8 @@
-name: deploy-image
+name: Deploy Image
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
+  release:
+    types: [published]
 
 env:
   REGISTRY: ghcr.io
