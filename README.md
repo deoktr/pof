@@ -70,6 +70,8 @@ pip install python-obfuscation-framework
 
 ### 2. Source
 
+Install from source inside a virtual env:
+
 ```bash
 git clone https://github.com/deoktr/pof
 cd pof
@@ -81,6 +83,19 @@ pip install .
 This will install pof inside a virtual env, so you'll need to activate it every time you want to use it.
 
 ### 3. Docker
+
+```bash
+docker pull ghcr.io/deoktr/pof:latest
+docker run --rm ghcr.io/deoktr/pof:latest --help
+```
+
+Run inside Docker from a local file `in.py`:
+
+```bash
+docker run --rm -v $(pwd):/tmp ghcr.io/deoktr/pof:latest /tmp/in.py -o /tmp/out.py
+```
+
+### 4. Docker Source
 
 ```bash
 git clone https://github.com/deoktr/pof
@@ -95,7 +110,7 @@ Run inside Docker from a local file `in.py`:
 docker run --rm -v $(pwd):/tmp pof /tmp/in.py -o /tmp/out.py
 ```
 
-### 4. Nix
+### 5. Nix
 
 From [github.com/onix-sec/nixsecpkgs](https://github.com/onix-sec/nixsecpkgs):
 

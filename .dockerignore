@@ -1,0 +1,6 @@
+.github/
+examples/
+scripts/
+tests/
+wip/
+yara/
