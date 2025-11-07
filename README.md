@@ -58,7 +58,9 @@ You could also use most of the stagers to stage payload that are not built in Py
 
 ## Install
 
-There are 4 installation options, with PIP, a virtualenv, a Docker container, or with Nix.
+There are multiple installation options, with PIP, a virtualenv, a container, or with Nix.
+
+There is also the option to run the web server, see [server/README.md](./server/README.md).
 
 ### 1. PIP
 

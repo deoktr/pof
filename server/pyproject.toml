@@ -1,10 +1,6 @@
-[build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
-
 [project]
-name = "python-obfuscation-framework"
-version = "1.6.2"
+name = "python-obfuscation-framework-server"
+version = "1.0.0"
 description = "Python Obfuscation Framework"
 readme = "README.md"
 requires-python = ">=3.5"
@@ -30,25 +26,16 @@ classifiers = [
   "Topic :: Security",
 ]
 dependencies = [
-  "rope>=1.0.0",
-  "Pillow>=10.0.0",
+  "flask>=3.1.2",
+  "pygments>=2.19.2",
+  "python-obfuscation-framework>=1.6.2",
+  "gunicorn>=23.0.0",
 ]
-# dynamic = ["version"]
 
 [project.optional-dependencies]
 dev = [
   "ruff==0.8.0",
   "black==24.10.0",
-  "pyinstrument",
-]
-test = [
-  "pytest",
-  "pytest-cov",
-]
-build = [
-  "build",
-  "twine",
-  "check-manifest",
 ]
 
 [project.urls]
@@ -56,24 +43,8 @@ build = [
 "Bug Reports" = "https://github.com/deoktr/pof/issues"
 "Source" = "https://github.com/deoktr/pof/"
 
-[project.scripts]
-pof = "pof.cli:_cli"
-
-[tool.setuptools]
-packages = ["pof"]
-package-data = { "pof" = ["*.txt"] }
-
-# [tool.setuptools.dynamic]
-# version = {attr = "pof.__version__"}
-
 [tool.black]
 target-version = ["py313"]
-extend-exclude = """
-(
-  ^/tests/obfuscator/test_names/code/
-  | ^/examples/out/
-)
-"""
 
 [tool.ruff]
 fix = true
@@ -90,23 +61,14 @@ exclude = [
     "build",
     "venv",
     "docs",
-    "wip/",
-    "examples/",
-    "hello.py",
-    "examples/out/",
 ]
 lint.select = ["ALL"]
 lint.ignore = ["ANN", "FIX"]
 lint.extend-ignore = ["ERA001", "S311", "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107", "TD001", "TD003"]
 lint.isort.known-local-folder = ["pof", "test"]
 lint.pydocstyle.convention = "google"
-lint.extend-per-file-ignores."pof/cli.py" = ["G004"]
 lint.flake8-copyright.author = "deoktr"
 
 [tool.mypy]
 ignore_missing_imports = true
 show_error_codes = true
-exclude = ["^tests/obfuscator/test_names/code/.*$"]
-
-[tool.pytest.ini_options]
-addopts = "-p no:warnings --cov=pof --no-cov-on-fail"

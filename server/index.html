@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTMX Example</title>
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"></script>
+  <link rel="stylesheet" href="pygment.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+    }
+    .container {
+      border: 1px solid #ccc;
+      padding-left: 1em;
+      padding-right: 1em;
+      min-height: 2em;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow: auto;
+    }
+    textarea {
+      /* width: 100%; */
+      padding: 1em;
+      font-family: monospace;
+      border: 1px solid #ccc;
+    }
+    #output {
+      border: 1px solid #ccc;
+      padding-left: 1em;
+      padding-right: 1em;
+      font-family: monospace;
+      white-space: pre-wrap;
+      overflow: auto;
+    }
+    button {
+      margin-top: 0.5em;
+      padding: 0.4em 1.0em;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #fff;
+      background-color: #2563eb;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #3b82f6;
+    }
+  </style>
+</head>
+<body>
+  <h1>POF Web Server</h1>
+  <p>Your Python script sources:</p>
+  <form hx-post="/html" hx-target="#output" hx-swap="innerHTML">
+    <textarea id="src" name="src" rows="4" cols="80" required>print("Hello, world!")</textarea>
+    <br>
+    <button type="submit">Obfuscate</button>
+  </form>
+  <p>Obfuscated output:</p>
+  <div id="output" class="container"></div>
+</body>
+</html>

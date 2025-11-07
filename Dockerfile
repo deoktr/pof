@@ -11,4 +11,4 @@ RUN /venv/bin/pip install --disable-pip-version-check --no-cache-dir .
 
 FROM gcr.io/distroless/python3-debian12
 COPY --from=build-venv /venv /venv
-ENTRYPOINT [ "/venv/bin/python3", "-m", "pof" ]
+ENTRYPOINT ["/venv/bin/python3", "-m", "pof"]
