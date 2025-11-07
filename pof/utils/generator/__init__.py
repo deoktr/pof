@@ -22,6 +22,13 @@ https://docs.python.org/3/reference/lexical_analysis.html#identifiers.
 from .advanced import AdvancedGenerator
 from .base import BaseGenerator
 from .basic import BasicGenerator
+from .comments import CommentGenerator
 from .unicode import UnicodeGenerator
 
-__all__ = ["AdvancedGenerator", "BaseGenerator", "BasicGenerator", "UnicodeGenerator"]
+__all__ = [
+    "AdvancedGenerator",
+    "BaseGenerator",
+    "BasicGenerator",
+    "CommentGenerator",
+    "UnicodeGenerator",
+]

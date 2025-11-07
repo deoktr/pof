@@ -2,26 +2,21 @@
 
 [![python-obfuscation-framework-pypi](https://img.shields.io/pypi/v/python-obfuscation-framework.svg)](https://pypi.org/project/python-obfuscation-framework)
 
-Python Obfuscation Framework.
+Python Obfuscation Framework, a complete Python offensive security toolkit to generate staged obfuscated payloads.
 
-Combine and chain obfuscation methods on a single Python source file.
+pof will allow you to:
 
-Install:
+- **Create staged payloads**, store stages inside images, on trusted sites, encrypt, compress, or encode them, and much more.
+- **Slow down static analysis** of the payload or the stage.
+- **Evade sandbox** by checking host information like MAC addresses, CPU count, memory count, uptime, and much more.
+- **Add guardrails** to ensure the payload only execute on the desired target host by verifying for username, hostname, domainame and much more.
+- **Prevent dynamic analysis** by detecting debugging or tracing via malloc.
+- **Enable automation** to produce numerous variant of the same payload.
 
-```bash
-pip install python-obfuscation-framework
-```
-
-Source:
+Example obfuscation:
 
 ```python
-print('Hello, world')
-```
-
-Run:
-
-```bash
-pof in.py -o out.py
+print("Hello, world")
 ```
 
 Output:
@@ -33,28 +28,6 @@ globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'[::-1]])].__dict__[_5269('
 ```
 
 More examples and usage can be found in `examples/` or in the section bellow.
-
-## Goals
-
-The goals of this project are to create a toolkit to obfuscate Python source code, mainly to create payload for offensive security.
-
-pof will allow you to:
-
-- create **payloads**: store the code inside images, have multiple stages, use LOTL techniques
-- create **stager**: easily create multi stages payloads
-- do **evasion**: AV, EDR, DPI, sandbox and other analysis techniques
-- slow **analysis**: slow down human analysis of the payload
-- enable **automation**: automate the whole process, to produce numerous variant of the payload
-- be **cross-platform**: works on Linux, Windows, and macOS
-- have **fun**: because it's always fun to see what's possible to do with Python
-
-This project also tries to combine all other Python obfuscation tools available, because most of them only provide a single method, and it's pretty basic. So you should be able to do everything that those other tools do, but without having to use multiple.
-
-Python is not exactly the best language to create payloads with, especially for Windows if the interpreter is not already installed. This project was made for learning, and discovering new ways of bypassing security, it's a great way to test obfuscations techniques.
-
-This project could also give you ideas to implement in other languages, such as powershell where it would make sens to obfuscate the source code. Or in C, C#, C++, Go or Rust where it would make sens to stage payloads, compress them, encrypt them and obfuscate strings.
-
-You could also use most of the stagers to stage payload that are not built in Python.
 
 ## Install
 
@@ -796,7 +769,7 @@ class ExampleObfuscator(BaseObfuscator):
 print(ExampleObfuscator().obfuscate(open("source.py", "r").read()))
 ```
 
-In this example we can see that first we remove comments, logging, print statements, and change the content of exceptions, and then we start to obfuscate constants, names, globals, builtins, strings, then strings and numbers multiple times, and we finally convert the tokens back to code.
+In this example we can see that first we remove comments, logging, print statements, and change the content of exceptions. And then we start to obfuscate constants, names, globals, builtins, strings. Then strings and numbers multiple times, and we finally convert the tokens back to code.
 
 By chaining multiple obfuscations techniques we can create very complex and custom output.
 
@@ -814,19 +787,19 @@ yara --no-warnings yara/python.yar file.py
 
 ## Development
 
-Project:
+Project directory structure:
 
-- `pof`: contains all the pof source code
-  - `pof/obfuscator`: contains obfuscators
-  - `pof/stager`: contains satgers
-  - `pof/evasion`: contains evasions
-  - `pof/utils`: all shared code between stager, obfuscator and evasion
-- `wip`: work in progress code that will eventually make its way inside the main code base
-- `tests`: unit tests for pof
-- `scripts`: some useful scripts to develop or use pof
-- `yara`: some yara rules to detect pof obfuscated code
+- `pof`: contains all the pof source code.
+  - `pof/obfuscator`: contains obfuscators.
+  - `pof/stager`: contains satgers.
+  - `pof/evasion`: contains evasions.
+  - `pof/utils`: all shared code between stager, obfuscator and evasion.
+- `wip`: work in progress code that will eventually make its way inside the main code base.
+- `tests`: unit tests for pof.
+- `scripts`: some useful scripts to develop or use pof.
+- `yara`: some yara rules to detect pof obfuscated code.
 
-Setup:
+Setup dev environment:
 
 ```bash
 python3 -m venv venv
@@ -834,13 +807,13 @@ python3 -m venv venv
 # activate it (or equivalent for your shell)
 source ./venv/bin/activate
 
-# install dep
+# install dependencies
 pip install -e .
-pip install -e .[dev]
-pip install -e .[test]
+pip install -e ".[dev]"
+pip install -e ".[test]"
 ```
 
-Run pof:
+Run pof CLI:
 
 ```bash
 ./pof.py --help
@@ -868,7 +841,8 @@ ruff check .
 Test build package:
 
 ```bash
-pip install -e .[build]
+# install dependencies
+pip install -e ".[build]"
 
 check-manifest --ignore "tests/**"
 python3 -m build
@@ -881,9 +855,9 @@ No effort is made to support Python 2, most obfuscator, stagers, and evasion sho
 
 ## TODO
 
-- Fix `NamesObfuscator`
-- Add option to prepend a shebang, and add ability to customize it
-- Fix multi line strings
+- Fix `NamesObfuscator`.
+- Add option to prepend a shebang, and add ability to customize it.
+- Fix multi line strings.
 
 ## License
 

@@ -19,7 +19,7 @@
 import io
 import logging
 import random
-from tokenize import generate_tokens
+from tokenize import COMMENT, NEWLINE, generate_tokens
 
 from pof.evasion import (
     CPUCountEvasion,
@@ -65,6 +65,8 @@ from pof.utils.tokens import untokenize
 class BaseObfuscator:
     @staticmethod
     def _get_tokens(source: str):
+        # TODO: this is not safe, the \r could be inside a string, probably
+        # should get tokens first, and update all the instances of newline
         if "\r" in source:
             source = source.replace("\r\n", "\n").replace("\r", "\n")
         if not source.endswith("\n"):
@@ -318,8 +320,6 @@ class Obfuscator(BaseObfuscator):
         ).obfuscate_tokens(tokens)
         tokens = IndentsObfuscator().obfuscate_tokens(tokens)
         tokens = NewlineObfuscator().obfuscate_tokens(tokens)
-
-        from tokenize import COMMENT, NEWLINE
 
         tokens = [(COMMENT, "# I love circles <3"), (NEWLINE, "\n"), *tokens]
 
