@@ -20,6 +20,9 @@ from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
 
 from pof import Obfuscator
+from pof.utils.format import black_format
+
+INPUT_SIZE_LIMIT = 200 * 1024
 
 app = Flask(__name__)
 
@@ -34,6 +37,9 @@ obfuscator = Obfuscator()
 def pof_route():
     """Basic HTTP endpoint to send and receive raw source code."""
     src = request.get_data().decode()
+    if len(src) > INPUT_SIZE_LIMIT:
+        return "Inpt too large", 413
+
     return obfuscator.obfuscate(src)
 
 
@@ -49,16 +55,34 @@ def pygment_style():
     return Response(pygment_css, mimetype="text/css")
 
 
+def format_html_error(msg: str) -> str:
+    return f'<p class="error">{msg}</p>'
+
+
 @app.post("/html")
 def pof_route_html():
     """HTML endpoint to send form data and receive HTML formatted code."""
     src = request.form.get("src", "")
-    obf = obfuscator.obfuscate(src)
-    return highlight(
-        obf,
-        PythonLexer(),
-        HtmlFormatter(cssstyles="background: none;"),
-    )
+    if len(src) > INPUT_SIZE_LIMIT:
+        return format_html_error("Input too large.")
+
+    try:
+        obf = obfuscator.obfuscate(src)
+    except Exception:  # noqa: BLE001
+        return format_html_error("Failed to obfuscate, invalid input.")
+
+    # TODO (deoktr): add a form option to enable format
+    obf = black_format(obf)
+
+    try:
+        return highlight(
+            obf,
+            PythonLexer(),
+            HtmlFormatter(cssstyles="background: none;"),
+        )
+    except Exception:  # noqa: BLE001
+        # in case we fail to highlight, return the raw output
+        return f'<p style="white-space: pre-wrap;">{obf}</p>'
 
 
 if __name__ == "__main__":

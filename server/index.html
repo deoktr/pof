@@ -11,30 +11,31 @@
       font-family: Arial, sans-serif;
       margin: 2em;
     }
-    .container {
-      border: 1px solid #ccc;
-      padding-left: 1em;
-      padding-right: 1em;
-      min-height: 2em;
-      font-family: monospace;
-      white-space: pre-wrap;
-      overflow: auto;
+    .error {
+      color: #ef4444;
     }
-    textarea {
-      /* width: 100%; */
+    #src {
+      width: 100%;
+      box-sizing: border-box;
       padding: 1em;
       font-family: monospace;
       border: 1px solid #ccc;
+      resize: vertical;
+      background-color: #f8fafc;
+    }
+    #outputContainer {
+      position: relative;
+      background-color: #f8fafc;
     }
     #output {
       border: 1px solid #ccc;
+      min-height: 6em;
       padding-left: 1em;
       padding-right: 1em;
       font-family: monospace;
-      white-space: pre-wrap;
       overflow: auto;
     }
-    button {
+    #obfuscateButton {
       margin-top: 0.5em;
       padding: 0.4em 1.0em;
       font-size: 1rem;
@@ -45,20 +46,95 @@
       border-radius: 6px;
       cursor: pointer;
     }
-    button:hover {
+    #obfuscateButton:hover {
       background-color: #3b82f6;
+    }
+    #obfuscateButton:disabled {
+      background-color: #475569;
+      cursor: wait;
+    }
+    #copyButton {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 5px;
+      color: #475569;
+      background-color: transparent;
+      border: 2px solid;
+      border-color: transparent;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    #copyButton:hover {
+      background-color: #f1f5f9;
+      border-color: #94a3b8;
+    }
+    #warning {
+      color: #c2410c;
     }
   </style>
 </head>
 <body>
-  <h1>POF Web Server</h1>
+  <h1>Python Obfuscation Framework</h1>
+  <p>POF, a free and open source Python obfuscation framework.</p>
+  <p>Source code at <a href="https://github.com/deoktr/pof/">github.com/deoktr/pof</a>, Python package at <a href="https://pypi.org/project/python-obfuscation-framework">pypi.org/project/python-obfuscation-framework</a>.</p>
   <p>Your Python script sources:</p>
   <form hx-post="/html" hx-target="#output" hx-swap="innerHTML">
-    <textarea id="src" name="src" rows="4" cols="80" required>print("Hello, world!")</textarea>
+    <textarea id="src" name="src" rows="12" spellcheck="false" required>
+# source file that will be obfuscated
+import random
+import string
+
+def get_random_letter():
+    """This is a docstring."""
+    return random.choice(string.ascii_lowercase)
+
+def get_random_name(name_len):
+    # this is a comment
+    name = get_random_letter()
+    for _ in range(name_len - 1):
+        name += get_random_letter()
+    return name
+
+def present_my_pet():
+    pet_name = get_random_name(8)
+    message = "My pet is name: " + pet_name
+    print(message)
+
+present_my_pet()</textarea>
     <br>
-    <button type="submit">Obfuscate</button>
+    <button id="obfuscateButton" type="submit">Obfuscate</button>
   </form>
   <p>Obfuscated output:</p>
-  <div id="output" class="container"></div>
+  <div id="outputContainer">
+    <div id="output"></div>
+    <button id="copyButton">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy-icon lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+    </button>
+  </div>
+  <p id="warning">The output may not work exactly like the input (or maybe not even at all), make sure to test it before using it.</p>
+  <p>Copyright (C) 2022 - 2025  Deoktr</p>
+
+  <script>
+    // disable obfuscate button on query
+    const button = document.getElementById("obfuscateButton");
+    document.body.addEventListener('htmx:configRequest', function () {
+      button.disabled = true;
+    });
+    document.body.addEventListener('htmx:afterOnLoad', function () {
+      button.disabled = false;
+    });
+    document.body.addEventListener('htmx:responseError', function () {
+        button.disabled = false;
+    });
+
+    // copy the output to clipboard
+    document.getElementById("copyButton").onclick = function() {
+      const content = document.getElementById("output").innerText.trimEnd();
+      navigator.clipboard.writeText(content).catch(err => {
+        console.error("Failed to copy: ", err);
+      });
+    };
+  </script>
 </body>
 </html>

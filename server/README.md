@@ -23,7 +23,7 @@ podman run --rm -p 5000:5000 pofserver
 Test:
 
 ```bash
-curl localhost:5000 -X POST -d 'print("Hello, world!")'
+echo 'print("Hello, world!")' | curl -X POST -d @- 0.0.0.0:5000
 ```
 
 Or visit [localhost:5000](http://localhost:5000).
@@ -31,4 +31,4 @@ Or visit [localhost:5000](http://localhost:5000).
 ## TODO
 
 - Add favicon.
-- Add link to Github repo and Pypi.
+- Add timeout in case the computation takes too long.
