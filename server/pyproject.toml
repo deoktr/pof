@@ -30,6 +30,7 @@ dependencies = [
   "pygments>=2.19.2",
   "python-obfuscation-framework>=1.7.0",
   "gunicorn>=23.0.0",
+  "black==24.10.0",
 ]
 
 [project.optional-dependencies]

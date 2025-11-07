@@ -571,6 +571,22 @@ The `out2.py` and `out3.py` files are identical, they both contain the source co
 > [!NOTE]
 > By default pof uses a custom `Untokenizer` that removes useless spaces (`NoSpaceUntokenizer` defined in `./pof/utils/tokens.py`), so first generation (in the example `out.py`) will not have spaces present in the subsquent outputs.
 
+### Format
+
+You can choose to automatically format the output code using black.
+
+From the CLI add the `--format` flag.
+
+From lib:
+
+```py
+from pof.utils.format import black_format
+
+obf = ExampleObfuscator().obfuscate(...)
+out = black_format(obf)
+print(out)
+```
+
 ### Generators
 
 Generators are used to generate new names, they can be used to classes, variables, functions, constants or any other.

@@ -1,5 +1,6 @@
 recursive-include pof *.py
 include pof/utils/generator/names.txt
+include pof/utils/generator/comments.txt
 include pof/utils/se/homoglyphs.txt
 
 recursive-include tests *

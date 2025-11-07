@@ -26,6 +26,7 @@ from pof.errors import PofError
 from pof.evasion import *  # noqa: F403
 from pof.obfuscator import *  # noqa: F403
 from pof.stager import *  # noqa: F403
+from pof.utils.format import black_format
 
 handler = logging.StreamHandler()
 formatter = logging.Formatter("%(levelname)s %(message)s\x1b[39m")
@@ -344,6 +345,9 @@ def _handle(args) -> int:
 
     end = time.time()
 
+    if args.format_black:
+        out = black_format(out)
+
     time_diff = round(end - start, 4)
     logging.info("took: %ds", time_diff)
     args.output.write(out)
@@ -467,6 +471,11 @@ def _cli() -> int:
     parser.add_argument("--eva-expire", action="store_true")
     parser.add_argument("--eva-uptime", action="store_true")
     parser.add_argument("--eva-utc", action="store_true")
+
+    # format
+    parser.add_argument(
+        "--format-black", action="store_true", help="format output with black"
+    )
 
     # control
     parser.add_argument(

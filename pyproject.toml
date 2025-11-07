@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python-obfuscation-framework"
-version = "1.6.3"
+version = "1.7.0"
 description = "Python Obfuscation Framework"
 readme = "README.md"
 requires-python = ">=3.5"
@@ -32,6 +32,7 @@ classifiers = [
 dependencies = [
   "rope>=1.0.0",
   "Pillow>=10.0.0",
+  "black>=24.10.0",
 ]
 # dynamic = ["version"]
 

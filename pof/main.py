@@ -65,7 +65,7 @@ from pof.utils.tokens import untokenize
 class BaseObfuscator:
     @staticmethod
     def _get_tokens(source: str):
-        # TODO: this is not safe, the \r could be inside a string, probably
+        # TODO (deoktr): this is not safe, the \r could be inside a string, probably
         # should get tokens first, and update all the instances of newline
         if "\r" in source:
             source = source.replace("\r\n", "\n").replace("\r", "\n")
