@@ -35,8 +35,9 @@
 # This method will ensure that we only need to change at most 1 bit and this
 # bit can either be the last or the second last bit.
 #
-import logging
 from tokenize import DEDENT, INDENT, NAME, NEWLINE, NUMBER, OP, STRING
+
+from pof.logger import logger
 
 try:
     from PIL import Image
@@ -121,8 +122,8 @@ class ImageStager:
                 # modify pixels until the end of the message
                 if msg_i >= msg_len:
                     im.save(im_out)
-                    logging.info("output image written to: %s", im_out)
-                    logging.info("run with: python3 path/to/stager.py %s", im_out)
+                    logger.info("output image written to: %s", im_out)
+                    logger.info("run with: python3 path/to/stager.py %s", im_out)
                     return
 
         msg = "can't store message into the image because it's too big"
@@ -158,7 +159,7 @@ class ImageStager:
         ```
         """
         if not PIL_INSTALLED:
-            logging.error(
+            logger.error(
                 "'pillow' is not installed, cannot user stager ImageStager",
             )
             return tokens

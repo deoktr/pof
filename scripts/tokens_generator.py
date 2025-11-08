@@ -175,8 +175,10 @@ if __name__ == "__main__":
     import logging
     from pathlib import Path
 
+    logger = logging.getLogger(__name__)
+
     file = sys.argv[1]
-    logging.info("opening file {file}", args={"file": file})
+    logger.info("opening file {file}", args={"file": file})
     with Path(file).open() as f:
         code = f.read()
 

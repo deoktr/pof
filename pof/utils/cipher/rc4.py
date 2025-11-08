@@ -15,10 +15,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # ruff: noqa: N802 N803 N806
-import logging
 import random
 import string
 from tokenize import DEDENT, INDENT, LPAR, NAME, NEWLINE, NUMBER, OP, RPAR, STRING
+
+from pof.logger import logger
 
 
 class RC4Cipher:
@@ -36,7 +37,7 @@ class RC4Cipher:
             la = string.ascii_letters + string.digits
             key = "".join([random.choice(la) for _ in range(self.KEY_SIZE)])
             msg = f"generated key: {key}"
-            logging.info(msg)
+            logger.info(msg)
         self.key = key
 
     @staticmethod

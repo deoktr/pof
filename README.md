@@ -13,6 +13,10 @@ pof will allow you to:
 - **Prevent dynamic analysis** by detecting debugging or tracing via malloc.
 - **Enable automation** to produce numerous variant of the same payload.
 
+The main benefit of POF is customizability, you can generate your payload however you want, choose the obfuscation you want and combine them.
+
+Most obfuscation work very well when combined. For example obfuscating an int from `42` to `int("42")` allows the string obfuscator to obfuscate it, turning it into `int("".join([chr(ord(i)-3)for i in'75']))`. And we now have multiple int and strings that we can once again obfuscate.
+
 Example obfuscation:
 
 ```python
@@ -20,6 +24,98 @@ print("Hello, world")
 ```
 
 Output:
+
+```python
+from base64 import b64decode as expected_data
+from base64 import b85decode as _5269
+
+globals()["".join([chr(ord(i) - 3) for i in "bbvqlwolxebb"[::-1]])].__dict__[
+    _5269("")
+    .decode()
+    .join([chr(ord(i) - 3) for i in "".join([chr(ord(i) - 3) for i in "mruhgry"])])
+]()[
+    _5269(""[::-1])
+    .decode()
+    .join(
+        [
+            globals()[
+                ""[::-1].join(
+                    [
+                        chr(ord(i) - 3)
+                        for i in expected_data("YmJleGxvd2xxdmJi").decode()
+                    ]
+                )
+            ].__dict__[
+                "".join(
+                    [chr(ord(i) - 3) for i in "".join([chr(ord(i) - 3) for i in "inx"])]
+                )
+            ](
+                __builtins__.__dict__.__getitem__(
+                    "".join([chr(ord(i) - 3) for i in ""]).join(
+                        [chr(ord(i) - 3) for i in expected_data("cnVn").decode()]
+                    )
+                )(i)
+                - (
+                    __name__.__len__().__class__(
+                        __builtins__.__dict__.__getitem__(_5269("X>N1").decode())(
+                            "".join([chr(ord(i) - 3) for i in "3\u007b5"]), 0
+                        )
+                        + __builtins__.__getattribute__(
+                            "egapraeytamrofel"[::-1].replace(
+                                "egapraeytamrof"[::-1], expected_data("bg==").decode()
+                            )
+                        )(
+                            expected_data(
+                                "".join([chr(ord(i) - 3) for i in "]j@@"])
+                            ).decode()
+                        )
+                    )
+                )
+            )
+            for i in "".join([chr(ord(i) - 3) for i in "eeh{olsy7bdgguvtyee"]).replace(
+                _5269("X>fKlUtwfqa&r").decode(), _5269("Z+C0").decode()
+            )
+        ]
+    )
+].__dict__[
+    ""[::-1]
+    .join([chr(ord(i) - 3) for i in ""[::-1]])
+    .join(
+        [
+            globals()[
+                expected_data(
+                    "XordinalidWlsdGlucordinalf".replace("ordinal", "19")
+                ).decode()
+            ].__dict__[expected_data("yh2Y"[::-1]).decode()](
+                globals()[
+                    _5269(expected_data("VXRlTiVYPjQ/OVpnWEU+").decode()).decode()
+                ].__dict__[_5269("fold_countV".replace("fold_count", "Z*p")).decode()](
+                    i
+                )
+                - __builtins__.__getattribute__(
+                    expected_data("".join([chr(ord(i) - 3) for i in "dZ83"])).decode()
+                )(
+                    "quaencode_7or8bits".replace("encode_7or8bit", "ntile").replace(
+                        "".join([chr(ord(i) - 3) for i in "txdqwlohv"]),
+                        "".join([chr(ord(i) - 3) for i in "6"]),
+                    )
+                )
+            )
+            for i in expected_data("")
+            .decode()
+            .join([chr(ord(i) - 3) for i in "ztoxv"[::-1]])
+        ]
+    )
+](
+    expected_data(
+        _5269("Q%6>FVKQQ0ad38HZFp+")
+        .decode()
+        .replace("pq_b2a"[::-1], "\u0062\u00478\u0073\u0049\u0048\u0064")
+    ).decode()
+)
+```
+
+The output was formatted using `black` to make it easier to read, you can generate the same as a single line:
 
 ```python
 from base64 import b64decode as expected_data
@@ -126,7 +222,7 @@ pof in.py -f obfuscator -k BuiltinsObfuscator |\
     pof -f stager -k PasteRsStager > out.py
 ```
 
-You can also use the Python API directly, you can find examples in the corresponding directory or bellow.
+You can also use the Python API directly, you can find examples or see API usage bellow.
 
 ## Examples
 
@@ -147,6 +243,48 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 ```
 
 ### Obfuscator
+
+`NamesObfuscator` the most basic obfuscator is changing variables, classes, function names, and imports.
+
+Source in `examples/source.py`.
+
+```python
+import random as dZoHe5KQ5T
+import string as BOu1uhdV
+
+def hrEnWnn_d():
+    """This is a docstring."""
+    return dZoHe5KQ5T.choice(BOu1uhdV.ascii_lowercase)
+
+def a_D(wYKTr7D5Ex):
+    JfQdd = hrEnWnn_d()
+    for kEw73z in range(wYKTr7D5Ex - 1):
+        JfQdd += hrEnWnn_d()
+    return JfQdd
+
+def VLBQn3():
+    mxO = a_D(8)
+    tBceS = 'My pet is name: ' + mxO
+    print(tBceS)
+VLBQn3()
+```
+
+> [!WARNING]
+> Right now this obfuscator can fail under very specific circumstances, see `pof/obfuscator/names.py`.
+
+An alternative is `DefinitionsObfuscator`, that will only obfuscate function declarations.
+
+> [!NOTE]
+> There is an alternative implementation at `NamesRopeObfuscator` that uses `rope`, it's a work in progress and currently does not obfuscate variables declared inside functions.
+
+Other very basic obfuscation functions are done by specific obfuscators like:
+
+- Removing comments with `CommentsObfuscator`.
+- Replacing exception messages with `ExceptionObfuscator`.
+- Reducing indentation to a single space with `IndentsObfuscator`.
+- Replace log messages with `LoggingObfuscator` or remove them with `LoggingRemoveObfuscator`.
+- Remove empty lines with `NewlineObfuscator`.
+- Remove print statements with `PrintObfuscator`.
 
 #### StringsObfuscator
 
@@ -196,22 +334,37 @@ print(len('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb'))
 print((True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True+True))
 ```
 
-#### DefinitionsObfuscator
+#### ConstantsObfuscator
 
-Source:
-
-```python
-def say_hello(t):
-    print(t)
-say_hello("Hello, world")
-```
-
-Obfuscated:
+Move every variable at the top of the file with random names.
 
 ```python
-def sczCWV(t):
-  print(t)
-sczCWV('Hello, world')
+gfdd_j=print
+uVu8Mq=8
+GqTsw9ZK="My pet is name: "
+u4F5X=range
+rSO2F=1
+# source file that will be obfuscated
+import random
+import string
+
+def get_random_letter():
+    """This is a docstring."""
+    return random.choice(string.ascii_lowercase)
+
+def get_random_name(name_len):
+# this is a comment
+    name=get_random_letter()
+    for _ in u4F5X(name_len-rSO2F):
+        name+=get_random_letter()
+    return name
+
+def present_my_pet():
+    pet_name=get_random_name(uVu8Mq)
+    message=GqTsw9ZK+pet_name
+    gfdd_j(message)
+
+present_my_pet()
 ```
 
 #### BuiltinsObfuscator
@@ -226,16 +379,6 @@ __builtins__.__dict__['print']('Hello, world')
 globals()['__builtins__'].__dict__['print']('Hello, world')
 
 __builtins__.__dict__.__getitem__('print')('Hello, world')
-```
-
-#### ConstantsObfuscator
-
-Move every variable at the top of the file.
-
-```python
-vVlJ='Hello, world'
-t4Bo=print
-t4Bo(vVlJ)
 ```
 
 #### ExtractVariablesObfuscator
@@ -254,6 +397,35 @@ print(var)
 
 ```python
 print.__call__('Hello, world')
+```
+
+#### GlobalsObfuscator
+
+Replaces call of global functions with `globals()['func_name']()`.
+
+Source in `examples/source.py`.
+
+```python
+import random
+import string
+
+def get_random_letter():
+    """This is a docstring."""
+    return random.choice(string.ascii_lowercase)
+
+def get_random_name(name_len):
+# this is a comment
+    name=globals()['get_random_letter']()
+    for _ in range(name_len-1):
+        name+=globals()['get_random_letter']()
+    return name
+
+def present_my_pet():
+    pet_name=globals()['get_random_name'](8)
+    message="My pet is name: "+pet_name
+    print(message)
+
+globals()['present_my_pet']()
 ```
 
 #### ShiftObfuscator
@@ -433,6 +605,25 @@ Source: `print('h')`
 
 ```python
 print(oct.__doc__[8])
+```
+
+#### AddCommentsObfuscator
+
+```python
+# This is a random comment
+print("Hello, world!")
+```
+
+The list of comments available is inside a file, all the comments have been extracted from Python standard library.
+
+#### AddNewlinesObfuscator
+
+Add random new lines everywhere it's possible.
+
+```python
+
+print("Hello, world!")
+
 ```
 
 ### Stager
@@ -844,7 +1035,6 @@ pytest
 Format:
 
 ```bash
-black .
 ruff format .
 ```
 
@@ -869,11 +1059,32 @@ python3 -m twine check dist/*
 
 No effort is made to support Python 2, most obfuscator, stagers, and evasion should work out of the box, but they are not tested.
 
+## Alternatives
+
+Other Python obfuscation projects:
+
+- [0x-Apollyon/Papyrus](https://github.com/0x-Apollyon/Papyrus)
+- [Hnfull/Intensio-Obfuscator](https://github.com/Hnfull/Intensio-Obfuscator)
+- [lepotekil/MsfMania](https://github.com/lepotekil/MsfMania)
+- [billythegoat356/Hyperion](https://github.com/billythegoat356/Hyperion)
+- [spyboy-productions/ObfuXtreme](https://github.com/spyboy-productions/ObfuXtreme)
+- [chris-rands/emojify](https://github.com/chris-rands/emojify)
+- [0sir1ss/Anubis](https://github.com/0sir1ss/Anubis)
+- [0sir1ss/Carbon](https://github.com/0sir1ss/Carbon)
+- [billythegoat356/Apollyon](https://github.com/billythegoat356/Apollyon)
+- [billythegoat356/Berserker](https://github.com/billythegoat356/Berserker)
+- [brandonasuncion/Python-Code-Obfuscator](https://github.com/brandonasuncion/Python-Code-Obfuscator)
+- [CSM-BlueRed/Impostor](https://github.com/CSM-BlueRed/Impostor)
+- [ImInTheICU/ExtraLayer](https://github.com/ImInTheICU/ExtraLayer)
+- [root4031/pyobfuscate](https://github.com/root4031/pyobfuscate)
+- [therealOri/PolyLock](https://github.com/therealOri/PolyLock)
+- [FlorianREGAZ/PyObfuscator](https://github.com/FlorianREGAZ/PyObfuscator)
+
 ## TODO
 
 - Fix `NamesObfuscator`.
-- Add option to prepend a shebang, and add ability to customize it.
 - Fix multi line strings.
+- Add option to prepend a shebang, and add ability to customize it.
 
 ## License
 

@@ -17,13 +17,13 @@
 # ruff: noqa: F405, C901, PLR0912, PLR0915
 
 import argparse
-import logging
 import sys
 import time
 
 from pof import Obfuscator, __version__
 from pof.errors import PofError
 from pof.evasion import *  # noqa: F403
+from pof.logger import logger
 from pof.obfuscator import *  # noqa: F403
 from pof.stager import *  # noqa: F403
 from pof.utils.format import black_format
@@ -57,174 +57,174 @@ class PofCliFlagError(PofError):
 
 def add_obfuscation(tokens, args):
     if args.obf_string:
-        logging.debug("obfuscating strings")
+        logger.debug("obfuscating strings")
         tokens = StringsObfuscator(
             import_b64decode=True,
             import_b85decode=True,
         ).obfuscate_tokens(tokens)
     if args.obf_builtins:
-        logging.debug("obfuscating builtins")
+        logger.debug("obfuscating builtins")
         tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
     if args.obf_deep_encryption:
-        logging.debug("obfuscating deep_encryption")
+        logger.debug("obfuscating deep_encryption")
         tokens = DeepEncryptionObfuscator().obfuscate_tokens(tokens)
     if args.obf_rc4:
-        logging.debug("obfuscating rc4")
+        logger.debug("obfuscating rc4")
         tokens = RC4Obfuscator().obfuscate_tokens(tokens)
     if args.obf_shift:
-        logging.debug("obfuscating shift")
+        logger.debug("obfuscating shift")
         tokens = ShiftObfuscator().obfuscate_tokens(tokens)
     if args.obf_xor:
-        logging.debug("obfuscating xor")
+        logger.debug("obfuscating xor")
         tokens = XORObfuscator().obfuscate_tokens(tokens)
     if args.obf_bz2:
-        logging.debug("obfuscating bz2")
+        logger.debug("obfuscating bz2")
         tokens = Bz2Obfuscator().obfuscate_tokens(tokens)
     if args.obf_gzip:
-        logging.debug("obfuscating gzip")
+        logger.debug("obfuscating gzip")
         tokens = GzipObfuscator().obfuscate_tokens(tokens)
     if args.obf_lzma:
-        logging.debug("obfuscating lzma")
+        logger.debug("obfuscating lzma")
         tokens = LzmaObfuscator().obfuscate_tokens(tokens)
     if args.obf_zlib:
-        logging.debug("obfuscating zlib")
+        logger.debug("obfuscating zlib")
         tokens = ZlibObfuscator().obfuscate_tokens(tokens)
     if args.obf_constants:
-        logging.debug("obfuscating constants")
+        logger.debug("obfuscating constants")
         tokens = ConstantsObfuscator().obfuscate_tokens(tokens)
     if args.obf_definitions:
-        logging.debug("obfuscating definitions")
+        logger.debug("obfuscating definitions")
         tokens = DefinitionsObfuscator().obfuscate_tokens(tokens)
     if args.obf_a85:
-        logging.debug("obfuscating a85")
+        logger.debug("obfuscating a85")
         tokens = ASCII85Obfuscator().obfuscate_tokens(tokens)
     if args.obf_b16:
-        logging.debug("obfuscating b16")
+        logger.debug("obfuscating b16")
         tokens = Base16Obfuscator().obfuscate_tokens(tokens)
     if args.obf_b32:
-        logging.debug("obfuscating b32")
+        logger.debug("obfuscating b32")
         tokens = Base32Obfuscator().obfuscate_tokens(tokens)
     if args.obf_b32hex:
-        logging.debug("obfuscating b32hex")
+        logger.debug("obfuscating b32hex")
         tokens = Base32HexObfuscator().obfuscate_tokens(tokens)
     if args.obf_b64:
-        logging.debug("obfuscating b64")
+        logger.debug("obfuscating b64")
         tokens = Base64Obfuscator().obfuscate_tokens(tokens)
     if args.obf_b85:
-        logging.debug("obfuscating b85")
+        logger.debug("obfuscating b85")
         tokens = Base85Obfuscator().obfuscate_tokens(tokens)
     if args.obf_binascii:
-        logging.debug("obfuscating binascii")
+        logger.debug("obfuscating binascii")
         tokens = BinasciiObfuscator().obfuscate_tokens(tokens)
     if args.obf_snt:
-        logging.debug("obfuscating snt")
+        logger.debug("obfuscating snt")
         tokens = SpacenTabObfuscator().obfuscate_tokens(tokens)
     if args.obf_call:
-        logging.debug("obfuscating call")
+        logger.debug("obfuscating call")
         tokens = CallObfuscator().obfuscate_tokens(tokens)
     if args.obf_doc:
-        logging.debug("obfuscating doc")
+        logger.debug("obfuscating doc")
         tokens = CharFromDocObfuscator().obfuscate_tokens(tokens)
     if args.obf_globals:
-        logging.debug("obfuscating globals")
+        logger.debug("obfuscating globals")
         tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
     if args.obf_imports:
-        logging.debug("obfuscating imports")
+        logger.debug("obfuscating imports")
         tokens = ImportsObfuscator().obfuscate_tokens(tokens)
     if args.obf_extract_variables:
-        logging.debug("obfuscating extract_variables")
+        logger.debug("obfuscating extract_variables")
         tokens = ExtractVariablesObfuscator().obfuscate_tokens(tokens)
     if args.obf_add_comments:
-        logging.debug("obfuscating add_comments")
+        logger.debug("obfuscating add_comments")
         tokens = AddCommentsObfuscator().obfuscate_tokens(tokens)
     if args.obf_add_newlines:
-        logging.debug("obfuscating add_newlines")
+        logger.debug("obfuscating add_newlines")
         tokens = AddNewlinesObfuscator().obfuscate_tokens(tokens)
     if args.obf_names:
-        logging.debug("obfuscating names")
+        logger.debug("obfuscating names")
         tokens = NamesObfuscator().obfuscate_tokens(tokens)
     if args.obf_names_rope:
-        logging.debug("obfuscating names_rope")
+        logger.debug("obfuscating names_rope")
         tokens = NamesRopeObfuscator().obfuscate_tokens(tokens)
     if args.obf_numbers:
-        logging.debug("obfuscating numbers")
+        logger.debug("obfuscating numbers")
         tokens = NumberObfuscator().obfuscate_tokens(tokens)
     if args.obf_tokens:
-        logging.debug("obfuscating tokens")
+        logger.debug("obfuscating tokens")
         tokens = TokensObfuscator().obfuscate_tokens(tokens)
     if args.obf_comments:
-        logging.debug("obfuscating comments")
+        logger.debug("obfuscating comments")
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
     if args.obf_exceptions:
-        logging.debug("obfuscating exceptions")
+        logger.debug("obfuscating exceptions")
         tokens = ExceptionObfuscator().obfuscate_tokens(tokens)
     if args.obf_indents:
-        logging.debug("obfuscating indents")
+        logger.debug("obfuscating indents")
         tokens = IndentsObfuscator().obfuscate_tokens(tokens)
     if args.obf_logging:
-        logging.debug("obfuscating logging")
+        logger.debug("obfuscating logging")
         tokens = LoggingObfuscator().obfuscate_tokens(tokens)
     if args.obf_logging_remove:
-        logging.debug("obfuscating logging remove")
+        logger.debug("obfuscating logging remove")
         tokens = LoggingRemoveObfuscator().obfuscate_tokens(tokens)
     if args.obf_newline:
-        logging.debug("obfuscating newline")
+        logger.debug("obfuscating newline")
         tokens = NewlineObfuscator().obfuscate_tokens(tokens)
     if args.obf_print:
-        logging.debug("obfuscating print")
+        logger.debug("obfuscating print")
         tokens = PrintObfuscator().obfuscate_tokens(tokens)
     if args.obf_docstrings:
-        logging.debug("obfuscating docstrings")
+        logger.debug("obfuscating docstrings")
         tokens = DocstringObfuscator().obfuscate_tokens(tokens)
     if args.obf_ipv6encoding:
-        logging.debug("obfuscating ipv6encoding")
+        logger.debug("obfuscating ipv6encoding")
         tokens = IPv6Obfuscator().obfuscate_tokens(tokens)
     if args.obf_macencoding:
-        logging.debug("obfuscating macencoding")
+        logger.debug("obfuscating macencoding")
         tokens = MACObfuscator().obfuscate_tokens(tokens)
     if args.obf_uuidencoding:
-        logging.debug("obfuscating uuidencoding")
+        logger.debug("obfuscating uuidencoding")
         tokens = UUIDObfuscator().obfuscate_tokens(tokens)
     return tokens
 
 
 def add_stagers(tokens, args):
     if args.stg_rc4:
-        logging.debug("staging rc4")
+        logger.debug("staging rc4")
         tokens = RC4Stager().generate_stager(tokens)
     if args.stg_download:
-        logging.debug("staging download")
+        logger.debug("staging download")
         tokens = DownloadStager().generate_stager(tokens)
     if args.stg_image:
-        logging.debug("staging image")
+        logger.debug("staging image")
         tokens = ImageStager().generate_stager(tokens)
     if args.stg_cl1pnet:
-        logging.debug("staging cl1pnet")
+        logger.debug("staging cl1pnet")
         tokens = Cl1pNetStager().generate_stager(tokens)
     if args.stg_pastebin:
-        logging.debug("staging pastebin")
+        logger.debug("staging pastebin")
         tokens = PastebinStager().generate_stager(tokens)
     if args.stg_pasters:
-        logging.debug("staging pasters")
+        logger.debug("staging pasters")
         tokens = PasteRsStager().generate_stager(tokens)
     if args.stg_quine:
-        logging.debug("staging quine")
+        logger.debug("staging quine")
         tokens = QuineStager().generate_stager(tokens)
     return tokens
 
 
 def add_evasion(tokens, args):
     if args.eva_argv:
-        logging.debug("staging argv")
+        logger.debug("staging argv")
         tokens = ArgvEvasion(
             args.eva_argv_argv,
             args.eva_argv_position,
         ).add_evasion(tokens)
     if args.eva_cpu_count:
-        logging.debug("staging cpu_count")
+        logger.debug("staging cpu_count")
         tokens = CPUCountEvasion(args.eva_cpu_count_min).add_evasion(tokens)
     if args.eva_directory_exist:
-        logging.debug("staging directory_exist")
+        logger.debug("staging directory_exist")
         if args.eva_directory_exist_dir is None:
             flag = "--eva-directory-exist-dir"
             raise PofCliFlagError(flag)
@@ -232,79 +232,79 @@ def add_evasion(tokens, args):
             tokens,
         )
     if args.eva_directory_list_exist:
-        logging.debug("staging directory_list_exist")
+        logger.debug("staging directory_list_exist")
         # TODO (deoktr): split input list
         tokens = DirectoryListExistEvasion().add_evasion(tokens)
     if args.eva_directory_list_missing:
-        logging.debug("staging directory_list_missing")
+        logger.debug("staging directory_list_missing")
         # TODO (deoktr): split input list
         tokens = DirectoryListMissingEvasion().add_evasion(tokens)
     if args.eva_directory_missing:
-        logging.debug("staging directory_missing")
+        logger.debug("staging directory_missing")
         tokens = DirectoryMissingEvasion().add_evasion(tokens)
     if args.eva_exec_method:
-        logging.debug("staging exec_method")
+        logger.debug("staging exec_method")
         tokens = ExecMethodEvasion().add_evasion(tokens)
     if args.eva_executable_path:
-        logging.debug("staging executable_path")
+        logger.debug("staging executable_path")
         tokens = ExecPathEvasion().add_evasion(tokens)
     if args.eva_file_exist:
-        logging.debug("staging file_exist")
+        logger.debug("staging file_exist")
         tokens = FileExistEvasion().add_evasion(tokens)
     if args.eva_file_list_exist:
-        logging.debug("staging file_list_exist")
+        logger.debug("staging file_list_exist")
         tokens = FileListExistEvasion().add_evasion(tokens)
     if args.eva_file_list_missing:
-        logging.debug("staging file_list_missing")
+        logger.debug("staging file_list_missing")
         tokens = FileListMissingEvasion().add_evasion(tokens)
     if args.eva_file_missing:
-        logging.debug("staging file_missing")
+        logger.debug("staging file_missing")
         tokens = FileMissingEvasion().add_evasion(tokens)
     if args.eva_tmp:
-        logging.debug("staging tmp")
+        logger.debug("staging tmp")
         # TODO (deoktr): choose depending on target OS
         # LinuxTmpCountEvasion
         # TmpCountEvasion
         # WinTmpCountEvasion
         tokens = TmpCountEvasion(args.eva_tmp_count).add_evasion(tokens)
     if args.eva_ram_count:
-        logging.debug("staging ram_count")
+        logger.debug("staging ram_count")
         tokens = LinuxRAMCountEvasion().add_evasion(tokens)
     if args.eva_debugger:
-        logging.debug("staging debugger")
+        logger.debug("staging debugger")
         tokens = DebuggerEvasion().add_evasion(tokens)
     if args.eva_tracemalloc:
-        logging.debug("staging tracemalloc")
+        logger.debug("staging tracemalloc")
         tokens = TracemallocEvasion().add_evasion(tokens)
     if args.eva_prompt:
-        logging.debug("staging prompt")
+        logger.debug("staging prompt")
         tokens = WinPromptEvasion().add_evasion(tokens)
     if args.eva_multi:
-        logging.debug("staging multi")
+        logger.debug("staging multi")
         tokens = MultiEvasion().add_evasion(tokens)
     if args.eva_domain:
-        logging.debug("staging domain")
+        logger.debug("staging domain")
         tokens = DomainEvasion().add_evasion(tokens)
     if args.eva_hostname:
-        logging.debug("staging hostname")
+        logger.debug("staging hostname")
         tokens = HostnameEvasion().add_evasion(tokens)
     if args.eva_uid:
-        logging.debug("staging uid")
+        logger.debug("staging uid")
         tokens = LinuxUIDEvasion().add_evasion(tokens)
     if args.eva_username:
-        logging.debug("staging username")
+        logger.debug("staging username")
         tokens = UsernameEvasion().add_evasion(tokens)
     if args.eva_proc_count:
-        logging.debug("staging proc_count")
+        logger.debug("staging proc_count")
         tokens = LinuxProcCountEvasion().add_evasion(tokens)
     if args.eva_expire:
-        logging.debug("staging expire")
+        logger.debug("staging expire")
         tokens = ExpireEvasion().add_evasion(tokens)
     if args.eva_uptime:
-        logging.debug("staging uptime")
+        logger.debug("staging uptime")
         tokens = LinuxUptimeEvasion().add_evasion(tokens)
     if args.eva_utc:
-        logging.debug("staging utc")
+        logger.debug("staging utc")
         tokens = UTCEvasion().add_evasion(tokens)
     return tokens
 
@@ -333,10 +333,9 @@ def _handle(args) -> int:
         return 0
 
     level = getattr(logging, args.logging)
-    logger = logging.getLogger()
     logger.setLevel(level)
 
-    logging.info("starting obfuscation of %s", args.input.name)
+    logger.info("starting obfuscation of %s", args.input.name)
     source = args.input.read()
 
     start = time.time()
@@ -349,9 +348,9 @@ def _handle(args) -> int:
         out = black_format(out)
 
     time_diff = round(end - start, 4)
-    logging.info("took: %ds", time_diff)
+    logger.info("took: %ds", time_diff)
     args.output.write(out)
-    logging.info("successfully obfuscated %s to %s", args.input.name, args.output.name)
+    logger.info("successfully obfuscated %s to %s", args.input.name, args.output.name)
     # no errors
     return 0
 
@@ -474,7 +473,9 @@ def _cli() -> int:
 
     # format
     parser.add_argument(
-        "--format-black", action="store_true", help="format output with black"
+        "--format-black",
+        action="store_true",
+        help="format output with black",
     )
 
     # control
@@ -501,10 +502,10 @@ def _cli() -> int:
     try:
         return _handle(args)
     except Exception as e:
-        logging.error(str(e))  # noqa: TRY400
+        logger.error(str(e))
         if args.raise_exceptions:
             raise
-        logging.debug("use `--raise-exceptions` to see full trace back")
+        logger.debug("use `--raise-exceptions` to see full trace back")
         return 1
 
 

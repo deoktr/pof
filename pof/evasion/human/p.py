@@ -16,8 +16,7 @@
 
 
 def promt_unix():
-    # TODO (deoktr): add try: except around tkinter imports
-    from tkinter import E, S, Tk, ttk
+    from tkinter import E, S, Tk, ttk  # noqa: PLC0415
 
     root = Tk()
 
@@ -40,7 +39,7 @@ def promt_unix():
         ),
     )
 
-    root.after(int(5 * 1000), func=root.destroy)
+    root.after((5 * 1000), func=root.destroy)
 
     frm = ttk.Frame(root, padding="50 12 50 12")
     frm.grid()

@@ -62,6 +62,8 @@
 import keyword
 from tokenize import DEDENT, ENCODING, INDENT, NAME, NEWLINE, NL, NUMBER, OP, STRING
 
+from pof.utils.generator import BasicGenerator
+
 
 class ExtractVariablesObfuscator:
     """Obfuscate by adding variables."""
@@ -241,8 +243,6 @@ class ExtractVariablesObfuscator:
 
     def __init__(self, generator=None) -> None:
         if generator is None:
-            from pof.utils.generator import BasicGenerator
-
             generator = BasicGenerator.alphabet_generator()
         self.generator = generator
 

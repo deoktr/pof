@@ -14,20 +14,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import logging
 
-from pof.logger import logger
-
-try:
-    import black
-
-    BLACK_INSTALLED = True
-except ImportError:
-    BLACK_INSTALLED = False
-
-
-def black_format(src: str) -> str:
-    """Format raw source code using black."""
-    if not BLACK_INSTALLED:
-        logger.error("'black' is not installed, cannot format using it")
-        return src
-    return black.format_str(src, mode=black.FileMode())
+logger = logging.getLogger(__name__)

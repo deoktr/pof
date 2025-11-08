@@ -15,11 +15,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import ast
-import logging
 import random
 from tokenize import NAME, NUMBER, OP, STRING
 
 from pof.errors import PofError
+from pof.logger import logger
 
 
 class CharFromDocObfuscator:
@@ -230,12 +230,8 @@ class CharFromDocObfuscator:
         # __builtins__.__doc__[0] = 'B'
         result = []
 
-        for index, (toknum, tokval, *_) in enumerate(tokens):
+        for _index, (toknum, tokval, *_) in enumerate(tokens):
             new_tokens = [(toknum, tokval)]
-            next_tokval = None
-            next_toknum = None
-            if len(tokens) > index + 1:
-                next_toknum, next_tokval, *__ = tokens[index + 1]
 
             if toknum == STRING:
                 string = ast.literal_eval(tokval)
@@ -243,9 +239,9 @@ class CharFromDocObfuscator:
                     try:
                         new_tokens = self.obfuscate_char(string)
                     except PofError as e:
-                        logging.debug(str(e))
-                    except Exception:
-                        logging.exception("Unexpected error")
+                        logger.debug(str(e))
+                    except Exception:  # noqa: BLE001
+                        logger.exception("Unexpected error")
 
             if new_tokens:
                 result.extend(new_tokens)

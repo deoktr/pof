@@ -22,10 +22,12 @@ Rename function and classes names using external package: rope
 import ast
 import io
 import keyword
-import logging
 import shutil
 from pathlib import Path
 from tokenize import NAME, generate_tokens, untokenize
+
+from pof.logger import logger
+from pof.utils.generator import BasicGenerator
 
 try:
     from rope.base.project import Project
@@ -217,8 +219,6 @@ class DefinitionsObfuscator:
 
     def __init__(self, generator=None, tmp_dir=None, *, clean=False) -> None:
         if generator is None:
-            from pof.utils.generator import BasicGenerator
-
             generator = BasicGenerator.alphabet_generator()
         self.generator = generator
 
@@ -232,12 +232,7 @@ class DefinitionsObfuscator:
     def get_local(cls, tokens):
         declared = []
         prev_tokval = None
-        next_tokval = None
-        next_toknum = None
-        for index, (toknum, tokval, *_) in enumerate(tokens):
-            next_tokval = None
-            if len(tokens) > index + 1:
-                next_toknum, next_tokval, *__ = tokens[index + 1]
+        for _index, (toknum, tokval, *_) in enumerate(tokens):
             if (
                 toknum == NAME
                 and prev_tokval in ["def", "class"]
@@ -300,7 +295,7 @@ class DefinitionsObfuscator:
     def obfuscate_tokens(self, tokens):
         """Definitions obfuscation tokens."""
         if not ROPE_INSTALLED:
-            logging.error(
+            logger.error(
                 "'rope' is not installed, cannot obfuscate with DefinitionsObfuscator",
             )
             return tokens
@@ -308,7 +303,7 @@ class DefinitionsObfuscator:
         local_names = self.get_local(tokens)
 
         msg = f"found {len(local_names)} local names"
-        logging.debug(msg)
+        logger.debug(msg)
 
         self.create_tmp_dir()
 
@@ -323,12 +318,12 @@ class DefinitionsObfuscator:
         for done, name in enumerate(local_names):
             new_name = self.generate_new_name()
             msg = f"{done + 1}/{todo} changing var {name} to {new_name}"
-            logging.debug(msg)
+            logger.debug(msg)
             try:
                 old_name = mod.get_attribute(name)
 
                 pymod, lineno = old_name.get_definition_location()
-                lineno_start, lineno_end = pymod.logical_lines.logical_line_in(lineno)
+                # lineno_start, lineno_end = pymod.logical_lines.logical_line_in(lineno)
 
                 offset = pymod.resource.read().index(
                     old_name.pyobject.get_name(),
@@ -340,10 +335,10 @@ class DefinitionsObfuscator:
                 )
 
                 proj.do(changes)
-            except Exception:  # noqa: S110 BLE001
+            except Exception:  # noqa: BLE001
                 msg = f"error trying to obfuscate var {name}"
-                logging.error(msg)
-                # logging.exception(msg)
+                logger.error(msg)
+                # logger.exception(msg)
         proj.close()
 
         # finish by reading the file one last time

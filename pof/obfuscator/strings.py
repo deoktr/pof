@@ -19,7 +19,6 @@
 # TODO (deoktr): add variable to import or not b64decode
 # TODO (deoktr): replace eval with ast.literal_eval: https://beta.ruff.rs/docs/rules/suspicious-eval-usage/
 
-import logging
 import random
 from base64 import b64encode, b85encode
 from enum import Enum
@@ -37,6 +36,7 @@ from tokenize import (
 )
 
 from pof.errors import PofError
+from pof.logger import logger
 from pof.utils.cipher import ShiftCipher
 from pof.utils.generator import AdvancedGenerator
 
@@ -142,7 +142,7 @@ class StringsObfuscator:
             raw_string = raw_string.decode()
         encoded = ""
         for c in raw_string:
-            ucode = f"\\u{hex(ord(c))[2:]:0>4}" if not c.isdigit() else c
+            ucode = f"\\u{hex(ord(c))[2:]:0>4}" if not c.isdigit() else c  # noqa: FURB116
             encoded += ucode
         return [(STRING, f"'{encoded}'")]
 
@@ -309,7 +309,7 @@ class StringsObfuscator:
             (OP, ")"),
         ]
 
-    def obfuscate_string(self, tokval: str, next_tokval: str):  # NOQA: C901
+    def obfuscate_string(self, tokval: str, next_tokval: str):  # noqa: C901
         # TODO (deoktr): consider f"" u"" ur"" b"" r"" strings
         # consider empty strings
         # consider calling function on whole string "".format()
@@ -353,7 +353,7 @@ class StringsObfuscator:
         elif strategy == self.Strats.ONE_ON_N:
             tokens = self.string_one_on_n(tokval)
         else:
-            logging.error("unsupported strategy %s", strategy)
+            logger.error("unsupported strategy %s", strategy)
             return None
 
         return tokens
@@ -425,8 +425,8 @@ class StringsObfuscator:
             ]:
                 try:
                     new_tokens = self.obfuscate_string(tokval, next_tokval)
-                except Exception:
-                    logging.exception("failed to get new token")
+                except BaseException:  # noqa: BLE001
+                    logger.exception("failed to get new token")
 
             if new_tokens:
                 result.extend(new_tokens)

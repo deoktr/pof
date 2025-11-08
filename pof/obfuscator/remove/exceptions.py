@@ -18,8 +18,9 @@
 # Replace text with code to still be able to use exception message on error
 #       raise Exception("text...") --> raise Exception("42")
 #       and log the code to text: 42: "text..."
-import logging
 from tokenize import NAME, OP, STRING
+
+from pof.logger import logger
 
 
 class ExceptionObfuscator:
@@ -69,7 +70,7 @@ class ExceptionObfuscator:
                 if self.add_codes:
                     current_code = self.get_code()
                     new_tokens.extend([(STRING, f'"{current_code}"')])
-                    logging.debug("Exception code %s --> %s", current_code, next_tokval)
+                    logger.debug("Exception code %s --> %s", current_code, next_tokval)
 
             elif prev_tokval == "raise" and prev_toknum == NAME:
                 is_exception = True

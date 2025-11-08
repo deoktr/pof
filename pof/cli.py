@@ -23,6 +23,7 @@ from pof import Obfuscator, __version__
 from pof.errors import PofError
 from pof.evasion import *  # noqa: F403
 from pof.evasion import __all__ as all_evasion
+from pof.logger import logger
 from pof.obfuscator import *  # noqa: F403
 from pof.obfuscator import __all__ as all_obfuscator
 from pof.stager import *  # noqa: F403
@@ -63,9 +64,9 @@ class CLIObfuscator(Obfuscator):
             msg = f"obfuscator {obfuscator} not found in: {lobf}"
             raise PofCliError(msg) from err
 
-        logging.info(f"using '{obf.__name__}' obfuscator")
-        logging.debug(f"args={args}")
-        logging.debug(f"kwargs={kwargs}")
+        logger.info(f"using '{obf.__name__}' obfuscator")
+        logger.debug(f"args={args}")
+        logger.debug(f"kwargs={kwargs}")
         tokens = globals()[obfuscator](*args, **kwargs).obfuscate_tokens(tokens)
         return self._untokenize(tokens)
 
@@ -83,9 +84,9 @@ class CLIObfuscator(Obfuscator):
             msg = f"stager '{stager}' not found in: {lpl}"
             raise PofCliError(msg) from err
 
-        logging.info(f"using '{obf.__name__}' stager")
-        logging.debug(f"{args=}")
-        logging.debug(f"{kwargs=}")
+        logger.info(f"using '{obf.__name__}' stager")
+        logger.debug(f"{args=}")
+        logger.debug(f"{kwargs=}")
         tokens = globals()[stager](*args, **kwargs).generate_stager(tokens)
         return self._untokenize(tokens)
 
@@ -103,9 +104,9 @@ class CLIObfuscator(Obfuscator):
             msg = f"evasion {evasion} not found in: {lobf}"
             raise PofCliError(msg) from err
 
-        logging.info(f"using '{obf.__name__}' evasion")
-        logging.debug(f"{args=}")
-        logging.debug(f"{kwargs=}")
+        logger.info(f"using '{obf.__name__}' evasion")
+        logger.debug(f"{args=}")
+        logger.debug(f"{kwargs=}")
         tokens = globals()[evasion](*args, **kwargs).add_evasion(tokens)
         return self._untokenize(tokens)
 
@@ -116,7 +117,6 @@ def _handle(args) -> int:
         return 0
 
     level = getattr(logging, args.logging)
-    logger = logging.getLogger()
     logger.setLevel(level)
 
     a = []
@@ -129,7 +129,7 @@ def _handle(args) -> int:
             else:
                 a.append(e)
 
-    logging.info(f"starting obfuscation of {args.input.name}")
+    logger.info(f"starting obfuscation of {args.input.name}")
     source = args.input.read()
 
     start = time.time()
@@ -142,9 +142,9 @@ def _handle(args) -> int:
         out = black_format(out)
 
     time_diff = round(end - start, 4)
-    logging.info(f"took: {time_diff}s")
+    logger.info(f"took: {time_diff}s")
     args.output.write(out)
-    logging.info(f"successfully obfuscated {args.input.name} to {args.output.name}")
+    logger.info(f"successfully obfuscated {args.input.name} to {args.output.name}")
     # no errors
     return 0
 
@@ -157,7 +157,7 @@ def _cli() -> int:
     parser.add_argument(
         "--raise-exceptions",
         action="store_true",
-        help="raise exceptions instead of just logging them",
+        help="raise exceptions instead of just logger them",
     )
     parser.add_argument(
         "input",
@@ -201,10 +201,10 @@ def _cli() -> int:
     try:
         return _handle(args)
     except Exception as e:
-        logging.error(str(e))  # noqa: TRY400
+        logger.error(str(e))
         if args.raise_exceptions:
             raise
-        logging.debug("use `--raise-exceptions` to see full trace back")
+        logger.debug("use `--raise-exceptions` to see full trace back")
         return 1
 
 

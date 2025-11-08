@@ -1,14 +1,14 @@
-import random as z6E0g168
-import string as wQmsVtU
-def rJNQ4_D():
- return z6E0g168.choice(wQmsVtU.ascii_lowercase)
-def iLdjeIAF(L8svFj):
- A4Z_tIw=rJNQ4_D()
- for V8YuA6 in range(L8svFj-1):
-  A4Z_tIw+=rJNQ4_D()
- return A4Z_tIw
-def mHg():
- k2Ax3trR44=iLdjeIAF(8)
- kNMjI='My pet is name: '+k2Ax3trR44
- print(kNMjI)
-mHg()
+import random as iQO
+import string as jbt3dfi8
+def N8fj():
+ return iQO.choice(jbt3dfi8.ascii_lowercase)
+def nzea(YCrPg6Vu):
+ KUI4bq8X=N8fj()
+ for vud in range(YCrPg6Vu-1):
+  KUI4bq8X+=N8fj()
+ return KUI4bq8X
+def fieLHRhdZ():
+ zN_tP=nzea(8)
+ DTOudGO='My pet is name: '+zN_tP
+ print(DTOudGO)
+fieLHRhdZ()

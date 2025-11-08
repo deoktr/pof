@@ -16,10 +16,10 @@
 
 """Unicode random names generators."""
 
-import logging
 import random
 
 from .base import BaseGenerator
+from pof.logger import logger
 
 
 class UnicodeGenerator(BaseGenerator):
@@ -50,7 +50,7 @@ class UnicodeGenerator(BaseGenerator):
                 #     continue
 
             except Exception:  # noqa: BLE001
-                logging.debug("Unicode %s doesn't work", name)
+                logger.debug("Unicode %s doesn't work", name)
                 continue
             previous.append(name)
             yield name

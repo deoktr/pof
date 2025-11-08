@@ -40,6 +40,8 @@ Can extract:
 import random
 from tokenize import DEDENT, ENCODING, INDENT, NAME, NEWLINE, NUMBER, OP, STRING
 
+from pof.utils.generator import BasicGenerator
+
 
 class ConstantsObfuscator:
     """Extract variables and put them at the top of the file.
@@ -216,8 +218,6 @@ class ConstantsObfuscator:
         obf_number_rate=1,
     ) -> None:
         if generator is None:
-            from pof.utils.generator import BasicGenerator
-
             generator = BasicGenerator.alphabet_generator()
 
         self.generator = generator
@@ -241,9 +241,8 @@ class ConstantsObfuscator:
         for index, (toknum, tokval, *_) in enumerate(tokens):
             new_tokens = [(toknum, tokval)]
             next_tokval = None
-            next_toknum = None
             if len(tokens) > index + 1:
-                next_toknum, next_tokval, *__ = tokens[index + 1]
+                _next_toknum, next_tokval, *__ = tokens[index + 1]
 
             # context
             if toknum == OP and tokval == "(":

@@ -21,3 +21,26 @@ My pet is name: ufvlwqot
 $ python3 evasion_basic.py
 My pet is name: vpdqkofy
 ```
+
+Or you can verify by running every output files:
+
+```bash
+$ ./run_all.sh
+My pet is name: asesufdl
+My pet is name: zntqagwv
+My pet is name: fpeygrtt
+My pet is name: trhkchrb
+My pet is name: svbzhrlj
+My pet is name: orxxqsnk
+My pet is name: sepwpfqh
+My pet is name: qvstoywr
+My pet is name: jpxhsuwp
+My pet is name: hdjkuzyg
+My pet is name: mjjndrqb
+My pet is name: aixmaamv
+My pet is name: ixkugvpc
+My pet is name: jvkhdgbd
+My pet is name: qqbpcnia
+My pet is name: fjerllhp
+My pet is name: vcyvsqbu
+```

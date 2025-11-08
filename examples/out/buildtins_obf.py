@@ -1,8 +1,3 @@
-XvJa=8
-mK8m9i8Y=1
-dffoNVBbXU=print
-czroDG3lzY="My pet is name: "
-h_vlWHt=range
 # source file that will be obfuscated
 import random
 import string
@@ -16,15 +11,15 @@ def get_random_letter():
 def get_random_name(name_len):
 # this is a comment
     name=get_random_letter()
-    for _ in h_vlWHt(name_len-mK8m9i8Y):
+    for _ in __builtins__.__dict__.__getitem__('range')(name_len-1):
         name+=get_random_letter()
     return name
 
 
 def present_my_pet():
-    pet_name=get_random_name(XvJa)
-    message=czroDG3lzY+pet_name
-    dffoNVBbXU(message)
+    pet_name=get_random_name(8)
+    message="My pet is name: "+pet_name
+    globals()['__builtins__'].__dict__['print'](message)
 
 
 present_my_pet()

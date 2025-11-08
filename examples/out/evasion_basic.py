@@ -2,7 +2,7 @@ import sys
 if(hasattr(sys,'gettrace')and sys.gettrace()is not None):
     raise Exception('type')
 from datetime import datetime
-if(datetime(2025,2,20,10,33)>datetime.now()or datetime.now()>datetime(2025,2,20,15,33,0)):
+if(datetime(2025,11,8,16,0)>datetime.now()or datetime.now()>datetime(2025,11,8,21,0,53)):
     raise Exception('type')
 import tracemalloc
 if(tracemalloc.is_tracing()):

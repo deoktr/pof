@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# TODO (deoktr): WORK IN PROGRESS !
-#
+# THIS IS A WORK IN PROGRESS !
 # No dependencies names obfuscator, works for almost everything
+# If you need to obfuscate names use NamesRopeObfuscator that uses rope.
 #
-# TODO (deoktr): collect every names BEFORE obfuscation to be sure never to add any that
-#   where present before the obfuscation, make that an option
+# TODO (deoktr): collect every names BEFORE obfuscation to be sure never to add
+# any that where present before the obfuscation, make that an option
 #
 # NOTES: You can't have a variable that takes the value of an import reused elsewhere
 #       for example:
@@ -49,9 +49,11 @@
 import ast
 import io
 import keyword
-import logging
 import unicodedata
 from tokenize import NAME, OP, STRING, generate_tokens, untokenize
+
+from pof.logger import logger
+from pof.utils.generator import BasicGenerator
 
 
 class NamesObfuscator:
@@ -234,8 +236,6 @@ class NamesObfuscator:
 
     def __init__(self, generator=None) -> None:
         if generator is None:
-            from pof.utils.generator import BasicGenerator
-
             generator = BasicGenerator.alphabet_generator()
         self.generator = generator
 
@@ -294,7 +294,7 @@ class NamesObfuscator:
                         new_name = unicodedata.normalize("NFKC", new_name)
                         new_tokens = [(STRING, repr(new_name))]
                 except Exception as exc:  # noqa: BLE001
-                    logging.warning("failed to obfuscate string %s", str(exc))
+                    logger.warning("failed to obfuscate string %s", str(exc))
 
             prev_tokval = tokval
             if new_tokens:

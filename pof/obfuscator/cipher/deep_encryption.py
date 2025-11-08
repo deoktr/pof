@@ -15,9 +15,10 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # FIXME (deoktr): work in progress !
-import logging
 from base64 import b64encode
 from tokenize import DEDENT, INDENT, LPAR, NAME, NEWLINE, OP, RPAR, STRING, untokenize
+
+from pof.logger import logger
 
 
 class DeepEncryptionObfuscator:
@@ -68,9 +69,8 @@ class DeepEncryptionObfuscator:
         for index, (toknum, tokval, *_) in enumerate(tokens):
             new_tokens = [(toknum, tokval)]
             next_tokval = None
-            next_toknum = None
             if len(tokens) > index + 1:
-                next_toknum, next_tokval, *__ = tokens[index + 1]
+                _next_toknum, next_tokval, *__ = tokens[index + 1]
 
             if toknum == INDENT:
                 depth += 1
@@ -82,7 +82,7 @@ class DeepEncryptionObfuscator:
                 new_tokens = []
 
             if tokval == "def" and toknum == NAME and depth == self.encryption_depth:
-                logging.debug("function definition: %s", next_tokval)
+                logger.debug("function definition: %s", next_tokval)
                 function_def = True
             elif function_def and toknum == OP and tokval == ":":
                 function_def = False

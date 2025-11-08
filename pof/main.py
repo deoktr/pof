@@ -17,8 +17,8 @@
 """pof (Python Obfuscator Framework)."""
 
 import io
-import logging
 import random
+from datetime import datetime, timedelta
 from tokenize import COMMENT, NEWLINE, generate_tokens
 
 from pof.evasion import (
@@ -37,6 +37,8 @@ from pof.evasion import (
     TracemallocEvasion,
     UsernameEvasion,
 )
+from pof.evasion.utils import FILE_SYSTEM
+from pof.logger import logger
 from pof.obfuscator import (
     AddCommentsObfuscator,
     BuiltinsObfuscator,
@@ -97,7 +99,7 @@ class Obfuscator(BaseObfuscator):
         BaseGenerator.extend_reserved(reserved_words_add)
 
         msg = f"reserved {len(tokens)} names"
-        logging.info(msg)
+        logger.info(msg)
 
         # clean input
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
@@ -263,8 +265,6 @@ class Obfuscator(BaseObfuscator):
         if check_tracemalloc:
             tokens = TracemallocEvasion().add_evasion(tokens)
         if file_list_exist:
-            from pof.evasion.utils import FILE_SYSTEM
-
             tokens = FileListMissingEvasion(file_list=FILE_SYSTEM).add_evasion(tokens)
         if file_exist:
             tokens = FileExistEvasion(file=file_exist).add_evasion(tokens)
@@ -281,8 +281,6 @@ class Obfuscator(BaseObfuscator):
         if username:
             tokens = UsernameEvasion(username=username).add_evasion(tokens)
         if expire:
-            from datetime import datetime, timedelta
-
             over_datetime = datetime.utcnow()  # noqa: DTZ003
             under_datetime = datetime.utcnow() + timedelta(seconds=5)  # noqa: DTZ003
             tokens = ExpireEvasion(

@@ -14,12 +14,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import logging
 import random
 from enum import Enum
 from tokenize import COMMA, LPAR, NAME, NUMBER, OP, PLUS, RPAR, STRING, untokenize
 
 from pof.errors import PofError
+from pof.logger import logger
 
 
 class NumberObfuscator:
@@ -138,7 +138,7 @@ class NumberObfuscator:
             t = "float"
         else:
             msg = f"{token_type=} not supported"
-            logging.error(msg)
+            logger.error(msg)
         return [
             (NAME, t),
             (LPAR, "("),
@@ -198,11 +198,11 @@ class NumberObfuscator:
             return False
         code = untokenize(tokens)
         result = eval(code)  # noqa: S307
-        # logging.debug("verifying that {}={}".format(tokval, result))
+        # logger.debug("verifying that {}={}".format(tokval, result))
         if str(result) == tokval:
             return True
         msg = f"error verifying that {tokval}={result}"
-        logging.error(msg)
+        logger.error(msg)
         return False
 
     def obfuscate_number(self, toknum, tokval):  # noqa: C901 PLR0912
@@ -265,9 +265,9 @@ class NumberObfuscator:
 
             msg = f"unable to verify obfuscation with: {tokens}."
             raise PofError(msg)  # noqa: TRY301
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             msg = f"unable to obfuscate number {tokval} with {strategy}: {e!s}"
-            logging.exception(msg)
+            logger.exception(msg)
             # just in case we can't obfuscate it, for example if we have tokval
             # 0o755 all obfuscation method will fail
             return unobfuscated

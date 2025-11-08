@@ -20,45 +20,23 @@ import random
 
 import pof
 from pof import BaseObfuscator
-from pof.obfuscator import (
-    BuiltinsObfuscator,
-    CommentsObfuscator,
-    ConstantsObfuscator,
-    ExceptionObfuscator,
-    GlobalsObfuscator,
-    LoggingObfuscator,
-    # NamesObfuscator,
-    NumberObfuscator,
-    PrintObfuscator,
-    StringsObfuscator,
-)
-from pof.evasion import (
-    CPUCountEvasion,
-    DebuggerEvasion,
-    DomainEvasion,
-    ExecPathEvasion,
-    ExpireEvasion,
-    FileExistEvasion,
-    FileListExistEvasion,
-    FileListMissingEvasion,
-    FileMissingEvasion,
-    HostnameEvasion,
-    LinuxRAMCountEvasion,
-    LinuxUIDEvasion,
-    TracemallocEvasion,
-    UsernameEvasion,
-)
+from pof.obfuscator import *
+from pof.evasion import *
 from pof.utils.extract_names import NameExtract
 from pof.utils.generator import AdvancedGenerator, BaseGenerator, BasicGenerator
+from pof.utils.format import black_format
 
 
 class ExampleObfuscator(BaseObfuscator):
-    def constant_obf(self, source):
+    def single(self, obfuscator_class, source):
+        """Helper to apply a single obfuscator."""
         tokens = self._get_tokens(source)
-        tokens = ConstantsObfuscator().obfuscate_tokens(tokens)
+        tokens = obfuscator_class.obfuscate_tokens(tokens)
         return self._untokenize(tokens)
 
     def custom_complete(self, source: str):
+        """Complete custom example obfuscation."""
+
         # tokenize Python source code
         tokens = self._get_tokens(source)
 
@@ -139,6 +117,7 @@ class ExampleObfuscator(BaseObfuscator):
         return self._untokenize(tokens)
 
     def evasion_basic(self, source):
+        """Basic example to use evasion."""
         tokens = self._get_tokens(source)
 
         tokens = FileMissingEvasion(file="/tmp/foobar").add_evasion(tokens)
@@ -158,9 +137,8 @@ class ExampleObfuscator(BaseObfuscator):
         return self._untokenize(tokens)
 
 
-def obfuscate_to_file(obf_class, func_name, source):
-    out = getattr(obf_class, func_name)(source)
-    file_name = func_name + ".py"
+def obfuscate_to_file(out, file_name):
+    file_name = file_name + ".py"
     file = pathlib.Path(__file__).parent / "out" / file_name
     with file.open("w") as f:
         f.write(out)
@@ -173,15 +151,26 @@ def run_all():
 
     # defaults from pof
     pof_obf = pof.Obfuscator()
-    obfuscate_to_file(pof_obf, "basic", source)
-    obfuscate_to_file(pof_obf, "obfuscate", source)
-    obfuscate_to_file(pof_obf, "circles", source)
+    obfuscate_to_file(pof_obf.basic(source), "basic")
+    obfuscate_to_file(pof_obf.obfuscate(source), "obfuscate")
+    obfuscate_to_file(pof_obf.circles(source), "circles")
 
     # custom API example
     obf = ExampleObfuscator()
-    obfuscate_to_file(obf, "constant_obf", source)
-    obfuscate_to_file(obf, "custom_complete", source)
-    obfuscate_to_file(obf, "evasion_basic", source)
+    obfuscate_to_file(obf.custom_complete(source), "custom_complete")
+    obfuscate_to_file(black_format(obf.custom_complete(source)), "custom_complete_format")
+    obfuscate_to_file(obf.evasion_basic(source), "evasion_basic")
+    obfuscate_to_file(obf.single(ConstantsObfuscator(), source), "constant_obf")
+    obfuscate_to_file(obf.single(BuiltinsObfuscator(), source), "buildtins_obf")
+    obfuscate_to_file(obf.single(XORObfuscator(), source), "xor_obf")
+    obfuscate_to_file(obf.single(RC4Obfuscator(), source), "rc4_obf")
+    obfuscate_to_file(obf.single(SpacenTabObfuscator(), source), "snt_obf")
+    obfuscate_to_file(obf.single(StringsObfuscator(), source), "strings_obf")
+    obfuscate_to_file(obf.single(DocstringObfuscator(), source), "docstring_obf")
+    obfuscate_to_file(obf.single(IndentsObfuscator(), source), "indent_obf")
+    obfuscate_to_file(obf.single(TokensObfuscator(), source), "tokens_obf")
+    obfuscate_to_file(obf.single(IPv6Obfuscator(), source), "ipv6_obf")
+    obfuscate_to_file(obf.single(MACObfuscator(), source), "mac_obf")
 
 
 if __name__ == "__main__":

@@ -17,10 +17,11 @@
 # TODO (deoktr): obfuscate `format` but only when not after `"".`
 # TODO (deoktr): add `__name__.__class__.__class__.__base__.__subclasses__()` variant
 
-import logging
 import random
 from tokenize import LPAR, LSQB, NAME, NUMBER, OP, RPAR, RSQB, STRING
 from typing import ClassVar
+
+from pof.logger import logger
 
 
 class BuiltinsObfuscator:
@@ -463,7 +464,7 @@ class BuiltinsObfuscator:
 
         # should never happen, but we never know
         msg = f"unsupported builtin obfuscation method {method}"
-        logging.error(msg)
+        logger.error(msg)
         return None
 
     def obfuscate_tokens(self, tokens):
