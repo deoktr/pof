@@ -228,6 +228,7 @@ class NamesObfuscator:
         "copy",  # copy dict or list
         "join",  # on string "".join()
         "__dict__",
+        "quine",  # quine is used by pof to get the quine output
         # TODO (deoktr): add all the others
     )
 

@@ -18,7 +18,7 @@ def get_random_name(name_len):
 
 def present_my_pet():
  pet_name=get_random_name(8)
- message="My pet is name: "+pet_name
+ message="My pet is named: "+pet_name
  print(message)
 
 

@@ -209,6 +209,7 @@ class DefinitionsObfuscator:
         "update",  # on dict
         "copy",  # copy dict or list
         "join",  # on string "".join()
+        "quine",  # quine is used by pof to get the quine output
         # TODO (deoktr): add all the others
     )
 

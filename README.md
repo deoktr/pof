@@ -28,6 +28,15 @@ Output:
 ```python
 from base64 import b64decode as expected_data
 from base64 import b85decode as _5269
+globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'[::-1]])].__dict__[_5269('').decode().join([chr(ord(i)-3)for i in"".join([chr(ord(i)-3)for i in'mruhgry'])])]()[_5269(''[::-1]).decode().join([globals()[''[::-1].join([chr(ord(i)-3)for i in expected_data('YmJleGxvd2xxdmJi').decode()])].__dict__["".join([chr(ord(i)-3)for i in"".join([chr(ord(i)-3)for i in'inx'])])](__builtins__.__dict__.__getitem__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in expected_data('cnVn').decode()]))(i)-(__name__.__len__().__class__(__builtins__.__dict__.__getitem__(_5269('X>N1').decode())("".join([chr(ord(i)-3)for i in'3\u007b5']),0)+__builtins__.__getattribute__('egapraeytamrofel'[::-1].replace('egapraeytamrof'[::-1],expected_data('bg==').decode()))(expected_data("".join([chr(ord(i)-3)for i in']j@@'])).decode()))))for i in"".join([chr(ord(i)-3)for i in'eeh{olsy7bdgguvtyee']).replace(_5269('X>fKlUtwfqa&r').decode(),_5269('Z+C0').decode())])].__dict__[''[::-1].join([chr(ord(i)-3)for i in''[::-1]]).join([globals()[expected_data('XordinalidWlsdGlucordinalf'.replace('ordinal','19')).decode()].__dict__[expected_data('yh2Y'[::-1]).decode()](globals()[_5269(expected_data('VXRlTiVYPjQ/OVpnWEU+').decode()).decode()].__dict__[_5269('fold_countV'.replace('fold_count','Z*p')).decode()](i)-__builtins__.__getattribute__(expected_data("".join([chr(ord(i)-3)for i in'dZ83'])).decode())('quaencode_7or8bits'.replace('encode_7or8bit','ntile').replace("".join([chr(ord(i)-3)for i in'txdqwlohv']),"".join([chr(ord(i)-3)for i in'6']))))for i in expected_data('').decode().join([chr(ord(i)-3)for i in'ztoxv'[::-1]])])](expected_data(_5269('Q%6>FVKQQ0ad38HZFp+').decode().replace('pq_b2a'[::-1],'\u0062\u00478\u0073\u0049\u0048\u0064')).decode())
+```
+
+<details>
+<summary>Same output formatted:</summary>
+
+```python
+from base64 import b64decode as expected_data
+from base64 import b85decode as _5269
 
 globals()["".join([chr(ord(i) - 3) for i in "bbvqlwolxebb"[::-1]])].__dict__[
     _5269("")
@@ -115,13 +124,7 @@ globals()["".join([chr(ord(i) - 3) for i in "bbvqlwolxebb"[::-1]])].__dict__[
 )
 ```
 
-The output was formatted using `black` to make it easier to read, you can generate the same as a single line:
-
-```python
-from base64 import b64decode as expected_data
-from base64 import b85decode as _5269
-globals()["".join([chr(ord(i)-3)for i in'bbvqlwolxebb'[::-1]])].__dict__[_5269('').decode().join([chr(ord(i)-3)for i in"".join([chr(ord(i)-3)for i in'mruhgry'])])]()[_5269(''[::-1]).decode().join([globals()[''[::-1].join([chr(ord(i)-3)for i in expected_data('YmJleGxvd2xxdmJi').decode()])].__dict__["".join([chr(ord(i)-3)for i in"".join([chr(ord(i)-3)for i in'inx'])])](__builtins__.__dict__.__getitem__("".join([chr(ord(i)-3)for i in'']).join([chr(ord(i)-3)for i in expected_data('cnVn').decode()]))(i)-(__name__.__len__().__class__(__builtins__.__dict__.__getitem__(_5269('X>N1').decode())("".join([chr(ord(i)-3)for i in'3\u007b5']),0)+__builtins__.__getattribute__('egapraeytamrofel'[::-1].replace('egapraeytamrof'[::-1],expected_data('bg==').decode()))(expected_data("".join([chr(ord(i)-3)for i in']j@@'])).decode()))))for i in"".join([chr(ord(i)-3)for i in'eeh{olsy7bdgguvtyee']).replace(_5269('X>fKlUtwfqa&r').decode(),_5269('Z+C0').decode())])].__dict__[''[::-1].join([chr(ord(i)-3)for i in''[::-1]]).join([globals()[expected_data('XordinalidWlsdGlucordinalf'.replace('ordinal','19')).decode()].__dict__[expected_data('yh2Y'[::-1]).decode()](globals()[_5269(expected_data('VXRlTiVYPjQ/OVpnWEU+').decode()).decode()].__dict__[_5269('fold_countV'.replace('fold_count','Z*p')).decode()](i)-__builtins__.__getattribute__(expected_data("".join([chr(ord(i)-3)for i in'dZ83'])).decode())('quaencode_7or8bits'.replace('encode_7or8bit','ntile').replace("".join([chr(ord(i)-3)for i in'txdqwlohv']),"".join([chr(ord(i)-3)for i in'6']))))for i in expected_data('').decode().join([chr(ord(i)-3)for i in'ztoxv'[::-1]])])](expected_data(_5269('Q%6>FVKQQ0ad38HZFp+').decode().replace('pq_b2a'[::-1],'\u0062\u00478\u0073\u0049\u0048\u0064')).decode())
-```
+</details>
 
 More examples and usage can be found in `examples/` or in the section bellow.
 
@@ -164,6 +167,12 @@ Run inside Docker from a local file `in.py`:
 
 ```bash
 docker run --rm -v $(pwd):/tmp ghcr.io/deoktr/pof:latest /tmp/in.py -o /tmp/out.py
+```
+
+Or pipe input and output:
+
+```bash
+cat in.py | docker run --rm -i ghcr.io/deoktr/pof:latest > out.py
 ```
 
 ### 4. Docker Source
@@ -827,10 +836,24 @@ Yes they are valid Python variable name.
 Usage:
 
 ```python
-
 from pof.utils.generator import UnicodeGenerator
 
 gen = UnicodeGenerator().katakana_generator()
+for _ in range(4):
+    print(next(gen))
+```
+
+You can also combine generators to pick randomly but with weights associated:
+
+```python
+from pof.utils.generator import *
+
+gen_dict = {
+    86: AdvancedGenerator.realistic_generator(),
+    10: BasicGenerator.alphabet_generator(),
+    4: BasicGenerator.number_name_generator(length=random.randint(2, 5)),
+}
+gen = AdvancedGenerator.multi_generator(gen_dict)
 for _ in range(4):
     print(next(gen))
 ```

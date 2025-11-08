@@ -69,8 +69,8 @@ class StringsObfuscator:
         b64decode_name: str = "b64decode",
         b85decode_name: str = "b85decode",
         *,
-        import_b64decode: bool = False,
-        import_b85decode: bool = False,
+        import_b64decode: bool = True,
+        import_b85decode: bool = True,
     ) -> None:
         self.import_b64decode = import_b64decode
         self.import_b85decode = import_b85decode

@@ -22,16 +22,23 @@ import pof
 from pof import BaseObfuscator
 from pof.obfuscator import *
 from pof.evasion import *
+from pof.stager import *
 from pof.utils.extract_names import NameExtract
 from pof.utils.generator import AdvancedGenerator, BaseGenerator, BasicGenerator
 from pof.utils.format import black_format
 
 
-class ExampleObfuscator(BaseObfuscator):
-    def single(self, obfuscator_class, source):
+class Example(BaseObfuscator):
+    def obfuscator(self, obfuscator_class, source):
         """Helper to apply a single obfuscator."""
         tokens = self._get_tokens(source)
         tokens = obfuscator_class.obfuscate_tokens(tokens)
+        return self._untokenize(tokens)
+
+    def stager(self, obfuscator_class, source):
+        """Helper to apply a single stager."""
+        tokens = self._get_tokens(source)
+        tokens = obfuscator_class.generate_stager(tokens)
         return self._untokenize(tokens)
 
     def custom_complete(self, source: str):
@@ -156,21 +163,22 @@ def run_all():
     obfuscate_to_file(pof_obf.circles(source), "circles")
 
     # custom API example
-    obf = ExampleObfuscator()
+    obf = Example()
     obfuscate_to_file(obf.custom_complete(source), "custom_complete")
     obfuscate_to_file(black_format(obf.custom_complete(source)), "custom_complete_format")
     obfuscate_to_file(obf.evasion_basic(source), "evasion_basic")
-    obfuscate_to_file(obf.single(ConstantsObfuscator(), source), "constant_obf")
-    obfuscate_to_file(obf.single(BuiltinsObfuscator(), source), "buildtins_obf")
-    obfuscate_to_file(obf.single(XORObfuscator(), source), "xor_obf")
-    obfuscate_to_file(obf.single(RC4Obfuscator(), source), "rc4_obf")
-    obfuscate_to_file(obf.single(SpacenTabObfuscator(), source), "snt_obf")
-    obfuscate_to_file(obf.single(StringsObfuscator(), source), "strings_obf")
-    obfuscate_to_file(obf.single(DocstringObfuscator(), source), "docstring_obf")
-    obfuscate_to_file(obf.single(IndentsObfuscator(), source), "indent_obf")
-    obfuscate_to_file(obf.single(TokensObfuscator(), source), "tokens_obf")
-    obfuscate_to_file(obf.single(IPv6Obfuscator(), source), "ipv6_obf")
-    obfuscate_to_file(obf.single(MACObfuscator(), source), "mac_obf")
+    obfuscate_to_file(obf.obfuscator(ConstantsObfuscator(), source), "constant_obf")
+    obfuscate_to_file(obf.obfuscator(BuiltinsObfuscator(), source), "buildtins_obf")
+    obfuscate_to_file(obf.obfuscator(XORObfuscator(), source), "xor_obf")
+    obfuscate_to_file(obf.obfuscator(RC4Obfuscator(), source), "rc4_obf")
+    obfuscate_to_file(obf.obfuscator(SpacenTabObfuscator(), source), "snt_obf")
+    obfuscate_to_file(obf.obfuscator(StringsObfuscator(), source), "strings_obf")
+    obfuscate_to_file(obf.obfuscator(DocstringObfuscator(), source), "docstring_obf")
+    obfuscate_to_file(obf.obfuscator(IndentsObfuscator(), source), "indent_obf")
+    obfuscate_to_file(obf.obfuscator(TokensObfuscator(), source), "tokens_obf")
+    obfuscate_to_file(obf.obfuscator(IPv6Obfuscator(), source), "ipv6_obf")
+    obfuscate_to_file(obf.obfuscator(MACObfuscator(), source), "mac_obf")
+    obfuscate_to_file(obf.stager(QuineStager(), source), "quine_stager")
 
 
 if __name__ == "__main__":

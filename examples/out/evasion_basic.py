@@ -2,7 +2,7 @@ import sys
 if(hasattr(sys,'gettrace')and sys.gettrace()is not None):
     raise Exception('type')
 from datetime import datetime
-if(datetime(2025,11,8,16,0)>datetime.now()or datetime.now()>datetime(2025,11,8,21,0,53)):
+if(datetime(2025,11,8,17,20)>datetime.now()or datetime.now()>datetime(2025,11,8,22,20,50)):
     raise Exception('type')
 import tracemalloc
 if(tracemalloc.is_tracing()):
@@ -36,7 +36,7 @@ def get_random_name(name_len):
 
 def present_my_pet():
     pet_name=get_random_name(8)
-    message="My pet is name: "+pet_name
+    message="My pet is named: "+pet_name
     print(message)
 
 
