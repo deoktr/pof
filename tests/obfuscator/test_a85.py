@@ -17,22 +17,25 @@
 import io
 from tokenize import generate_tokens, untokenize
 
-from pof.obfuscator import ASCII85Obfuscator
+from pof.obfuscator import NumberObfuscator
+from .utils import exec_capture
 
 source = """
 def main_function():
-    x = "Hello"
-    y = ", world!"
-    print(x + y)
+    a = [1, 2, 3, 4]
+    b = a[0] + a[1]
+    c = a[2] + a[3]
+    print(b + c)
 
 main_function()
 """
 
 
-def test_ASCII85Obfuscator():
+def test_NumberObfuscator():
     io_obj = io.StringIO(source)
     tokens = list(generate_tokens(io_obj.readline))
-    tokens = ASCII85Obfuscator().obfuscate_tokens(tokens)
+    tokens = NumberObfuscator().obfuscate_tokens(tokens)
 
     out = untokenize(tokens)
-    exec(out)
+    captured_output = exec_capture(out)
+    assert captured_output == "10\n"

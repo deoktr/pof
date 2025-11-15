@@ -253,7 +253,7 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 
 ### Obfuscator
 
-`NamesObfuscator` the most basic obfuscator is changing variables, classes, function names, and imports.
+`NamesObfuscator` the most basic obfuscator is renaming variables, classes, functions, and imports.
 
 Source in `examples/source.py`.
 

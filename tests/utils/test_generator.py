@@ -14,46 +14,75 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from pof.utils.generator import AdvancedGenerator, BasicGenerator
+import ast
+
+from pof.utils.generator import AdvancedGenerator, BasicGenerator, UnicodeGenerator
 
 r = 100
 
 
-def test_number_name_generator():
-    generator = BasicGenerator.number_name_generator()
-    names = []
-    for _ in range(r):
-        new = next(generator)
-        assert new not in names
-        names.append(new)
+def test_basic_generator():
+    generators = [
+        BasicGenerator.alphabet_generator(),
+        BasicGenerator.number_name_generator(),
+        BasicGenerator.single_symbol_generator(),
+        BasicGenerator.pointer_generator(),
+        BasicGenerator.function_generator(),
+        BasicGenerator.class_generator(),
+    ]
+
+    for generator in generators:
+        names = []
+        for _ in range(r):
+            new = next(generator)
+            assert new not in names
+            assert ast.parse(f"{new} = 0")
+            names.append(new)
 
 
-def test_alphabet_generator():
-    generator = BasicGenerator.alphabet_generator()
-    names = []
-    for _ in range(r):
-        new = next(generator)
-        assert new not in names
-        names.append(new)
+def test_advanced_generator():
+    generators = [
+        AdvancedGenerator.realistic_generator(),
+        AdvancedGenerator.fixed_length_generator(),
+        AdvancedGenerator.multi_generator(
+            {
+                1: BasicGenerator.alphabet_generator(),
+                5: BasicGenerator.number_name_generator(),
+            }
+        ),
+    ]
+
+    for generator in generators:
+        names = []
+        for _ in range(r):
+            new = next(generator)
+            assert new not in names
+            assert ast.parse(f"{new} = 0")
+            names.append(new)
 
 
-def test_realistic_generator():
-    generator = AdvancedGenerator.realistic_generator()
-    names = []
-    for _ in range(r):
-        new = next(generator)
-        assert new not in names
-        names.append(new)
+def test_unicode_generator():
+    generators = [
+        UnicodeGenerator.broken_generator(),
+        UnicodeGenerator.ideograms_generator(),
+        UnicodeGenerator.weird_generator(),
+        UnicodeGenerator.ideograms_generator(),
+        UnicodeGenerator.dot_generator(),
+        UnicodeGenerator.canadian_aboriginal_generator(),
+        UnicodeGenerator.runic_generator(),
+        UnicodeGenerator.katakana_generator(),
+        UnicodeGenerator.cjk_generator(),
+        UnicodeGenerator.egyptian_hieroglyphs_generator(),
+        UnicodeGenerator.arabic_generator(),
+        UnicodeGenerator.latin_generator(),
+        UnicodeGenerator.cyrillic_generator(),
+        UnicodeGenerator.greek_generator(),
+    ]
 
-
-def test_multi_generator():
-    gen_dict = {
-        1: BasicGenerator.alphabet_generator(),
-        5: BasicGenerator.number_name_generator(),
-    }
-    generator = AdvancedGenerator.multi_generator(gen_dict)
-    names = []
-    for _ in range(r):
-        new = next(generator)
-        assert new not in names
-        names.append(new)
+    for generator in generators:
+        names = []
+        for _ in range(r):
+            new = next(generator)
+            assert new not in names
+            assert ast.parse(f"{new} = 0")
+            names.append(new)

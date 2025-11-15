@@ -209,7 +209,11 @@ class NamesRopeObfuscator:
         "update",  # on dict
         "copy",  # copy dict or list
         "join",  # on string "".join()
+        "decode",  # on string "".decode()
+        "encode",  # on string "".encode()
+        "__dict__",
         # TODO (deoktr): add all the others
+        "quine",  # quine is used by pof to get the quine output
     )
 
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)
@@ -344,7 +348,7 @@ class NamesRopeObfuscator:
         imports = self.get_imports(tokens)
         local_names = self.get_local(tokens, imports)
 
-        msg = f"found {len(local_names)} local names"
+        msg = f"found {len(local_names)} local names to obfuscate"
         logger.debug(msg)
 
         self.create_tmp_dir()
@@ -359,7 +363,7 @@ class NamesRopeObfuscator:
         todo = len(local_names)
         for done, name in enumerate(local_names):
             new_name = self.generate_new_name()
-            msg = f"{done + 1}/{todo} changing var {name} to {new_name}"
+            msg = f"{done + 1}/{todo} renaming {name} to {new_name}"
             logger.debug(msg)
             try:
                 old_name = mod.get_attribute(name)

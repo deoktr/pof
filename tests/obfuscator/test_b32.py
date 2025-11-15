@@ -18,6 +18,7 @@ import io
 from tokenize import generate_tokens, untokenize
 
 from pof.obfuscator import Base32Obfuscator
+from .utils import exec_capture
 
 source = """
 def main_function():
@@ -35,4 +36,5 @@ def test_Base32Obfuscator():
     tokens = Base32Obfuscator().obfuscate_tokens(tokens)
 
     out = untokenize(tokens)
-    exec(out)
+    captured_output = exec_capture(out)
+    assert captured_output == "Hello, world!\n"

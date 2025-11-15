@@ -227,9 +227,11 @@ class NamesObfuscator:
         "update",  # on dict
         "copy",  # copy dict or list
         "join",  # on string "".join()
+        "decode",  # on string "".decode()
+        "encode",  # on string "".encode()
         "__dict__",
-        "quine",  # quine is used by pof to get the quine output
         # TODO (deoktr): add all the others
+        "quine",  # quine is used by pof to get the quine output
     )
 
     RESERVED = RESERVED_WORDS + BUILTINS + tuple(keyword.kwlist)

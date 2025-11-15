@@ -16,6 +16,7 @@
 
 """Unicode random names generators."""
 
+import ast
 import random
 
 from .base import BaseGenerator
@@ -35,7 +36,7 @@ class UnicodeGenerator(BaseGenerator):
             if name in previous or name in cls.RESERVED:
                 continue
             try:
-                exec(f"{name}=None")  # noqa: S102
+                ast.parse(f"{name}=None")
 
                 # if we need to call `getattr` on the variable name, then normalize
                 # the variable name BEFORE adding it to the string, or uncomment the

@@ -18,6 +18,7 @@ import io
 from tokenize import generate_tokens, untokenize
 
 from pof.obfuscator import PrintObfuscator
+from .utils import exec_capture
 
 source = """
 import foo

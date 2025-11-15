@@ -15,13 +15,9 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import io
-
-# to fix a problem "undefined b64decode" during exec
-from base64 import b64decode  # noqa
-
 from tokenize import generate_tokens, untokenize
 
-from pof.obfuscator import XORObfuscator
+from pof.obfuscator import ASCII85Obfuscator
 from .utils import exec_capture
 
 source = """
@@ -34,11 +30,11 @@ main_function()
 """
 
 
-def test_XORObfuscator():
+def test_ASCII85Obfuscator():
     io_obj = io.StringIO(source)
     tokens = list(generate_tokens(io_obj.readline))
-    tokens = XORObfuscator().obfuscate_tokens(tokens)
+    tokens = ASCII85Obfuscator().obfuscate_tokens(tokens)
 
     out = untokenize(tokens)
-    captured_output = exec_capture(out, {"b64decode": b64decode})
+    captured_output = exec_capture(out)
     assert captured_output == "Hello, world!\n"

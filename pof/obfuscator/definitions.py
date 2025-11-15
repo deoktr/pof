@@ -19,6 +19,8 @@
 Rename function and classes names using external package: rope
 """
 
+# https://rope.readthedocs.io/en/latest/library.html
+
 import ast
 import io
 import keyword
@@ -30,6 +32,7 @@ from pof.logger import logger
 from pof.utils.generator import BasicGenerator
 
 try:
+    import rope
     from rope.base.project import Project
     from rope.refactor.rename import Rename
 
@@ -218,7 +221,7 @@ class DefinitionsObfuscator:
 
     DEFAULT_TMP_DIR = ".pof_cache"
 
-    def __init__(self, generator=None, tmp_dir=None, *, clean=False) -> None:
+    def __init__(self, generator=None, tmp_dir=None, *, clean=True) -> None:
         if generator is None:
             generator = BasicGenerator.alphabet_generator()
         self.generator = generator
@@ -303,8 +306,7 @@ class DefinitionsObfuscator:
 
         local_names = self.get_local(tokens)
 
-        msg = f"found {len(local_names)} local names"
-        logger.debug(msg)
+        logger.debug(f"found {len(local_names)} local names")
 
         self.create_tmp_dir()
 
@@ -312,35 +314,36 @@ class DefinitionsObfuscator:
         tmp_file_path = self.create_tmp_file(tokens, mod_name)
 
         # TODO (deoktr): find a way better way, do everything in memory
-        proj = Project(self.tmp_dir)
-        mod = proj.get_module(mod_name)
+        project = Project(self.tmp_dir)
+        mod = project.get_module(mod_name)
 
         todo = len(local_names)
         for done, name in enumerate(local_names):
             new_name = self.generate_new_name()
-            msg = f"{done + 1}/{todo} changing var {name} to {new_name}"
-            logger.debug(msg)
+            logger.debug(f"{done + 1}/{todo} renaming {name} to {new_name}")
             try:
                 old_name = mod.get_attribute(name)
-
                 pymod, lineno = old_name.get_definition_location()
-                # lineno_start, lineno_end = pymod.logical_lines.logical_line_in(lineno)
-
+                # pymod.logical_lines.logical_line_in(lineno)
                 offset = pymod.resource.read().index(
                     old_name.pyobject.get_name(),
                     pymod.lines.get_line_start(lineno),
                 )
+                renamer = Rename(project, pymod.get_resource(), offset)
+                change = renamer.get_changes(new_name)
+                project.do(change)
+            except (
+                # can happen on class functions
+                rope.base.exceptions.AttributeNotFoundError,
+                # this can happen if the function is not called for example and
+                # for other very obscure reasons
+                ValueError,
+            ):
+                logger.error(f"error trying to obfuscate var {name}")
+            except Exception as e:  # noqa: BLE001
+                logger.exception(f"error trying to obfuscate var {name}: {e!s}")
 
-                changes = Rename(proj, pymod.get_resource(), offset).get_changes(
-                    new_name,
-                )
-
-                proj.do(changes)
-            except Exception:  # noqa: BLE001
-                msg = f"error trying to obfuscate var {name}"
-                logger.error(msg)
-                # logger.exception(msg)
-        proj.close()
+        project.close()
 
         # finish by reading the file one last time
         with tmp_file_path.open() as f:
