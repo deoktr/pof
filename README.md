@@ -307,6 +307,9 @@ print('Helnelemd'.replace('nelem','lo, worl'))
 # One on n
 print("".join([d if g%3==0 else""for g,d in enumerate('H9IesYlvJl5loU4,dK nDw51ovsrozl0UdoI!jL')]))
 
+# Hex-encoded
+print('\x48\x65\x6c\x6c\x6f\x2c\x20\x77\x6f\x72\x6c\x64')
+
 # Unicode
 print('\u0048\u0065\u006c\u006c\u006f\u002c\u0020\u0077\u006f\u0072\u006c\u0064')
 

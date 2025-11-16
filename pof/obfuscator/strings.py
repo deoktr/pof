@@ -49,11 +49,12 @@ class StringsObfuscator:
         ADDITION = 2  # FIXME (deoktr): doesn't seems to work <
         ONLY_ADDITION = 3
         BASE85 = 4
-        UNICODE = 5
-        SHIFT = 6
-        REPLACE = 7
-        REVERSE = 8
-        ONE_ON_N = 9
+        HEX = 5
+        UNICODE = 6
+        SHIFT = 7
+        REPLACE = 8
+        REVERSE = 9
+        ONE_ON_N = 10
 
     ALL = (
         Strats.BASE64,
@@ -133,6 +134,18 @@ class StringsObfuscator:
             (LPAR, "("),
             (RPAR, ")"),
         ]
+
+    @staticmethod
+    def hex(tokval: str):
+        # Hello --> \x48\x65\x6c\x6c\x6f
+        raw_string = eval(tokval)  # noqa: S307
+        if isinstance(raw_string, bytes):
+            raw_string = raw_string.decode()
+        encoded = ""
+        for c in raw_string:
+            hexcode = f"\\x{hex(ord(c))[2:]:0>2}" if not c.isdigit() else c  # noqa: FURB116
+            encoded += hexcode
+        return [(STRING, f"'{encoded}'")]
 
     @staticmethod
     def unicode(tokval: str):
@@ -327,6 +340,7 @@ class StringsObfuscator:
             strategies = list(strategies)
             strategies.extend(
                 [
+                    self.Strats.HEX,
                     self.Strats.UNICODE,
                     self.Strats.SHIFT,
                 ],
@@ -342,6 +356,8 @@ class StringsObfuscator:
             tokens = self.only_additions(tokval)
         elif strategy == self.Strats.BASE85:
             tokens = self.obf_base85(tokval)
+        elif strategy == self.Strats.HEX:
+            tokens = self.hex(tokval)
         elif strategy == self.Strats.UNICODE:
             tokens = self.unicode(tokval)
         elif strategy == self.Strats.SHIFT:
