@@ -128,6 +128,46 @@ globals()["".join([chr(ord(i) - 3) for i in "bbvqlwolxebb"[::-1]])].__dict__[
 
 More examples and usage can be found in `examples/` or in the section bellow.
 
+## Effectiveness
+
+The tests are done using the default configuration of pof, no sandbox evasion
+technique was used with obfuscation. Also note that I haven't tested the
+malware to see if they still work, they should, but they may break with
+obfuscation.
+
+Obfuscating a [Lazarus malware](https://bazaar.abuse.ch/sample/c3cb53c4a290bc9ab6c9eb825ed0ca38bb54bcc4a59f33be72becdff80cb091b/),
+we go from
+[18/63](https://www.virustotal.com/gui/file/c3cb53c4a290bc9ab6c9eb825ed0ca38bb54bcc4a59f33be72becdff80cb091b)
+to
+[0/63](https://www.virustotal.com/gui/file/2f427bc784e2a865d8f000c21f366cb8459842f97c56465cbe963f221b3e115a)
+on virus total:
+![](./examples/images/lazarus.png)
+
+Obfuscating [BTC-Clipper](https://github.com/NightfallGT/BTC-Clipper), we go
+from
+[13/64](https://www.virustotal.com/gui/file/9817d8de9bf7d2740b5b66e30ec1afdd98d7d119074a61cbba05514d4ebdc149)
+to
+[0/63](https://www.virustotal.com/gui/file/71631daa26fe6c2cf77d282a16f8b3fd31e4794b63709b956599563b95e64816)
+on virus total:
+![](./examples/images/btc_clipper.png)
+
+Obfuscating a
+[Braodo malware](https://bazaar.abuse.ch/sample/b86e4bff935db9345cc1467e615ff4fbe292fae618ae927595d328cfd9e8a08f/),
+we go from
+[10/61](https://www.virustotal.com/gui/file/b86e4bff935db9345cc1467e615ff4fbe292fae618ae927595d328cfd9e8a08f)
+to
+[0/63](https://www.virustotal.com/gui/file/8791188aaf7655093307e46fa68e3705ee7249cb81e05ea416ae96ad2fd2f0f2)
+on virus total:
+![](./examples/images/braodo.png)
+
+Obfuscating [Python-File-Stealer](https://github.com/KrizzhSriskantharajah-UK/Python-File-Stealer),
+we go from
+[4/63](https://www.virustotal.com/gui/file/2fc798f1df42adae3af2f7d2623edc74f6b8f08a7ae16ef3b67305c4ad668c82)
+to
+[0/63](https://www.virustotal.com/gui/file/8d529e6ee2806986ca376a427d683fdf6980d6332134e4759d790d604d6b5dcb)
+on virus total:
+![](./examples/images/python_stealer.png)
+
 ## Install
 
 There are multiple installation options, with PIP, a virtualenv, a container, or with Nix.
