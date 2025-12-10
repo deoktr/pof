@@ -33,6 +33,7 @@ from .encoding.b64 import Base64Obfuscator
 from .encoding.b85 import Base85Obfuscator
 from .encoding.binascii import BinasciiObfuscator
 from .encoding.snt import SpacenTabObfuscator
+from .encoding.whitespace import WhitespaceObfuscator
 from .esoteric.call import CallObfuscator
 from .esoteric.doc import CharFromDocObfuscator
 from .esoteric.globals import GlobalsObfuscator
@@ -97,6 +98,7 @@ __all__ = [
     "StringsObfuscator",
     "TokensObfuscator",
     "UUIDObfuscator",
+    "WhitespaceObfuscator",
     "XORObfuscator",
     "ZlibObfuscator",
 ]

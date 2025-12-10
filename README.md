@@ -6,11 +6,11 @@ Python Obfuscation Framework, a complete Python offensive security toolkit to ge
 
 pof will allow you to:
 
-- **Create staged payloads**, store stages inside images, on trusted sites, encrypt, compress, or encode them, and much more.
-- **Slow down static analysis** of the payload or the stage.
+- **Slow down static analysis** with layered obfuscation and novel techniques.
 - **Evade sandbox** by checking host information like MAC addresses, CPU count, memory count, uptime, and much more.
 - **Add guardrails** to ensure the payload only execute on the desired target host by verifying for username, hostname, domainame and much more.
 - **Prevent dynamic analysis** by detecting debugging or tracing via malloc.
+- **Create staged payloads**, store stages inside images, on trusted sites, encrypt, compress, or encode them, and much more.
 - **Enable automation** to produce numerous variant of the same payload.
 
 The main benefit of POF is customizability, you can generate your payload however you want, choose the obfuscation you want and combine them.
@@ -509,6 +509,19 @@ def sntdecode(encoded):
     return n.to_bytes((n.bit_length()+7)//8,"big")
 
 exec(sntdecode('\t\t\t     \t\t\t  \t  \t\t \t  \t \t\t \t\t\t  \t\t\t \t    \t \t     \t  \t\t\t \t  \t    \t\t  \t \t \t\t \t\t   \t\t \t\t   \t\t \t\t\t\t  \t \t\t    \t      \t\t\t \t\t\t \t\t \t\t\t\t \t\t\t  \t  \t\t \t\t   \t\t  \t    \t  \t\t\t  \t \t  \t    \t \t '))
+```
+
+#### WhitespaceObfuscator
+
+Use whitespace and zero width whitespace `\u200B`.
+
+```python
+def wsdecode(encoded):
+    msg_bin=encoded.replace(" ","0").replace('\u200b',"1")
+    n=int(msg_bin,2)
+    return n.to_bytes((n.bit_length()+7)//8,"big")
+
+exec(wsdecode("​​​     ​​​  ​  ​​ ​  ​ ​​ ​​​  ​​​ ​    ​ ​     ​  ​​​ ​  ​    ​​  ​ ​ ​​ ​​   ​​ ​​   ​​ ​​​​  ​ ​​    ​      ​​​ ​​​ ​​ ​​​​ ​​​  ​  ​​ ​​   ​​  ​    ​  ​​​  ​ ​  ​    ​ ​ "))
 ```
 
 #### RC4Obfuscator

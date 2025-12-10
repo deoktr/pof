@@ -119,6 +119,9 @@ def add_obfuscation(tokens, args):
     if args.obf_snt:
         logger.debug("obfuscating snt")
         tokens = SpacenTabObfuscator().obfuscate_tokens(tokens)
+    if args.obf_whitespace:
+        logger.debug("obfuscating whitespace")
+        tokens = WhitespaceObfuscator().obfuscate_tokens(tokens)
     if args.obf_call:
         logger.debug("obfuscating call")
         tokens = CallObfuscator().obfuscate_tokens(tokens)

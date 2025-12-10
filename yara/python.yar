@@ -6,7 +6,7 @@ rule execFunction
 {
     meta:
         description = "Function `exec` used"
-        author = "private"
+        author = "deoktr"
 
     strings:
         $exec = "exec"
@@ -19,10 +19,12 @@ rule suspiciousImports
 {
     meta:
         description = "Suspicious library imports"
-        author = "private"
+        author = "deoktr"
 
     strings:
         $base64 = "import base64"
+        $base64from = "from base64 import b64decode"
+        $base85 = "from base64 import b85decode"
 
     condition:
         any of them
@@ -33,7 +35,7 @@ rule suspiciousImports
 //{
 //    meta:
 //        description = "No comments found"
-//        author = "private"
+//        author = "deoktr"
 //
 //    strings:
 //        $comment = /#.{1,2}/
@@ -47,7 +49,7 @@ rule obfuscationOxyry
 {
     meta:
         description = "Obfuscation using Oxyry"
-        author = "private"
+        author = "deoktr"
         resources = "https://pyob.oxyry.com/"
 
     strings:
@@ -62,7 +64,7 @@ rule LOTLURL
 {
     meta:
         description = "Living Off Trusted Sites URLs"
-        author = "private"
+        author = "deoktr"
         resources = "https://lots-project.com/"
 
     strings:
@@ -70,6 +72,19 @@ rule LOTLURL
         $githubusercontent = "githubusercontent"
         $github = "github"
         $pastebin = "pastebin"
+
+    condition:
+        any of them
+}
+
+rule zerowidthspace
+{
+    meta:
+        description = "Whitespace encoding with zero width spaces"
+        author = "deoktr"
+
+    strings:
+        $a = "\xe2\x80\x8b"
 
     condition:
         any of them

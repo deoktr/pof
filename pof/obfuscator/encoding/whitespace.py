@@ -14,24 +14,26 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from .a85 import ASCII85Encoding
-from .b16 import Base16Encoding
-from .b32 import Base32Encoding
-from .b32hex import Base32HexEncoding
-from .b64 import Base64Encoding
-from .b85 import Base85Encoding
-from .binascii import BinasciiEncoding
-from .snt import SpacenTabEncoding
-from .whitespace import WhitespaceEncoding
+from tokenize import LPAR, NAME, NEWLINE, RPAR
 
-__all__ = [
-    "ASCII85Encoding",
-    "Base16Encoding",
-    "Base32Encoding",
-    "Base32HexEncoding",
-    "Base64Encoding",
-    "Base85Encoding",
-    "BinasciiEncoding",
-    "SpacenTabEncoding",
-    "WhitespaceEncoding",
-]
+from pof.utils.encoding import WhitespaceEncoding
+from pof.utils.tokens import untokenize
+
+
+class WhitespaceObfuscator(WhitespaceEncoding):
+    """Obfuscate with encoding format white spaces encoding."""
+
+    @classmethod
+    def obfuscate_tokens(cls, tokens):
+        code = untokenize(tokens)
+        return [
+            *cls.import_tokens(),
+            (NEWLINE, "\n"),
+            *cls.definition_tokens(),
+            (NEWLINE, "\n"),
+            (NAME, "exec"),
+            (LPAR, "("),
+            *cls.decode_tokens(cls.encode_tokens(code.encode())),
+            (RPAR, ")"),
+            (NEWLINE, "\n"),
+        ]
