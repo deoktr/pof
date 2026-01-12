@@ -15,7 +15,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 import logging
-import os
+from pathlib import Path
 
 from flask import Flask, request, send_file, send_from_directory
 from markupsafe import escape
@@ -100,7 +100,7 @@ def pof_route_html():
 
 @app.get("/favicon.ico")
 def favicon():
-    return send_from_directory(os.path.join(app.root_path, "static"), "favicon.png")
+    return send_from_directory(Path(app.root_path) / "static", "favicon.png")
 
 
 if __name__ == "__main__":
