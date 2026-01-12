@@ -1,0 +1,65 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2em;
+}
+.error {
+  color: #ef4444;
+}
+#src {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1em;
+  font-family: monospace;
+  border: 1px solid #ccc;
+  resize: vertical;
+  background-color: #f8fafc;
+}
+#outputContainer {
+  position: relative;
+  background-color: #f8fafc;
+}
+#output {
+  border: 1px solid #ccc;
+  min-height: 6em;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-family: monospace;
+  overflow: auto;
+}
+#obfuscateButton {
+  margin-top: 0.5em;
+  padding: 0.4em 1.0em;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2563eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#obfuscateButton:hover {
+  background-color: #3b82f6;
+}
+#obfuscateButton:disabled {
+  background-color: #475569;
+  cursor: wait;
+}
+#copyButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px;
+  color: #475569;
+  background-color: transparent;
+  border: 2px solid;
+  border-color: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+}
+#copyButton:hover {
+  background-color: #f1f5f9;
+  border-color: #94a3b8;
+}
+#warning {
+  color: #c2410c;
+}

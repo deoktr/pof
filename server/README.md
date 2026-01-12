@@ -28,7 +28,17 @@ echo 'print("Hello, world!")' | curl -X POST -d @- 0.0.0.0:5000
 
 Or visit [localhost:5000](http://localhost:5000).
 
+## Dev
+
+Generate `static/pygment.css` file:
+
+```python
+from pygments.formatters import HtmlFormatter
+with open("static/pygment.css", "w") as f:
+    f.write(HtmlFormatter().get_style_defs(".highlight"))
+```
+
 ## TODO
 
-- Add favicon.
 - Add timeout in case the computation takes too long.
+- Set correct version when building the server in CI.

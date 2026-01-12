@@ -1,5 +1,5 @@
 # POF, a free and open source Python obfuscation framework.
-# Copyright (C) 2022 - 2025  POF Team
+# Copyright (C) 2022 - 2026  Deoktr
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,7 +14,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from flask import Flask, Response, request, send_file
+import logging
+import os
+
+from flask import Flask, request, send_file, send_from_directory
+from markupsafe import escape
 from pygments import highlight
 from pygments.formatters import HtmlFormatter
 from pygments.lexers import PythonLexer
@@ -26,8 +30,11 @@ INPUT_SIZE_LIMIT = 200 * 1024
 
 app = Flask(__name__)
 
-# generate the Pygment CSS to be ready to serve it
-pygment_css = HtmlFormatter().get_style_defs(".highlight")
+logger = logging.getLogger(__name__)
+formatter = logging.Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(formatter)
+logger.addHandler(console_handler)
 
 # pof obfuscator instance to be reused for requests
 obfuscator = Obfuscator()
@@ -38,21 +45,20 @@ def pof_route():
     """Basic HTTP endpoint to send and receive raw source code."""
     src = request.get_data().decode()
     if len(src) > INPUT_SIZE_LIMIT:
+        logger.warning("input too large")
         return "Inpt too large", 413
 
-    return obfuscator.obfuscate(src)
+    try:
+        return obfuscator.obfuscate(src)
+    except Exception:
+        logger.exception("failed to obfuscate")
+        return "", 500
 
 
 @app.get("/")
 def pof_index():
     """Simple webpage to use the /html endpoint."""
     return send_file("index.html")
-
-
-@app.get("/pygment.css")
-def pygment_style():
-    """Style for the HTML formatted output of the /html endpoint."""
-    return Response(pygment_css, mimetype="text/css")
 
 
 def format_html_error(msg: str) -> str:
@@ -64,15 +70,20 @@ def pof_route_html():
     """HTML endpoint to send form data and receive HTML formatted code."""
     src = request.form.get("src", "")
     if len(src) > INPUT_SIZE_LIMIT:
+        logger.warning("input too large")
         return format_html_error("Input too large.")
 
     try:
         obf = obfuscator.obfuscate(src)
-    except Exception:  # noqa: BLE001
+    except Exception:
+        logger.exception("failed to obfuscate")
         return format_html_error("Failed to obfuscate, invalid input.")
 
     # TODO (deoktr): add a form option to enable format
-    obf = black_format(obf)
+    try:
+        obf = black_format(obf)
+    except Exception:
+        logger.exception("failed to format")
 
     try:
         return highlight(
@@ -80,9 +91,16 @@ def pof_route_html():
             PythonLexer(),
             HtmlFormatter(cssstyles="background: none;"),
         )
-    except Exception:  # noqa: BLE001
-        # in case we fail to highlight, return the raw output
-        return f'<p style="white-space: pre-wrap;">{obf}</p>'
+    except Exception:
+        logger.exception("failed to highlight")
+
+        # in case we fail to highlight, return non highlighted version
+        return f'<p style="white-space: pre-wrap;">{escape(obf)}</p>'
+
+
+@app.get("/favicon.ico")
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, "static"), "favicon.png")
 
 
 if __name__ == "__main__":
