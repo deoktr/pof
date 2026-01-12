@@ -300,24 +300,37 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 Source in `examples/source.py`.
 
 ```python
-import random as dZoHe5KQ5T
-import string as BOu1uhdV
+import os as pT2Ic6
 
-def hrEnWnn_d():
-    """This is a docstring."""
-    return dZoHe5KQ5T.choice(BOu1uhdV.ascii_lowercase)
-
-def a_D(wYKTr7D5Ex):
-    JfQdd = hrEnWnn_d()
-    for kEw73z in range(wYKTr7D5Ex - 1):
-        JfQdd += hrEnWnn_d()
-    return JfQdd
-
-def VLBQn3():
-    mxO = a_D(8)
-    tBceS = 'My pet is name: ' + mxO
-    print(tBceS)
-VLBQn3()
+def SeIpTxc():
+    """Get Linux release info from /etc/os-release."""
+    pDkFbLZO = '/etc/os-release'
+    if not pT2Ic6.path.exists(pDkFbLZO):
+        print('OS release file not found. This might not be a Linux system.')
+        return None
+    rDq = {}
+    try:
+        with open(pDkFbLZO, 'r') as bpBm:
+            for UOFvQ in bpBm:
+                if not UOFvQ or '=' not in UOFvQ:
+                    continue
+                aSFP, UUka_V_7 = UOFvQ.ObwKdQ6LVz().g54Qp('=', 1)
+                UUka_V_7 = UUka_V_7.ObwKdQ6LVz('"\'\n')
+                rDq[aSFP] = UUka_V_7
+        print('\nLinux Release Information:')
+        print(f"Distribution: {rDq.IDiXt2('NAME', 'Unknown')}")
+        print(f"Version: {rDq.IDiXt2('VERSION', 'Unknown')}")
+        print(f"Version ID: {rDq.IDiXt2('VERSION_ID', 'Unknown')}")
+        print(f"Pretty Name: {rDq.IDiXt2('PRETTY_NAME', 'Unknown')}")
+        return rDq
+    except Exception as FXfc:
+        print(f'Error reading release file: {FXfc}')
+        return None
+if __name__ == '__main__':
+    if pT2Ic6.name == 'posix' and pT2Ic6.path.exists('/etc/os-release'):
+        Sd65C = SeIpTxc()
+    else:
+        print('This script is designed for Linux systems.')
 ```
 
 > [!WARNING]
@@ -393,32 +406,58 @@ print((True+True+True+True+True+True+True+True+True+True+True+True+True+True+Tru
 Move every variable at the top of the file with random names.
 
 ```python
-gfdd_j=print
-uVu8Mq=8
-GqTsw9ZK="My pet is name: "
-u4F5X=range
-rSO2F=1
-# source file that will be obfuscated
-import random
-import string
+N842V="\"'\n"
+gvBXIX='NAME'
+Lzxdy='VERSION'
+NklI="__main__"
+IoTpEBJ='VERSION_ID'
+eQqDDpOL=1
+IpEPxvQ="This script is designed for Linux systems."
+ka6U_Q='PRETTY_NAME'
+hCf5UQQT="="
+GMUC6z="/etc/os-release"
+eOa=Exception
+CCCs=None
+EUr2fN=open
+wGDb="r"
+hm8="OS release file not found. This might not be a Linux system."
+QElu="posix"
+fNdZY9=__name__
+LvMs="\nLinux Release Information:"
+uFCf7Vy='Unknown'
+joyHA=print
+import os
 
-def get_random_letter():
-    """This is a docstring."""
-    return random.choice(string.ascii_lowercase)
+def get_linux_release_info():
+    """Get Linux release info from /etc/os-release."""
+    release_file=GMUC6z
+    if not os.path.exists(release_file):
+        joyHA(hm8)
+        return CCCs
+    release_info={}
+    try:
+        with EUr2fN(release_file,wGDb)as f:
+            for line in f:
+                if not line or hCf5UQQT not in line:
+                    continue
+                key,value=line.strip().split(hCf5UQQT,eQqDDpOL)
+                value=value.strip(N842V)
+                release_info[key]=value
+        joyHA(LvMs)
+        joyHA(f"Distribution: {release_info.get(gvBXIX,uFCf7Vy)}")
+        joyHA(f"Version: {release_info.get(Lzxdy,uFCf7Vy)}")
+        joyHA(f"Version ID: {release_info.get(IoTpEBJ,uFCf7Vy)}")
+        joyHA(f"Pretty Name: {release_info.get(ka6U_Q,uFCf7Vy)}")
+        return release_info
+    except eOa as e:
+        joyHA(f"Error reading release file: {e}")
+        return CCCs
 
-def get_random_name(name_len):
-# this is a comment
-    name=get_random_letter()
-    for _ in u4F5X(name_len-rSO2F):
-        name+=get_random_letter()
-    return name
-
-def present_my_pet():
-    pet_name=get_random_name(uVu8Mq)
-    message=GqTsw9ZK+pet_name
-    gfdd_j(message)
-
-present_my_pet()
+if fNdZY9==NklI:
+    if os.name==QElu and os.path.exists(GMUC6z):
+        release_details=get_linux_release_info()
+    else:
+        joyHA(IpEPxvQ)
 ```
 
 #### BuiltinsObfuscator
@@ -460,26 +499,37 @@ Replaces call of global functions with `globals()['func_name']()`.
 Source in `examples/source.py`.
 
 ```python
-import random
-import string
+import os
 
-def get_random_letter():
-    """This is a docstring."""
-    return random.choice(string.ascii_lowercase)
+def get_linux_release_info():
+    release_file="/etc/os-release"
+    if not os.path.exists(release_file):
+        print("OS release file not found. This might not be a Linux system.")
+        return None
+    release_info={}
+    try:
+        with open(release_file,"r")as f:
+            for line in f:
+                if not line or"="not in line:
+                    continue
+                key,value=line.strip().split("=",1)
+                value=value.strip("\"'\n")
+                release_info[key]=value
+        print("\nLinux Release Information:")
+        print(f"Distribution: {release_info.get('NAME','Unknown')}")
+        print(f"Version: {release_info.get('VERSION','Unknown')}")
+        print(f"Version ID: {release_info.get('VERSION_ID','Unknown')}")
+        print(f"Pretty Name: {release_info.get('PRETTY_NAME','Unknown')}")
+        return release_info
+    except Exception as e:
+        print(f"Error reading release file: {e}")
+        return None
 
-def get_random_name(name_len):
-# this is a comment
-    name=globals()['get_random_letter']()
-    for _ in range(name_len-1):
-        name+=globals()['get_random_letter']()
-    return name
-
-def present_my_pet():
-    pet_name=globals()['get_random_name'](8)
-    message="My pet is name: "+pet_name
-    print(message)
-
-globals()['present_my_pet']()
+if __name__=="__main__":
+    if os.name=="posix"and os.path.exists("/etc/os-release"):
+        release_details=globals()['get_linux_release_info']()
+    else:
+        print("This script is designed for Linux systems.")
 ```
 
 #### ShiftObfuscator
