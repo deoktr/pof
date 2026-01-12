@@ -11,13 +11,13 @@ Two endpoints are presented, one simple HTTP API to send raw Python sources and 
 Build:
 
 ```bash
-podman build -f Dockerfile -t pofserver
+docker build . -t pofserver
 ```
 
 Run:
 
 ```bash
-podman run --rm -p 5000:5000 pofserver
+docker run --rm -p 5000:5000 pofserver
 ```
 
 Test:
