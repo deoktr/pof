@@ -176,6 +176,12 @@ There are multiple installation options, with PIP, a virtualenv, a container, or
 
 There is also the option to run the web server, see [server/README.md](./server/README.md).
 
+And you can try it without installing anything:
+
+```bash
+echo 'print("Hello, world!")' | curl -X POST -d @- https://pof.run
+```
+
 ### 1. PIP
 
 From [pypi](https://pypi.org/project/python-obfuscation-framework):
