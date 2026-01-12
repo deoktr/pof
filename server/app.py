@@ -104,4 +104,5 @@ def favicon():
 
 
 if __name__ == "__main__":
+    logger.info("starting pof server")
     app.run()
