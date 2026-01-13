@@ -30,12 +30,19 @@ Or visit [localhost:5000](http://localhost:5000).
 
 ## Dev
 
+Generate Tailwind CSS file:
+
+```bash
+npm install
+npx @tailwindcss/cli -i ./input.css -o ./static/tailwind.css --watch
+```
+
 Generate `static/pygment.css` file:
 
 ```python
 from pygments.formatters import HtmlFormatter
 with open("static/pygment.css", "w") as f:
-    f.write(HtmlFormatter().get_style_defs(".highlight"))
+    f.write(HtmlFormatter(style="monokai").get_style_defs(".highlight"))
 ```
 
 ## TODO

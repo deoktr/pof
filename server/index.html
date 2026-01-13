@@ -1,19 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Python Obfuscation Framework</title>
-  <link rel="stylesheet" href="/static/pygment.css">
-  <link rel="stylesheet" href="/static/main.css">
-</head>
-<body>
-  <h1>Python Obfuscation Framework</h1>
-  <p>POF, a free and open source Python obfuscation framework.</p>
-  <p>Source code at <a href="https://github.com/deoktr/pof/">github.com/deoktr/pof</a>, Python package at <a href="https://pypi.org/project/python-obfuscation-framework">pypi.org/project/python-obfuscation-framework</a>.</p>
-  <p>Your Python script sources:</p>
-  <form hx-post="/html" hx-target="#output" hx-swap="innerHTML">
-    <textarea id="src" name="src" rows="12" spellcheck="false" required>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Obfuscation Framework</title>
+    <link rel="stylesheet" href="/static/pygment.css" />
+    <link rel="stylesheet" href="/static/main.css" />
+    <link rel="stylesheet" href="/static/tailwind.css" />
+  </head>
+  <body class="bg-zinc-900 p-10 text-zinc-100">
+    <div class="flex flex-row">
+      <div>
+        <h1 class="text-3xl font-bold">Python Obfuscation Framework</h1>
+        <p>POF, a free and open source Python obfuscation framework.</p>
+      </div>
+      <div class="flow-row ml-auto flex">
+        <a
+          class="cursor-pointer"
+          href="https://github.com/deoktr/pof/"
+          target="_blank"
+        >
+          <svg
+            class="h-8 w-8 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 640"
+          >
+            <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path d="M237.9 461.4C237.9 463.4 235.6 465 232.7 465C229.4 465.3 227.1 463.7 227.1 461.4C227.1 459.4 229.4 457.8 232.3 457.8C235.3 457.5 237.9 459.1 237.9 461.4zM206.8 456.9C206.1 458.9 208.1 461.2 211.1 461.8C213.7 462.8 216.7 461.8 217.3 459.8C217.9 457.8 216 455.5 213 454.6C210.4 453.9 207.5 454.9 206.8 456.9zM251 455.2C248.1 455.9 246.1 457.8 246.4 460.1C246.7 462.1 249.3 463.4 252.3 462.7C255.2 462 257.2 460.1 256.9 458.1C256.6 456.2 253.9 454.9 251 455.2zM316.8 72C178.1 72 72 177.3 72 316C72 426.9 141.8 521.8 241.5 555.2C254.3 557.5 258.8 549.6 258.8 543.1C258.8 536.9 258.5 502.7 258.5 481.7C258.5 481.7 188.5 496.7 173.8 451.9C173.8 451.9 162.4 422.8 146 415.3C146 415.3 123.1 399.6 147.6 399.9C147.6 399.9 172.5 401.9 186.2 425.7C208.1 464.3 244.8 453.2 259.1 446.6C261.4 430.6 267.9 419.5 275.1 412.9C219.2 406.7 162.8 398.6 162.8 302.4C162.8 274.9 170.4 261.1 186.4 243.5C183.8 237 175.3 210.2 189 175.6C209.9 169.1 258 202.6 258 202.6C278 197 299.5 194.1 320.8 194.1C342.1 194.1 363.6 197 383.6 202.6C383.6 202.6 431.7 169 452.6 175.6C466.3 210.3 457.8 237 455.2 243.5C471.2 261.2 481 275 481 302.4C481 398.9 422.1 406.6 366.2 412.9C375.4 420.8 383.2 435.8 383.2 459.3C383.2 493 382.9 534.7 382.9 542.9C382.9 549.4 387.5 557.3 400.2 555C500.2 521.8 568 426.9 568 316C568 177.3 455.5 72 316.8 72zM169.2 416.9C167.9 417.9 168.2 420.2 169.9 422.1C171.5 423.7 173.8 424.4 175.1 423.1C176.4 422.1 176.1 419.8 174.4 417.9C172.8 416.3 170.5 415.6 169.2 416.9zM158.4 408.8C157.7 410.1 158.7 411.7 160.7 412.7C162.3 413.7 164.3 413.4 165 412C165.7 410.7 164.7 409.1 162.7 408.1C160.7 407.5 159.1 407.8 158.4 408.8zM190.8 444.4C189.2 445.7 189.8 448.7 192.1 450.6C194.4 452.9 197.3 453.2 198.6 451.6C199.9 450.3 199.3 447.3 197.3 445.4C195.1 443.1 192.1 442.8 190.8 444.4zM179.4 429.7C177.8 430.7 177.8 433.3 179.4 435.6C181 437.9 183.7 438.9 185 437.9C186.6 436.6 186.6 434 185 431.7C183.6 429.4 181 428.4 179.4 429.7z" />
+          </svg>
+        </a>
+        <a
+          class="cursor-pointer"
+          href="https://pypi.org/project/python-obfuscation-framework"
+          target="_blank"
+        >
+          <svg
+            class="h-8 w-8 fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 640 640"
+          >
+            <!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.-->
+            <path d="M535.8 264.5C528.1 233.6 513.5 210.3 482.4 210.3L442.3 210.3L442.3 257.7C442.3 294.5 411.1 325.5 375.5 325.5L268.7 325.5C239.5 325.5 215.3 350.5 215.3 379.8L215.3 481.6C215.3 510.6 240.5 527.6 268.7 535.9C302.5 545.8 335 547.6 375.5 535.9C402.4 528.1 428.9 512.4 428.9 481.6L428.9 440.9L322.2 440.9L322.2 427.3L482.4 427.3C513.5 427.3 525 405.6 535.8 373.1C547 339.6 546.5 307.4 535.8 264.5zM382.2 508.7C374.6 509.2 367.3 505.5 363.3 499C359.4 492.4 359.4 484.3 363.3 477.7C367.3 471.2 374.6 467.5 382.2 468C389.8 467.5 397.1 471.2 401.1 477.7C405 484.3 405 492.4 401.1 499C397.1 505.5 389.8 509.2 382.2 508.7zM263.8 312.1L370.6 312.1C400.3 312.1 424 287.6 424 257.8L424 155.9C424 126.9 399.6 105.2 370.6 100.3C334.8 94.4 295.9 94.7 263.8 100.4C218.6 108.4 210.4 125.1 210.4 156L210.4 196.7L317.3 196.7L317.3 210.3L170.3 210.3C139.2 210.3 112 229 103.5 264.5C93.7 305.2 93.3 330.6 103.5 373.1C111.1 404.7 129.2 427.3 160.3 427.3L197 427.3L197 378.5C197 343.2 227.5 312.1 263.8 312.1zM257.2 128.7C268.5 128.7 277.6 137.8 277.6 149.1C277.6 160.4 268.5 169.5 257.2 169.5C245.9 169.5 236.8 160.4 236.8 149.1C236.8 137.8 245.9 128.7 257.2 128.7z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <form hx-post="/html" hx-target="#output" hx-swap="innerHTML">
+      <div class="my-4 divide-y divide-zinc-600 rounded border border-zinc-600 bg-zinc-950/20">
+        <div class="flex p-2">
+          <button
+            class="mr-auto cursor-pointer rounded border border-blue-600 bg-blue-700 px-3 py-1 hover:bg-blue-600"
+            id="obfuscateButton"
+            type="submit"
+          >
+            Obfuscate
+          </button>
+          <button
+            class="cursor-pointer rounded border border-zinc-700 px-3 py-1 hover:bg-zinc-700"
+            id="copyButton"
+            type="button"
+          >
+            Copy Output
+          </button>
+        </div>
+        <div class="flex flex-col divide-x divide-y divide-zinc-600 md:h-120 md:flex-row md:divide-y-0">
+          <div class="flex h-120 w-full flex-col divide-y divide-zinc-600 md:w-1/2">
+            <div class="px-2 py-1 font-semibold">Source Input</div>
+            <textarea
+              class="font-sm h-full w-full resize-none p-1 font-mono"
+              id="src"
+              name="src"
+              spellcheck="false"
+              required
+            >
 # source file that will be obfuscated
 import os
 
@@ -68,20 +128,34 @@ if __name__ == "__main__":
         release_details = get_linux_release_info()
     else:
         print("This script is designed for Linux systems.")</textarea>
-    <br>
-    <button id="obfuscateButton" type="submit">Obfuscate</button>
-  </form>
-  <p>Obfuscated output:</p>
-  <div id="outputContainer">
-    <div id="output"></div>
-    <button id="copyButton">
-      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy-icon lucide-copy"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-    </button>
-  </div>
-  <p id="warning">The output may not work exactly like the input, or maybe not even at all, make sure to test it before using it.</p>
-  <p>Copyright (C) 2022 - 2026  Deoktr</p>
-
-  <script src="/static/htmx.min.js"></script>
-  <script src="/static/obfuscate.js"></script>
-</body>
+          </div>
+          <div class="flex h-120 w-full flex-col divide-y divide-zinc-600 md:w-1/2">
+            <div class="px-2 py-1 font-semibold">Obfuscated Output</div>
+            <div
+              class="font-sm h-full w-full grow overflow-auto p-1 font-mono"
+              id="output"
+            >
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div>
+      Alternatively you can curl it from your terminal:
+      <div class="rounded-sm border border-zinc-600 bg-zinc-950/20 p-1 font-mono text-sm">
+        <div class="highlight" style="background: none">
+          echo
+          <span class="s1">&#39;print(&quot;Hello, world!&quot;)&#39;</span>
+          | curl -X POST -d @- https://pof.run
+        </div>
+      </div>
+    </div>
+    <p class="py-4 text-orange-300">
+      The output may not work exactly like the input, or maybe not even at all,
+      make sure to test it before using it.
+    </p>
+    <p>Copyright (C) 2022 - 2026 Deoktr</p>
+    <script src="/static/htmx.min.js"></script>
+    <script src="/static/obfuscate.js"></script>
+  </body>
 </html>
