@@ -394,7 +394,7 @@ def add_evasion(tokens, form):
     )
     tokens = evasion_helper(tokens, form, "eva_tmp", TmpCountEvasion)
     tokens = evasion_helper(tokens, form, "eva_linux_ram_count", LinuxRAMCountEvasion)
-    # TODO: convert to multile argumnets, or have multiple form fields?
+    # TODO (deoktr): convert to multile argumnets, or have multiple form fields?
     tokens = evasion_bool_helper(tokens, form, "eva_windows_prompt", WinPromptEvasion)
     tokens = evasion_datetime_helper(tokens, form, "eva_expire", ExpireEvasion)
     tokens = evasion_helper(tokens, form, "eva_linux_uptime", LinuxUptimeEvasion)
