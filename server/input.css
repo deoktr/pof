@@ -1,1 +1,21 @@
 @import "tailwindcss";
+
+@layer components {
+    .hover-tooltip {
+        @apply absolute
+               invisible
+               group-hover:visible
+               bg-zinc-800/90
+               text-white
+               text-xs
+               rounded
+               p-2
+               bottom-full
+               mb-1
+               left-1/2
+               transform
+               w-full
+               -translate-x-1/2
+               z-50;
+    }
+}

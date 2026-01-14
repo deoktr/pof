@@ -1,6 +1,6 @@
 [project]
 name = "python-obfuscation-framework-server"
-version = "1.2.0"
+version = "2.0.0"
 description = "Python Obfuscation Framework"
 readme = "README.md"
 requires-python = ">=3.5"
@@ -28,7 +28,7 @@ classifiers = [
 dependencies = [
   "flask>=3.1.2",
   "pygments>=2.19.2",
-  "python-obfuscation-framework>=1.7.4",
+  "python-obfuscation-framework>=1.7.5",
   "gunicorn>=23.0.0",
   "MarkupSafe>=3.0.3",
 ]

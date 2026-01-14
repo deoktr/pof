@@ -16,4 +16,39 @@ document.getElementById("copyButton").onclick = function() {
     navigator.clipboard.writeText(content).catch(err => {
         console.error("Failed to copy: ", err);
     });
+
+    // show copied toast
+    const toast = document.getElementById("toast");
+    toast.classList.remove("hidden");
+    setTimeout(() => {
+        toast.classList.add("hidden");
+    }, 600);
 };
+
+class AdvanceOptionsDrawer {
+    constructor() {
+        this.drawer = document.getElementById("advancedOptionsDrawer");
+        this.drawerToggle = document.getElementById("advancedOptionsDrawerToggle");
+
+        this.toggleDrawer = this.toggleDrawer.bind(this);
+        this.closeDrawer = this.closeDrawer.bind(this);
+
+        this.attachEventListeners();
+    }
+
+    attachEventListeners() {
+        this.drawerToggle.addEventListener("click", this.toggleDrawer);
+    }
+
+    toggleDrawer() {
+        this.drawer.classList.toggle("hidden");
+    }
+
+    closeDrawer() {
+        this.drawer.classList.add("hidden");
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    new AdvanceOptionsDrawer();
+});

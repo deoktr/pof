@@ -11,8 +11,8 @@
   <body class="bg-zinc-900 p-10 text-zinc-100">
     <div class="flex flex-row">
       <div>
-        <h1 class="text-3xl font-bold">Python Obfuscation Framework</h1>
-        <p>POF, a free and open source Python obfuscation framework.</p>
+        <h1 class="text-3xl font-bold">Python Obfuscation Framework Online</h1>
+        <p>The most advanced free online and open source Python obfuscator.</p>
       </div>
       <div class="flow-row ml-auto flex">
         <a
@@ -45,91 +45,803 @@
         </a>
       </div>
     </div>
-
     <form hx-post="/html" hx-target="#output" hx-swap="innerHTML">
       <div class="my-4 divide-y divide-zinc-600 rounded border border-zinc-600 bg-zinc-950/20">
-        <div class="flex p-2">
-          <button
-            class="mr-auto cursor-pointer rounded border border-blue-600 bg-blue-700 px-3 py-1 hover:bg-blue-600"
-            id="obfuscateButton"
-            type="submit"
+        <div>
+          <div class="flex p-2">
+            <button
+              id="obfuscateButton"
+              class="mr-2 cursor-pointer rounded border border-blue-600 bg-blue-700 px-3 py-1 hover:bg-blue-600 disabled:cursor-progress disabled:opacity-50"
+              type="submit"
+            >
+              Obfuscate
+            </button>
+            <button
+              id="advancedOptionsDrawerToggle"
+              type="button"
+              class="mr-auto cursor-pointer rounded border border-zinc-700 px-3 py-1 hover:bg-zinc-700"
+            >
+              Advanced Options
+            </button>
+            <div class="relative">
+              <button
+                id="copyButton"
+                class="cursor-pointer rounded border border-zinc-700 px-3 py-1 hover:bg-zinc-700"
+                type="button"
+              >
+                Copy Output
+              </button>
+              <div
+                id="toast"
+                class="absolute -top-8 left-1/2 hidden -translate-x-1/2 transform rounded-full bg-blue-600/40 px-3 py-1 text-sm text-white transition-all duration-100 ease-in-out"
+              >
+                Copied!
+              </div>
+            </div>
+          </div>
+          <div
+            id="advancedOptionsDrawer"
+            class="z-50 hidden w-full transform p-2 shadow-lg transition-transform duration-300"
+            x-transition:enter="translate-y-0"
+            x-transition:leave="-translate-y-full"
           >
-            Obfuscate
-          </button>
-          <button
-            class="cursor-pointer rounded border border-zinc-700 px-3 py-1 hover:bg-zinc-700"
-            id="copyButton"
-            type="button"
-          >
-            Copy Output
-          </button>
+            <p class="pb-4">
+              Obfuscators and applied in the order they appear, but evasions are
+              always added first so they will be obfuscated as well.
+            </p>
+            <h3 class="mb-1 border-b border-zinc-800 text-2xl">
+              Remove Elements
+            </h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip"> Remove comments obfuscator. </span>
+                <input
+                  type="checkbox"
+                  name="obf_comments"
+                  id="obf_comments-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_comments-checkbox">Remove Comments</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip"> Remove exception messages. </span>
+                <input
+                  type="checkbox"
+                  name="obf_exceptions"
+                  id="obf_exceptions-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_exceptions-checkbox"
+                >Remove Exception Messages</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Remove logging messages and repace them with random strings.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_logging"
+                  id="obf_logging-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_logging-checkbox">Obfuscate Logging</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Remove logging entirely, may cause some problems.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_logging_remove"
+                  id="obf_logging_remove-checkbox"
+                  value="true"
+                />
+                <label for="obf_logging_remove-checkbox">Remove Logging</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip"> Remove print statements. </span>
+                <input
+                  type="checkbox"
+                  name="obf_print"
+                  id="obf_print-checkbox"
+                  value="true"
+                />
+                <label for="obf_print-checkbox">Remove Print</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">
+              Rename Elements
+            </h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Obfuscate globals by calling them the globals()["name"].
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_globals"
+                  id="obf_globals-checkbox"
+                  value="true"
+                />
+                <label for="obf_globals-checkbox">Obfuscate Globals</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Builtins obfuscator, replace builtins call by other means.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_builtins"
+                  id="obf_builtins-checkbox"
+                  value="true"
+                />
+                <label for="obf_builtins-checkbox">Obfuscate Builtins</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Pull constants out of functions.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_constants"
+                  id="obf_constants-checkbox"
+                  value="true"
+                />
+                <label for="obf_constants-checkbox">Pull Constants</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Rename locally defined function names.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_definitions"
+                  id="obf_definitions-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_definitions-checkbox"
+                >Obfuscate Definitions</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Extract variables obfuscator.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_extract_variables"
+                  id="obf_extract_variables-checkbox"
+                  value="true"
+                />
+                <label for="obf_extract_variables-checkbox"
+                >Extract Variables</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Classic</h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Names obfuscator, this obfuscator is prone to errors.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_names"
+                  id="obf_names-checkbox"
+                  value="true"
+                />
+                <label for="obf_names-checkbox">Obfuscate Names</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Names using Rope library obfuscator. Disabled for the moment.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_names_rope"
+                  id="obf_names_rope-checkbox"
+                  value="true"
+                  disabled
+                />
+                <label class="text-zinc-400" for="obf_names_rope-checkbox">
+                  Obfuscate Names (rope)
+                </label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_string"
+                  id="obf_string-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_string-checkbox">Obfuscate Strings</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_numbers"
+                  id="obf_numbers-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_numbers-checkbox">Obfuscate Numbers</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">
+              Unusual Obfuscator
+            </h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip"> Execute from a docstrings. </span>
+                <input
+                  type="checkbox"
+                  name="obf_docstrings"
+                  id="obf_docstrings-checkbox"
+                  value="true"
+                />
+                <label for="obf_docstrings-checkbox">Docstrings Exec</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Replace all functions calls with funcname.__call__().
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_call"
+                  id="obf_call-checkbox"
+                  value="true"
+                />
+                <label for="obf_call-checkbox">Obfuscate Call</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip"> Imports obfuscator. </span>
+                <input
+                  type="checkbox"
+                  name="obf_imports"
+                  id="obf_imports-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_imports-checkbox">Obfuscate Imports</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Get a single char from a Python documentation, for example
+                  print.__doc__[0] == "P", this is very experimental and could
+                  obviously break if documentation changes.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_doc"
+                  id="obf_doc-checkbox"
+                  value="true"
+                />
+                <label for="obf_doc-checkbox">Obfuscate Doc</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip"> Raw Python tokens encoding. </span>
+                <input
+                  type="checkbox"
+                  name="obf_tokens"
+                  id="obf_tokens-checkbox"
+                  value="true"
+                />
+                <label for="obf_tokens-checkbox">Tokens Encoding</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">
+              Compression
+            </h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_bz2"
+                  id="obf_bz2-checkbox"
+                  value="true"
+                />
+                <label for="obf_bz2-checkbox">BZ2 Compression</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_gzip"
+                  id="obf_gzip-checkbox"
+                  value="true"
+                />
+                <label for="obf_gzip-checkbox">GZIP Compression</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_lzma"
+                  id="obf_lzma-checkbox"
+                  value="true"
+                />
+                <label for="obf_lzma-checkbox">LZMA Compression</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_zlib"
+                  id="obf_zlib-checkbox"
+                  value="true"
+                />
+                <label for="obf_zlib-checkbox">ZLIB Compression</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Crypto</h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip"> Implement and use RC4. </span>
+                <input
+                  type="checkbox"
+                  name="obf_rc4"
+                  id="obf_rc4-checkbox"
+                  value="true"
+                />
+                <label for="obf_rc4-checkbox">RC4</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Ceasar shift cipher. Disabled for the moment.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_shift"
+                  id="obf_shift-checkbox"
+                  value="true"
+                  disabled
+                />
+                <label class="text-zinc-400" for="obf_shift-checkbox"
+                >Shift Cipher</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_xor"
+                  id="obf_xor-checkbox"
+                  value="true"
+                />
+                <label for="obf_xor-checkbox">XOR</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">
+              Encoding
+            </h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_a85"
+                  id="obf_a85-checkbox"
+                  value="true"
+                />
+                <label for="obf_a85-checkbox">ASCII 85</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_b16"
+                  id="obf_b16-checkbox"
+                  value="true"
+                />
+                <label for="obf_b16-checkbox">Base16</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_b32"
+                  id="obf_b32-checkbox"
+                  value="true"
+                />
+                <label for="obf_b32-checkbox">Base 32</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_b32hex"
+                  id="obf_b32hex-checkbox"
+                  value="true"
+                />
+                <label for="obf_b32hex-checkbox">Base 32 Hex</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_b64"
+                  id="obf_b64-checkbox"
+                  value="true"
+                />
+                <label for="obf_b64-checkbox">Base64</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_b85"
+                  id="obf_b85-checkbox"
+                  value="true"
+                />
+                <label for="obf_b85-checkbox">Base85</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_binascii"
+                  id="obf_binascii-checkbox"
+                  value="true"
+                />
+                <label for="obf_binascii-checkbox">Binascii</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_snt"
+                  id="obf_snt-checkbox"
+                  value="true"
+                />
+                <label for="obf_snt-checkbox">Space and Tabs</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_whitespace"
+                  id="obf_whitespace-checkbox"
+                  value="true"
+                />
+                <label for="obf_whitespace-checkbox">Whitespace</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_ipv6encoding"
+                  id="obf_ipv6encoding-checkbox"
+                  value="true"
+                />
+                <label for="obf_ipv6encoding-checkbox">IPv6 Encoding</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_macencoding"
+                  id="obf_macencoding-checkbox"
+                  value="true"
+                />
+                <label for="obf_macencoding-checkbox">MAC Encoding</label>
+              </div>
+              <div class="group relative">
+                <input
+                  type="checkbox"
+                  name="obf_uuidencoding"
+                  id="obf_uuidencoding-checkbox"
+                  value="true"
+                />
+                <label for="obf_uuidencoding-checkbox">UUID Encoding</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Format</h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip"> Use black to format output. </span>
+                <input
+                  type="checkbox"
+                  name="format_black"
+                  id="format_black-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="format_black-checkbox">Format</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Add random comments pulled for Python's source code.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_add_comments"
+                  id="obf_add_comments-checkbox"
+                  value="true"
+                />
+                <label for="obf_add_comments-checkbox">Add Comments</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip"> Add newlines randomly. </span>
+                <input
+                  type="checkbox"
+                  name="obf_add_newlines"
+                  id="obf_add_newlines-checkbox"
+                  value="true"
+                />
+                <label for="obf_add_newlines-checkbox">Add Newlines</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Set indent to a single space.
+                </span>
+                <input
+                  type="checkbox"
+                  name="obf_indents"
+                  id="obf_indents-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_indents-checkbox">Space Indent</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip"> Remove newlines. </span>
+                <input
+                  type="checkbox"
+                  name="obf_newline"
+                  id="obf_newline-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="obf_newline-checkbox">Remove newlines</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Evasion</h3>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Detect when hooked by a debugger.
+                </span>
+                <input
+                  type="checkbox"
+                  name="eva_debugger"
+                  id="eva_debugger-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="eva_debugger-checkbox">Debugger</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Detect when traced by tracemalloc.
+                </span>
+                <input
+                  type="checkbox"
+                  name="eva_tracemalloc"
+                  id="eva_tracemalloc-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="eva_tracemalloc-checkbox">Tracemalloc</label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Verify that the execution path does not contain a string like
+                  virus/sample/malware/sandbox.
+                </span>
+                <input
+                  type="checkbox"
+                  name="eva_executable_path"
+                  id="eva_executable_path-checkbox"
+                  value="true"
+                />
+                <label for="eva_executable_path-checkbox">
+                  Executable path
+                </label>
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Check if the timezone is UTC.
+                </span>
+                <input
+                  type="checkbox"
+                  name="eva_utc_evasion"
+                  id="eva_utc_evasion-checkbox"
+                  value="true"
+                  checked
+                />
+                <label for="eva_utc_evasion-checkbox">UTC timezone</label>
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">Minimum number of CPU cores.</span>
+                <label>Min CPU core count: </label>
+                <input
+                  type="text"
+                  name="eva_cpu_count_min"
+                  placeholder="2"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip"
+                >Minimum number of running processes on Linux.</span>
+                <label>Min Linux process: </label>
+                <input
+                  type="text"
+                  name="eva_linux_proc_count"
+                  placeholder="20"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip"> Expected domain name. </span>
+                <label>Domain: </label>
+                <input
+                  type="text"
+                  name="eva_domain"
+                  placeholder="CompanyA"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip"> Expected hostname. </span>
+                <label>Hostname: </label>
+                <input
+                  type="text"
+                  name="eva_hostname"
+                  placeholder="PC1"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip"> Expected username. </span>
+                <label>Username: </label>
+                <input
+                  type="text"
+                  name="eva_username"
+                  placeholder="User1"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Expected Linux user ID (UID).
+                </span>
+                <label>Linux UID: </label>
+                <input
+                  type="text"
+                  name="eva_linux_uid"
+                  placeholder="1000"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Expected number of files in the temp files, on Windows check
+                  in C:\windows\temp, on Linux check in /tmp.
+                </span>
+                <label>Min tmp files: </label>
+                <input
+                  type="text"
+                  name="eva_tmp"
+                  placeholder="5"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Minimum ammount of memory (RAM) in Gb, only works on Linux.
+                </span>
+                <label>Min memory linux: </label>
+                <input
+                  type="text"
+                  name="eva_linux_ram_count"
+                  placeholder="5"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex flex-row">
+                <span class="hover-tooltip">Verify the execution method.</span>
+                <label for="eva_exec_method-choices">Execution: </label>
+                <select
+                  id="eva_exec_method-choices"
+                  name="eva_exec_method"
+                  class="mx-2 w-full rounded border border-zinc-700 px-2"
+                >
+                  <option value="">any</option>
+                  <option value="file">file</option>
+                  <option value="memory">memory</option>
+                </select>
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Add execution expiry date, in the format: '%Y-%m-%d %H:%M:%S'.
+                </span>
+                <label>Expiry date: </label>
+                <input
+                  type="text"
+                  name="eva_expire"
+                  placeholder="2026-01-02 04:05:06"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Comma (,) separated list of directory that must be present on
+                  target.
+                </span>
+                <label>Directory Exist: </label>
+                <input
+                  type="text"
+                  name="eva_directory_exist"
+                  placeholder="C:\Foo\Bar"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Comma (,) separated list of directory that must not be present
+                  on target.
+                </span>
+                <label>Directory Missing: </label>
+                <input
+                  type="text"
+                  name="eva_directory_missing"
+                  placeholder="C:\Foo\Bar"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Comma (,) separated list of files that must be present on
+                  target.
+                </span>
+                <label>Files Exist: </label>
+                <input
+                  type="text"
+                  name="eva_file_exist"
+                  placeholder="C:\Foo\Bar.txt"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Comma (,) separated list of files that must not be present on
+                  target.
+                </span>
+                <label>Files Missing: </label>
+                <input
+                  type="text"
+                  name="eva_file_missing"
+                  placeholder="C:\Foo\Bar.txt"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Comma (,) separated list of expected commands arguments.
+                </span>
+                <label>CLI arguments: </label>
+                <input
+                  type="text"
+                  name="eva_argv"
+                  placeholder="--custom-argument"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Prompt the user with a simple checkbox to see if he is active.
+                </span>
+                <input
+                  type="checkbox"
+                  name="eva_windows_prompt"
+                  id="eva_windows_prompt-checkbox"
+                  value="true"
+                />
+                <label for="eva_windows_prompt-checkbox">Windows prompt</label>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flex flex-col divide-x divide-y divide-zinc-600 md:h-120 md:flex-row md:divide-y-0">
-          <div class="flex h-120 w-full flex-col divide-y divide-zinc-600 md:w-1/2">
+        <div class="flex flex-col divide-y divide-zinc-600 md:h-140 md:flex-row md:divide-x md:divide-y-0">
+          <div class="flex h-140 w-full flex-col divide-y divide-zinc-600 md:w-1/2">
             <div class="px-2 py-1 font-semibold">Source Input</div>
             <textarea
-              class="font-sm h-full w-full resize-none p-1 font-mono"
+              class="font-sm h-full w-full resize-none p-1 font-mono focus:outline-none"
               id="src"
               name="src"
               spellcheck="false"
               required
-            >
-# source file that will be obfuscated
-import os
-
-
-def get_linux_release_info():
-    """Get Linux release info from /etc/os-release."""
-
-    # Check if the file exists
-    release_file = "/etc/os-release"
-
-    if not os.path.exists(release_file):
-        print("OS release file not found. This might not be a Linux system.")
-        return None
-
-    # Dictionary to store release information
-    release_info = {}
-
-    try:
-        # Read and parse the file
-        with open(release_file, "r") as f:
-            for line in f:
-                if not line or "=" not in line:
-                    continue
-
-                # Split key and value
-                key, value = line.strip().split("=", 1)
-
-                # Remove quotes from value
-                value = value.strip("\"'\n")
-
-                # Store in dictionary
-                release_info[key] = value
-
-        # Print key release information
-        print("\nLinux Release Information:")
-        print(f"Distribution: {release_info.get('NAME', 'Unknown')}")
-        print(f"Version: {release_info.get('VERSION', 'Unknown')}")
-        print(f"Version ID: {release_info.get('VERSION_ID', 'Unknown')}")
-        print(f"Pretty Name: {release_info.get('PRETTY_NAME', 'Unknown')}")
-
-        return release_info
-
-    except Exception as e:
-        print(f"Error reading release file: {e}")
-        return None
-
-
-# Main execution
-if __name__ == "__main__":
-    # Check if running on Linux
-    if os.name == "posix" and os.path.exists("/etc/os-release"):
-        release_details = get_linux_release_info()
-    else:
-        print("This script is designed for Linux systems.")</textarea>
+            >print("Hello, world!")</textarea>
           </div>
-          <div class="flex h-120 w-full flex-col divide-y divide-zinc-600 md:w-1/2">
+          <div class="flex h-140 w-full flex-col divide-y divide-zinc-600 md:w-1/2">
             <div class="px-2 py-1 font-semibold">Obfuscated Output</div>
             <div
               class="font-sm h-full w-full grow overflow-auto p-1 font-mono"
@@ -149,6 +861,14 @@ if __name__ == "__main__":
           | curl -X POST -d @- https://pof.run
         </div>
       </div>
+      <p class="pt-2">
+        Find out more at:
+        <a
+          class="text-blue-400 hover:underline"
+          target="_blank"
+          href="https://github.com/deoktr/pof"
+        >github.com/deoktr/pof</a>.
+      </p>
     </div>
     <p class="py-4 text-orange-300">
       The output may not work exactly like the input, or maybe not even at all,
