@@ -134,10 +134,7 @@ class Example(BaseObfuscator):
 
         from datetime import datetime, timedelta, timezone
 
-        tokens = ExpireEvasion(
-            under_datetime=datetime.now() + timedelta(hours=5),
-            over_datetime=datetime.now(),
-        ).add_evasion(tokens)
+        tokens = ExpireEvasion(datetime.now() + timedelta(hours=5)).add_evasion(tokens)
 
         tokens = DebuggerEvasion().add_evasion(tokens)
 

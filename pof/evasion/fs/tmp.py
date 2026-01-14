@@ -14,7 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-from tokenize import LPAR, NAME, OP, RPAR, STRING
+from tokenize import LPAR, NAME, NUMBER, OP, RPAR, STRING
 
 from pof.evasion.base import BaseEvasion
 
@@ -58,7 +58,7 @@ class TmpCountEvasion(BaseEvasion):
             (RPAR, ")"),
             (RPAR, ")"),
             (OP, "<"),
-            (STRING, repr(self.tmp_count)),
+            (NUMBER, repr(self.tmp_count)),
         ]
 
 
@@ -91,7 +91,7 @@ class LinuxTmpCountEvasion(BaseEvasion):
             (RPAR, ")"),
             (RPAR, ")"),
             (OP, "<"),
-            (STRING, repr(self.tmp_count)),
+            (NUMBER, repr(self.tmp_count)),
         ]
 
 
@@ -124,5 +124,5 @@ class WinTmpCountEvasion(BaseEvasion):
             (RPAR, ")"),
             (RPAR, ")"),
             (OP, "<"),
-            (STRING, repr(self.tmp_count)),
+            (NUMBER, repr(self.tmp_count)),
         ]

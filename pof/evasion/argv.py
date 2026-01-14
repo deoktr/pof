@@ -22,10 +22,10 @@ from pof.evasion.base import BaseEvasion
 class ArgvEvasion(BaseEvasion):
     """Ensure that the correct argument is passed."""
 
-    def __init__(self, argv="argv", position=1) -> None:
+    def __init__(self, argv=None) -> None:
+        if argv is None:
+            argv = []
         self.argv = argv
-        # can put -1 in position to select the last argument
-        self.position = position
 
     @staticmethod
     def import_tokens():
@@ -37,8 +37,18 @@ class ArgvEvasion(BaseEvasion):
     def check_tokens(self):
         """Argument check tokens.
 
-        `len(sys.argv)==1 or sys.argv[1]!="123"`
+        `len(sys.argv)<=1 or not all(a in sys.argv[:1] for a in ["123"])`
         """
+        list_args = [(OP, "[")]
+        for arg in self.argv:
+            list_args.extend(
+                [
+                    (STRING, repr(arg)),
+                    (OP, ","),
+                ],
+            )
+        list_args.append((OP, "]"))
+
         return [
             (NAME, "len"),
             (OP, "("),
@@ -46,15 +56,24 @@ class ArgvEvasion(BaseEvasion):
             (OP, "."),
             (NAME, "argv"),
             (OP, ")"),
-            (OP, "=="),
-            (NUMBER, str(self.position)),
+            (OP, "<="),
+            (NUMBER, "1"),
             (NAME, "or"),
+            (NAME, "not"),
+            (NAME, "all"),
+            (OP, "("),
+            (NAME, "a"),
+            (NAME, "in"),
             (NAME, "sys"),
             (OP, "."),
             (NAME, "argv"),
             (OP, "["),
-            (NUMBER, str(self.position)),
+            (NUMBER, "1"),
+            (OP, ":"),
             (OP, "]"),
-            (OP, "!="),
-            (STRING, repr(self.argv)),
+            (NAME, "for"),
+            (NAME, "a"),
+            (NAME, "in"),
+            *list_args,
+            (OP, ")"),
         ]

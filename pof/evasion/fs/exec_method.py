@@ -56,9 +56,12 @@ class ExecMethodEvasion(BaseEvasion):
         If running from the console `__file__` doesn't exist, this needs to be
         taken into account !
         """
-        equal = "=!"
         if self.exec_method == "file":
             equal = "=="
+        elif self.exec_method == "memory":
+            equal = "!="
+        else:
+            return []
 
         return [
             (NAME, "__file__"),

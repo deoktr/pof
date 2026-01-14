@@ -283,10 +283,7 @@ class Obfuscator(BaseObfuscator):
         if expire:
             over_datetime = datetime.utcnow()  # noqa: DTZ003
             under_datetime = datetime.utcnow() + timedelta(seconds=5)  # noqa: DTZ003
-            tokens = ExpireEvasion(
-                under_datetime=under_datetime,
-                over_datetime=over_datetime,
-            ).add_evasion(tokens)
+            tokens = ExpireEvasion(under_datetime).add_evasion(tokens)
         if check_executable_path:
             tokens = ExecPathEvasion().add_evasion(tokens)
         if check_debugger:
