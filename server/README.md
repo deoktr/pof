@@ -34,7 +34,7 @@ Generate Tailwind CSS file:
 
 ```bash
 npm install
-npx @tailwindcss/cli -i ./input.css -o ./static/tailwind.css --watch
+npx @tailwindcss/cli -i ./input.css -o ./app/static/tailwind.css --watch
 ```
 
 Generate `static/pygment.css` file:
@@ -50,3 +50,4 @@ with open("static/pygment.css", "w") as f:
 - Add option to reset and also unselect all on the advanced config tab.
 - Add timeout in case the computation takes too long.
 - Set correct version when building the server in CI.
+- Run as user

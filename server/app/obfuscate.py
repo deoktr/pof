@@ -1,44 +1,8 @@
-# POF, a free and open source Python obfuscation framework.
-# Copyright (C) 2022 - 2026  Deoktr
-#
-# This program is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-# ruff: noqa: F405
-
-import logging
+import random
 from datetime import datetime
-from pathlib import Path
 
-from flask import Flask, request, send_file, send_from_directory
-from markupsafe import escape
-from pygments import highlight
-from pygments.formatters import HtmlFormatter
-from pygments.lexers import PythonLexer
-
-from pof import Obfuscator, obfuscator
-from pof.evasion import *  # noqa: F403
-from pof.utils.format import black_format
-
-INPUT_SIZE_LIMIT = 200 * 1024
-
-app = Flask(__name__)
-
-logger = logging.getLogger(__name__)
-formatter = logging.Formatter("[%(asctime)s] %(levelname)s in %(module)s: %(message)s")
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(formatter)
-logger.addHandler(console_handler)
+from pof import Obfuscator, evasion, obfuscator
+from pof.utils import generator
 
 
 def obfuscation_helper(tokens, form, key, obfuscation_class):
@@ -54,7 +18,16 @@ def obfuscation_bool_helper(tokens, form, key, obfuscation_class, **kwargs):
     return tokens
 
 
+# TODO (deoktr): multualy exclusive comppressions/crypto/encoding
 def add_obfuscation(tokens, form):
+    # TODO (deoktr): make the generator customizable from frontend
+    gen_dict = {
+        86: generator.AdvancedGenerator.realistic_generator(),
+        10: generator.BasicGenerator.alphabet_generator(),
+        4: generator.BasicGenerator.number_name_generator(length=random.randint(2, 5)),
+    }
+    gen = generator.AdvancedGenerator.multi_generator(gen_dict)
+
     # remove
     tokens = obfuscation_bool_helper(
         tokens,
@@ -67,6 +40,14 @@ def add_obfuscation(tokens, form):
         form,
         "obf_exceptions",
         obfuscator.ExceptionObfuscator,
+    )
+    tokens = obfuscation_bool_helper(
+        tokens,
+        form,
+        "obf_change_exceptions",
+        obfuscator.ExceptionObfuscator,
+        add_codes=True,
+        generator=gen,
     )
     tokens = obfuscation_bool_helper(
         tokens,
@@ -105,6 +86,8 @@ def add_obfuscation(tokens, form):
         form,
         "obf_constants",
         obfuscator.ConstantsObfuscator,
+        generator=gen,
+        obf_string_rate=0,  # there is some sort of bugs with string
     )
     tokens = obfuscation_bool_helper(
         tokens,
@@ -133,6 +116,7 @@ def add_obfuscation(tokens, form):
         form,
         "obf_names",
         obfuscator.NamesObfuscator,
+        generator=gen,
     )
     # tokens = obfuscation_bool_helper(
     #     tokens,
@@ -362,43 +346,78 @@ def evasion_datetime_helper(tokens, form, key, evasion_class):
 
 
 def add_evasion(tokens, form):
-    tokens = evasion_helper(tokens, form, "eva_cpu_count_min", CPUCountEvasion)
-    tokens = evasion_bool_helper(tokens, form, "eva_tracemalloc", TracemallocEvasion)
-    tokens = evasion_bool_helper(tokens, form, "eva_debugger", DebuggerEvasion)
-    tokens = evasion_bool_helper(tokens, form, "eva_executable_path", ExecPathEvasion)
-    tokens = evasion_helper(tokens, form, "eva_exec_method", ExecMethodEvasion)
-    tokens = evasion_helper(tokens, form, "eva_domain", DomainEvasion)
-    tokens = evasion_helper(tokens, form, "eva_hostname", HostnameEvasion)
-    tokens = evasion_helper(tokens, form, "eva_linux_uid", LinuxUIDEvasion)
-    tokens = evasion_helper(tokens, form, "eva_username", UsernameEvasion)
-    tokens = evasion_helper(tokens, form, "eva_linux_proc_count", LinuxProcCountEvasion)
+    tokens = evasion_helper(tokens, form, "eva_cpu_count_min", evasion.CPUCountEvasion)
+    tokens = evasion_bool_helper(
+        tokens,
+        form,
+        "eva_tracemalloc",
+        evasion.TracemallocEvasion,
+    )
+    tokens = evasion_bool_helper(tokens, form, "eva_debugger", evasion.DebuggerEvasion)
+    tokens = evasion_bool_helper(
+        tokens,
+        form,
+        "eva_executable_path",
+        evasion.ExecPathEvasion,
+    )
+    tokens = evasion_helper(tokens, form, "eva_exec_method", evasion.ExecMethodEvasion)
+    tokens = evasion_helper(tokens, form, "eva_domain", evasion.DomainEvasion)
+    tokens = evasion_helper(tokens, form, "eva_hostname", evasion.HostnameEvasion)
+    tokens = evasion_helper(tokens, form, "eva_linux_uid", evasion.LinuxUIDEvasion)
+    tokens = evasion_helper(tokens, form, "eva_username", evasion.UsernameEvasion)
+    tokens = evasion_helper(
+        tokens,
+        form,
+        "eva_linux_proc_count",
+        evasion.LinuxProcCountEvasion,
+    )
     tokens = evasion_list_helper(
         tokens,
         form,
         "eva_directory_exist",
-        DirectoryListExistEvasion,
+        evasion.DirectoryListExistEvasion,
     )
     tokens = evasion_list_helper(
         tokens,
         form,
         "eva_directory_missing",
-        DirectoryListMissingEvasion,
+        evasion.DirectoryListMissingEvasion,
     )
-    tokens = evasion_list_helper(tokens, form, "eva_argv", ArgvEvasion)
-    tokens = evasion_list_helper(tokens, form, "eva_file_exist", FileListExistEvasion)
+    tokens = evasion_list_helper(tokens, form, "eva_argv", evasion.ArgvEvasion)
+    tokens = evasion_list_helper(
+        tokens,
+        form,
+        "eva_file_exist",
+        evasion.FileListExistEvasion,
+    )
     tokens = evasion_list_helper(
         tokens,
         form,
         "eva_file_missing",
-        FileListMissingEvasion,
+        evasion.FileListMissingEvasion,
     )
-    tokens = evasion_helper(tokens, form, "eva_tmp", TmpCountEvasion)
-    tokens = evasion_helper(tokens, form, "eva_linux_ram_count", LinuxRAMCountEvasion)
+    tokens = evasion_helper(tokens, form, "eva_tmp", evasion.TmpCountEvasion)
+    tokens = evasion_helper(
+        tokens,
+        form,
+        "eva_linux_ram_count",
+        evasion.LinuxRAMCountEvasion,
+    )
     # TODO (deoktr): convert to multile argumnets, or have multiple form fields?
-    tokens = evasion_bool_helper(tokens, form, "eva_windows_prompt", WinPromptEvasion)
-    tokens = evasion_datetime_helper(tokens, form, "eva_expire", ExpireEvasion)
-    tokens = evasion_helper(tokens, form, "eva_linux_uptime", LinuxUptimeEvasion)
-    tokens = evasion_bool_helper(tokens, form, "eva_utc_evasion", UTCEvasion)
+    tokens = evasion_bool_helper(
+        tokens,
+        form,
+        "eva_windows_prompt",
+        evasion.WinPromptEvasion,
+    )
+    tokens = evasion_datetime_helper(tokens, form, "eva_expire", evasion.ExpireEvasion)
+    tokens = evasion_helper(
+        tokens,
+        form,
+        "eva_linux_uptime",
+        evasion.LinuxUptimeEvasion,
+    )
+    tokens = evasion_bool_helper(tokens, form, "eva_utc_evasion", evasion.UTCEvasion)
     return tokens  # noqa: RET504
 
 
@@ -411,71 +430,3 @@ class HtmlFormObfuscator(Obfuscator):
 
 
 obfuscator_instance = HtmlFormObfuscator()
-
-
-@app.post("/")
-def pof_route():
-    """Basic HTTP endpoint to send and receive raw source code."""
-    src = request.get_data().decode()
-    if len(src) > INPUT_SIZE_LIMIT:
-        logger.warning("input too large")
-        return "Inpt too large", 413
-
-    try:
-        return obfuscator_instance.obfuscate(src)
-    except Exception:
-        logger.exception("failed to obfuscate")
-        return "", 500
-
-
-@app.get("/")
-def pof_index():
-    """Simple webpage to use the /html endpoint."""
-    return send_file("index.html")
-
-
-def format_html_error(msg: str) -> str:
-    return f'<p class="error">{msg}</p>'
-
-
-@app.post("/html")
-def pof_route_html():
-    """HTML endpoint to send form data and receive HTML formatted code."""
-    src = request.form.get("src", "")
-    if len(src) > INPUT_SIZE_LIMIT:
-        logger.warning("input too large")
-        return format_html_error("Input too large.")
-
-    try:
-        obf = obfuscator_instance.run(src, request.form)
-    except Exception:
-        logger.exception("failed to obfuscate")
-        return format_html_error("Failed to obfuscate, invalid input.")
-
-    if request.form.get("format_black", "false") == "true":
-        try:
-            obf = black_format(obf)
-        except Exception:
-            logger.exception("failed to format with black")
-
-    try:
-        return highlight(
-            obf,
-            PythonLexer(),
-            HtmlFormatter(cssstyles="background: none;"),
-        )
-    except Exception:
-        logger.exception("failed to highlight")
-
-        # in case we fail to highlight, return non highlighted version
-        return f'<p style="white-space: pre-wrap;">{escape(obf)}</p>'
-
-
-@app.get("/favicon.ico")
-def favicon():
-    return send_from_directory(Path(app.root_path) / "static", "favicon.png")
-
-
-if __name__ == "__main__":
-    logger.info("starting pof server")
-    app.run()
