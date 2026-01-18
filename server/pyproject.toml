@@ -3,40 +3,30 @@ name = "python-obfuscation-framework-server"
 version = "2.2.0"
 description = "Python Obfuscation Framework"
 readme = "README.md"
-requires-python = ">=3.5"
+requires-python = ">=3.9"
 license = "GPL-3.0-or-later"
 keywords = ["cybersecurity", "obfuscation", "obfuscator", "stager", "payload"]
 authors = [{ name = "deoktr", email = "35725720+deoktr@users.noreply.github.com" }]
 maintainers = [{ name = "deoktr", email = "35725720+deoktr@users.noreply.github.com" }]
 classifiers = [
-  "Development Status :: 4 - Beta",
-  "Intended Audience :: Developers",
-  "Natural Language :: English",
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.5",
-  "Programming Language :: Python :: 3.6",
-  "Programming Language :: Python :: 3.7",
-  "Programming Language :: Python :: 3.8",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
-  "Programming Language :: Python :: 3.12",
-  "Programming Language :: Python :: 3.13",
-  "Programming Language :: Python :: 3.14",
-  "Topic :: Security",
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Security",
 ]
 dependencies = [
-  "flask>=3.1.2",
-  "pygments>=2.19.2",
-  "python-obfuscation-framework>=1.7.5",
-  "gunicorn[gevent]>=23.0.0",
-  "MarkupSafe>=3.0.3",
-]
-
-[project.optional-dependencies]
-dev = [
-  "ruff==0.8.0",
-  "black==24.10.0",
+    "flask>=3.1.2",
+    "gunicorn[gevent]>=23.0.0",
+    "markupsafe>=3.0.3",
+    "pygments>=2.19.2",
+    "python-obfuscation-framework>=1.7.5",
 ]
 
 [project.urls]
