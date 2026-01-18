@@ -47,6 +47,7 @@ with open("static/pygment.css", "w") as f:
 
 ## TODO
 
+- Download output to file.
 - Add option to reset and also unselect all on the advanced config tab.
 - Add timeout in case the computation takes too long.
 - Set correct version when building the server in CI.

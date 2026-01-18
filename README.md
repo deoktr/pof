@@ -145,6 +145,15 @@ to
 on virus total:
 ![](./examples/images/lazarus.png)
 
+Obfuscating
+[RedTigerStealer](https://bazaar.abuse.ch/sample/9b4c37e3e994ad0222740e4c51dae48cc415957f8ad066da25e977e5031fa374/)
+we go from
+[26/63](https://www.virustotal.com/gui/file/9b4c37e3e994ad0222740e4c51dae48cc415957f8ad066da25e977e5031fa374)
+to
+[1/62](https://www.virustotal.com/gui/file/5616cb69576b11fa4a024023bcf0f66e66b84f426067e597075dfcbba945d5e3)
+on virus total:
+![](./examples/images/red_tiger_stealer.png)
+
 Obfuscating [BTC-Clipper](https://github.com/NightfallGT/BTC-Clipper), we go
 from
 [13/64](https://www.virustotal.com/gui/file/9817d8de9bf7d2740b5b66e30ec1afdd98d7d119074a61cbba05514d4ebdc149)
