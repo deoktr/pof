@@ -593,7 +593,8 @@
                 <label for="obf_newline-checkbox">Remove newlines</label>
               </div>
             </div>
-            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Evasion</h3>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Sandbox/Debugger Evasion</h3>
+            <p class="mb-2">Detect and avoid virtualization and analysis environments.</p>
             <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
               <div class="group relative">
                 <span class="hover-tooltip">
@@ -668,6 +669,47 @@
                 />
               </div>
               <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Expected number of files in the temp files, on Windows check
+                  in C:\windows\temp, on Linux check in /tmp.
+                </span>
+                <label>Min tmp files: </label>
+                <input
+                  type="text"
+                  name="eva_tmp"
+                  placeholder="5"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative flex">
+                <span class="hover-tooltip">
+                  Minimum ammount of memory (RAM) in Gb, only works on Linux.
+                </span>
+                <label>Min memory linux: </label>
+                <input
+                  type="text"
+                  name="eva_linux_ram_count"
+                  placeholder="5"
+                  class="mx-2 grow rounded border border-zinc-700 px-1"
+                />
+              </div>
+              <div class="group relative">
+                <span class="hover-tooltip">
+                  Prompt the user with a simple checkbox to see if he is active.
+                </span>
+                <input
+                  type="checkbox"
+                  name="eva_windows_prompt"
+                  id="eva_windows_prompt-checkbox"
+                  value="true"
+                />
+                <label for="eva_windows_prompt-checkbox">Windows prompt</label>
+              </div>
+            </div>
+            <h3 class="mb-1 border-b border-zinc-800 pt-4 text-2xl">Guardrails</h3>
+            <p class="mb-2">Guardrails ensure that a payload only executes against an intended target.</p>
+            <div class="grid grid-cols-1 gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+              <div class="group relative flex">
                 <span class="hover-tooltip"> Expected domain name. </span>
                 <label>Domain: </label>
                 <input
@@ -706,31 +748,6 @@
                   type="text"
                   name="eva_linux_uid"
                   placeholder="1000"
-                  class="mx-2 grow rounded border border-zinc-700 px-1"
-                />
-              </div>
-              <div class="group relative flex">
-                <span class="hover-tooltip">
-                  Expected number of files in the temp files, on Windows check
-                  in C:\windows\temp, on Linux check in /tmp.
-                </span>
-                <label>Min tmp files: </label>
-                <input
-                  type="text"
-                  name="eva_tmp"
-                  placeholder="5"
-                  class="mx-2 grow rounded border border-zinc-700 px-1"
-                />
-              </div>
-              <div class="group relative flex">
-                <span class="hover-tooltip">
-                  Minimum ammount of memory (RAM) in Gb, only works on Linux.
-                </span>
-                <label>Min memory linux: </label>
-                <input
-                  type="text"
-                  name="eva_linux_ram_count"
-                  placeholder="5"
                   class="mx-2 grow rounded border border-zinc-700 px-1"
                 />
               </div>
@@ -822,18 +839,6 @@
                   placeholder="--custom-argument"
                   class="mx-2 grow rounded border border-zinc-700 px-1"
                 />
-              </div>
-              <div class="group relative">
-                <span class="hover-tooltip">
-                  Prompt the user with a simple checkbox to see if he is active.
-                </span>
-                <input
-                  type="checkbox"
-                  name="eva_windows_prompt"
-                  id="eva_windows_prompt-checkbox"
-                  value="true"
-                />
-                <label for="eva_windows_prompt-checkbox">Windows prompt</label>
               </div>
             </div>
           </div>
