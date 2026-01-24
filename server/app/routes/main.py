@@ -11,3 +11,10 @@ def index():
 @main_bp.get("/favicon.ico")
 def favicon():
     return send_from_directory("static", "favicon.png")
+
+
+@main_bp.get("/robots.txt")
+def robots():
+    return """User-agent: *
+Allow: /
+"""

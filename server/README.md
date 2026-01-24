@@ -34,7 +34,7 @@ Generate Tailwind CSS file:
 
 ```bash
 npm install
-npx @tailwindcss/cli -i ./input.css -o ./app/static/tailwind.css --watch
+npx @tailwindcss/cli -i ./input.css -o ./app/static/tailwind.css --watch --minify
 ```
 
 Generate `static/pygment.css` file:
