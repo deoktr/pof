@@ -146,8 +146,14 @@ def add_obfuscation(tokens, form):
         tokens = obfuscation_bool_helper(
             tokens,
             form,
-            "obf_numbers",
+            "obf_number",
             obfuscator.NumberObfuscator,
+        )
+        tokens = obfuscation_bool_helper(
+            tokens,
+            form,
+            "obf_boolean",
+            obfuscator.BooleanObfuscator,
         )
 
     # unusual
