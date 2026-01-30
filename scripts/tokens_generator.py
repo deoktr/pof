@@ -25,10 +25,8 @@ import sys
 from tokenize import (
     AMPER,
     AMPEREQUAL,
-    ASYNC,
     AT,
     ATEQUAL,
-    AWAIT,
     CIRCUMFLEX,
     CIRCUMFLEXEQUAL,
     COLON,
@@ -148,8 +146,6 @@ TOKENS_TABLE = {
     RARROW: "RARROW",
     ELLIPSIS: "ELLIPSIS",
     COLONEQUAL: "COLONEQUAL",
-    AWAIT: "AWAIT",
-    ASYNC: "ASYNC",
     TYPE_IGNORE: "TYPE_IGNORE",
     TYPE_COMMENT: "TYPE_COMMENT",
     SOFT_KEYWORD: "SOFT_KEYWORD",
@@ -179,8 +175,12 @@ if __name__ == "__main__":
 
     file = sys.argv[1]
     logger.info("opening file {file}", args={"file": file})
-    with Path(file).open() as f:
-        code = f.read()
+
+    if file == "-":
+        code = sys.stdin.read()
+    else:
+        with Path(file).open() as f:
+            code = f.read()
 
     io_obj = io.StringIO(code)
     tokens = list(generate_tokens(io_obj.readline))

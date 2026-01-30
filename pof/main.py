@@ -41,6 +41,7 @@ from pof.evasion.utils import FILE_SYSTEM
 from pof.logger import logger
 from pof.obfuscator import (
     AddCommentsObfuscator,
+    BooleanObfuscator,
     BuiltinsObfuscator,
     CommentsObfuscator,
     ConstantsObfuscator,
@@ -195,9 +196,16 @@ class Obfuscator(BaseObfuscator):
 
         for _ in range(2):
             tokens = NumberObfuscator().obfuscate_tokens(tokens)
+
         tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
+
         for _ in range(2):
             tokens = string_obfuscator.obfuscate_tokens(tokens)
+
+        # TODO (deoktr): enable once fully tested
+        # for _ in range(2):
+        #     tokens = BooleanObfuscator().obfuscate_tokens(tokens)
+
         tokens = AddCommentsObfuscator().obfuscate_tokens(tokens)
 
         # clean output
@@ -370,9 +378,10 @@ class Obfuscator(BaseObfuscator):
 
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
         # tokens = DeepEncryptionEvasion().add_evasion(tokens)  # TODO (deoktr): fix
-        tokens = NamesObfuscator(
-            generator=AdvancedGenerator.fixed_length_generator(),
-        ).obfuscate_tokens(tokens)
+        # tokens = NamesObfuscator(
+        #     generator=AdvancedGenerator.fixed_length_generator(),
+        # ).obfuscate_tokens(tokens)
+        tokens = BooleanObfuscator().obfuscate_tokens(tokens)
         tokens = IndentsObfuscator().obfuscate_tokens(tokens)
         tokens = NewlineObfuscator().obfuscate_tokens(tokens)
 

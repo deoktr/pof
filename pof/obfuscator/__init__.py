@@ -14,6 +14,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+from .boolean import BooleanObfuscator
 from .builtins import BuiltinsObfuscator
 from .cipher.deep_encryption import DeepEncryptionObfuscator
 from .cipher.rc4 import RC4Obfuscator
@@ -67,6 +68,7 @@ __all__ = [
     "Base64Obfuscator",
     "Base85Obfuscator",
     "BinasciiObfuscator",
+    "BooleanObfuscator",
     "BuiltinsObfuscator",
     "Bz2Obfuscator",
     "CallObfuscator",
