@@ -160,6 +160,7 @@ def tokens_of_tokens(tokens, indent: str = "    "):
     out = ""
     out += "[\n"
     for toknum, tokval, *_ in tokens:
+        toknum_str = toknum
         if toknum in TOKENS_TABLE:
             toknum_str = TOKENS_TABLE[toknum]
         out += f"{indent}({toknum_str}, {tokval!r}),\n"
