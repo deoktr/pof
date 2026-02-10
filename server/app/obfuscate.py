@@ -114,6 +114,13 @@ def add_obfuscation(tokens, form):
     tokens = obfuscation_bool_helper(
         tokens,
         form,
+        "obf_variables",
+        obfuscator.VariablesObfuscator,
+        generator=gen,
+    )
+    tokens = obfuscation_bool_helper(
+        tokens,
+        form,
         "obf_names",
         obfuscator.NamesObfuscator,
         generator=gen,
