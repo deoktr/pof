@@ -8,10 +8,10 @@ def get_linux_release_info():
     """Get Linux release info from /etc/os-release."""
 
     # Check if the file exists
-    release_file='\x2f\x65\x74\x63\x2f\x6f\x73\x2d\x72\x65\x6c\x65\x61\x73\x65'
+    release_file="/etc/os-release"
 
     if not os.path.exists(release_file):
-        print(b85decode('Pg5XrWo%_(b7dfAX>4U6Zf|rTW^Z+FWG*07XlZjGZE0s{bRceTbRc47AYmX(X>N6RAai+hbY*QW').decode())
+        print('.metsys xuniL a eb ton thgim sihT .dnuof ton elif esaeler SO'[::-1])
         return None
 
         # Dictionary to store release information
@@ -19,25 +19,25 @@ def get_linux_release_info():
 
     try:
     # Read and parse the file
-        with open(release_file,'\x72')as f:
+        with open(release_file,"r")as f:
             for line in f:
-                if not line or'\u003d'not in line:
+                if not line or b85decode('Jp').decode()not in line:
                     continue
 
                     # Split key and value
-                key,value=line.strip().split("=",1)
+                key,value=line.strip().split('='[::-1],1)
 
                 # Remove quotes from value
-                value=value.strip("\"'\n")
+                value=value.strip('\u0022\u0027\u000a')
 
                 # Store in dictionary
                 release_info[key]=value
 
                 # Print key release information
-        print(':noitamrofnI esaeleR xuniL\n'[::-1])
-        print(f"Distribution: {release_info.get('\x4e\x41\x4d\x45',b64decode('VW5rbm93bg==').decode())}")
-        print(f"Version: {release_info.get(b64decode('VkVSU0lPTg==').decode(),'\u0055\u006e\u006b\u006e\u006f\u0077\u006e')}")
-        print(f"Version ID: {release_info.get('DI_NOISREV'[::-1],"".join([chr(ord(i)-3)for i in'Xqnqrzq']))}")
+        print(b64decode('CkxpbnV4IFJlbGVhc2UgSW5mb3JtYXRpb246').decode())
+        print(f"Distribution: {release_info.get('NAME',"".join([chr(ord(i)-3)for i in'Xqnqrzq']))}")
+        print(f"Version: {release_info.get('\u0056\u0045\u0052\u0053\u0049\u004f\u004e',"".join([chr(ord(i)-3)for i in'Xqnqrzq']))}")
+        print(f"Version ID: {release_info.get(b64decode('VkVSU0lPTl9JRA==').decode(),"".join([chr(ord(i)-3)for i in'Xqnqrzq']))}")
         print(f"Pretty Name: {release_info.get("".join([chr(ord(i)-3)for i in'SUHWW\\bQDPH']),"".join([chr(ord(i)-3)for i in'Xqnqrzq']))}")
 
         return release_info
@@ -48,9 +48,9 @@ def get_linux_release_info():
 
 
         # Main execution
-if __name__=="".join([chr(ord(i)-3)for i in'bbpdlqbb']):
+if __name__==b64decode('X19tYWluX18=').decode():
 # Check if running on Linux
-    if os.name=='\u0070\u006f\u0073\u0069\u0078'and os.path.exists("".join([chr(ord(i)-3)for i in'2hwf2rv0uhohdvh'])):
+    if os.name==b64decode('cG9zaXg=').decode()and os.path.exists(b85decode('FJ*LNFK=@#a%F5~VRK~').decode()):
         release_details=get_linux_release_info()
     else:
-        print(b85decode('RA^~)Aai4KX>fEPX>%ZCWpim~Ze?U3W^ZyJOlfX)cp!6mb97~Gb1n').decode())
+        print('.smetsys xuniL rof dengised si tpircs sihT'[::-1])

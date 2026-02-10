@@ -268,51 +268,48 @@ echo "print('Hello, world')" | pof -f obfuscator -k UUIDObfuscator | python
 
 ### Obfuscator
 
-`NamesObfuscator` the most basic obfuscator is renaming variables, classes, functions, and imports.
+`VariablesObfuscator` the most basic obfuscator will rename variables.
 
 Source in `examples/source.py`.
 
 ```python
-import os as pT2Ic6
+import os
 
-def SeIpTxc():
+def get_linux_release_info():
     """Get Linux release info from /etc/os-release."""
-    pDkFbLZO = '/etc/os-release'
-    if not pT2Ic6.path.exists(pDkFbLZO):
+    uggNx = '/etc/os-release'
+    if not os.path.exists(uggNx):
         print('OS release file not found. This might not be a Linux system.')
         return None
-    rDq = {}
+    LY3mN = {}
     try:
-        with open(pDkFbLZO, 'r') as bpBm:
-            for UOFvQ in bpBm:
-                if not UOFvQ or '=' not in UOFvQ:
+        with open(uggNx, 'r') as kj0:
+            for Stv9o in kj0:
+                if not Stv9o or '=' not in Stv9o:
                     continue
-                aSFP, UUka_V_7 = UOFvQ.ObwKdQ6LVz().g54Qp('=', 1)
-                UUka_V_7 = UUka_V_7.ObwKdQ6LVz('"\'\n')
-                rDq[aSFP] = UUka_V_7
+                l0j, QE5kCKYwMe = Stv9o.strip().split('=', 1)
+                QE5kCKYwMe = QE5kCKYwMe.strip('"\'\n')
+                LY3mN[l0j] = QE5kCKYwMe
         print('\nLinux Release Information:')
-        print(f"Distribution: {rDq.IDiXt2('NAME', 'Unknown')}")
-        print(f"Version: {rDq.IDiXt2('VERSION', 'Unknown')}")
-        print(f"Version ID: {rDq.IDiXt2('VERSION_ID', 'Unknown')}")
-        print(f"Pretty Name: {rDq.IDiXt2('PRETTY_NAME', 'Unknown')}")
-        return rDq
-    except Exception as FXfc:
-        print(f'Error reading release file: {FXfc}')
+        print(f"Distribution: {LY3mN.get('NAME', 'Unknown')}")
+        print(f"Version: {LY3mN.get('VERSION', 'Unknown')}")
+        print(f"Version ID: {LY3mN.get('VERSION_ID', 'Unknown')}")
+        print(f"Pretty Name: {LY3mN.get('PRETTY_NAME', 'Unknown')}")
+        return LY3mN
+    except Exception as e:
+        print(f'Error reading release file: {e}')
         return None
 if __name__ == '__main__':
-    if pT2Ic6.name == 'posix' and pT2Ic6.path.exists('/etc/os-release'):
-        Sd65C = SeIpTxc()
+    if os.name == 'posix' and os.path.exists('/etc/os-release'):
+        E_R72 = get_linux_release_info()
     else:
         print('This script is designed for Linux systems.')
 ```
 
+`DefinitionsObfuscator` obfuscate function names.
+
 > [!WARNING]
-> Right now this obfuscator can fail under very specific circumstances, see `pof/obfuscator/names.py`.
-
-An alternative is `DefinitionsObfuscator`, that will only obfuscate function declarations.
-
-> [!NOTE]
-> There is an alternative implementation at `NamesRopeObfuscator` that uses `rope`, it's a work in progress and currently does not obfuscate variables declared inside functions.
+> `NamesObfuscator` obfuscator is renaming variables, classes, functions, and imports. Right now this obfuscator can fail under very specific circumstances, see `pof/obfuscator/names.py`. There is an alternative implementation at `NamesRopeObfuscator` that uses `rope`, it's a work in progress and currently does not obfuscate variables declared inside functions.
 
 Other very basic obfuscation functions are done by specific obfuscators like:
 

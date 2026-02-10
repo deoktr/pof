@@ -56,6 +56,7 @@ from pof.obfuscator import (
     NumberObfuscator,
     PrintObfuscator,
     StringsObfuscator,
+    VariablesObfuscator,
     XORObfuscator,
 )
 from pof.stager import ImageStager, RC4Stager
@@ -178,6 +179,8 @@ class Obfuscator(BaseObfuscator):
         # In this context, `baz` would be obfuscated, but it shouldn't because
         # the function is part of the `foo` imported module
         # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        # TODO: use alternative variable obfuscator using the AST
+        # tokens = VariablesObfuscator().obfuscate_tokens(tokens)
 
         tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
         tokens = BuiltinsObfuscator().obfuscate_tokens(tokens)
@@ -238,7 +241,9 @@ class Obfuscator(BaseObfuscator):
         tokens = self._get_tokens(source)
         tokens = CommentsObfuscator().obfuscate_tokens(tokens)
         generator = BasicGenerator.alphabet_generator()
-        tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        tokens = VariablesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        tokens = DefinitionsObfuscator(generator=generator).obfuscate_tokens(tokens)
         tokens = IndentsObfuscator().obfuscate_tokens(tokens)
         tokens = NewlineObfuscator().obfuscate_tokens(tokens)
         return self._untokenize(tokens)
@@ -313,7 +318,9 @@ class Obfuscator(BaseObfuscator):
         #     # FIXME (deoktr): breaks if obf_builtins_rate=1 with NamesObfuscator
         #     obf_builtins_rate=0,
         # ).obfuscate_tokens(tokens)
-        tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        tokens = VariablesObfuscator(generator=generator).obfuscate_tokens(tokens)
+        tokens = DefinitionsObfuscator(generator=generator).obfuscate_tokens(tokens)
         tokens = ConstantsObfuscator(
             generator=generator,
             obf_number_rate=1,

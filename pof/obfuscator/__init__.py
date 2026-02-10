@@ -57,6 +57,7 @@ from .stegano.ipv6encoding import IPv6Obfuscator
 from .stegano.macencoding import MACObfuscator
 from .stegano.uuidencoding import UUIDObfuscator
 from .strings import StringsObfuscator
+from .variables import VariablesObfuscator
 
 __all__ = [
     "ASCII85Obfuscator",
@@ -100,6 +101,7 @@ __all__ = [
     "StringsObfuscator",
     "TokensObfuscator",
     "UUIDObfuscator",
+    "VariablesObfuscator",
     "WhitespaceObfuscator",
     "XORObfuscator",
     "ZlibObfuscator",

@@ -1,29 +1,29 @@
-import os as p6k6
-def QKr():
- rWOlpK2='/etc/os-release'
- if not p6k6.path.exists(rWOlpK2):
+import os
+def Ceh0RM6c5D():
+ j1YJwvlP='/etc/os-release'
+ if not os.path.exists(j1YJwvlP):
   print('OS release file not found. This might not be a Linux system.')
   return None
- k9QXV={}
+ oD7PH9yc2={}
  try:
-  with open(rWOlpK2,'r')as N8t78J:
-   for fyFirmrlXD in N8t78J:
-    if not fyFirmrlXD or'='not in fyFirmrlXD:
+  with open(j1YJwvlP,'r')as fih2Kq:
+   for GUqy6 in fih2Kq:
+    if not GUqy6 or'='not in GUqy6:
      continue
-    v9zZ94aH0,jnWy=fyFirmrlXD.UMuFw_().K8N57JaM('=',1)
-    jnWy=jnWy.UMuFw_('"\'\n')
-    k9QXV[v9zZ94aH0]=jnWy
+    SC_N,ujexlUbB=GUqy6.strip().split('=',1)
+    ujexlUbB=ujexlUbB.strip('"\'\n')
+    oD7PH9yc2[SC_N]=ujexlUbB
   print('\nLinux Release Information:')
-  print(f"Distribution: {k9QXV.d_sVawOly_('NAME','Unknown')}")
-  print(f"Version: {k9QXV.d_sVawOly_('VERSION','Unknown')}")
-  print(f"Version ID: {k9QXV.d_sVawOly_('VERSION_ID','Unknown')}")
-  print(f"Pretty Name: {k9QXV.d_sVawOly_('PRETTY_NAME','Unknown')}")
-  return k9QXV
- except Exception as ttJ:
-  print(f'Error reading release file: {ttJ}')
+  print(f"Distribution: {oD7PH9yc2.get('NAME','Unknown')}")
+  print(f"Version: {oD7PH9yc2.get('VERSION','Unknown')}")
+  print(f"Version ID: {oD7PH9yc2.get('VERSION_ID','Unknown')}")
+  print(f"Pretty Name: {oD7PH9yc2.get('PRETTY_NAME','Unknown')}")
+  return oD7PH9yc2
+ except Exception as e:
+  print(f'Error reading release file: {e}')
   return None
 if __name__=='__main__':
- if p6k6.name=='posix'and p6k6.path.exists('/etc/os-release'):
-  EOr_=QKr()
+ if os.name=='posix'and os.path.exists('/etc/os-release'):
+  T_hJ3hEB=Ceh0RM6c5D()
  else:
   print('This script is designed for Linux systems.')

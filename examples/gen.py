@@ -164,6 +164,7 @@ def run_all():
     obfuscate_to_file(obf.custom_complete(source), "custom_complete")
     obfuscate_to_file(black_format(obf.custom_complete(source)), "custom_complete_format")
     obfuscate_to_file(obf.evasion_basic(source), "evasion_basic")
+    obfuscate_to_file(obf.obfuscator(VariablesObfuscator(), source), "variables_obf")
     obfuscate_to_file(obf.obfuscator(ConstantsObfuscator(), source), "constant_obf")
     obfuscate_to_file(obf.obfuscator(BuiltinsObfuscator(), source), "buildtins_obf")
     obfuscate_to_file(obf.obfuscator(XORObfuscator(), source), "xor_obf")
