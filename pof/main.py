@@ -179,7 +179,7 @@ class Obfuscator(BaseObfuscator):
         # In this context, `baz` would be obfuscated, but it shouldn't because
         # the function is part of the `foo` imported module
         # tokens = NamesObfuscator(generator=generator).obfuscate_tokens(tokens)
-        # TODO: use alternative variable obfuscator using the AST
+        # TODO (deoktr): use alternative variable obfuscator using the AST
         # tokens = VariablesObfuscator().obfuscate_tokens(tokens)
 
         tokens = GlobalsObfuscator().obfuscate_tokens(tokens)
