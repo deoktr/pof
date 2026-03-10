@@ -30,9 +30,9 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/deoktr/pof"
-"Bug Reports" = "https://github.com/deoktr/pof/issues"
-"Source" = "https://github.com/deoktr/pof/"
+"Homepage" = "https://github.com/deoktr/Python-Obfuscation-Framework/"
+"Bug Reports" = "https://github.com/deoktr/Python-Obfuscation-Framework/issues"
+"Source" = "https://github.com/deoktr/Python-Obfuscation-Framework/"
 
 [tool.black]
 target-version = ["py313"]

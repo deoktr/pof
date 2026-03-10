@@ -1,10 +1,10 @@
-# pof
+# Python Obfuscation Framework - pof
 
 [![python-obfuscation-framework-pypi](https://img.shields.io/pypi/v/python-obfuscation-framework.svg)](https://pypi.org/project/python-obfuscation-framework)
 
 Test it at [pof.run](https://pof.run).
 
-Python Obfuscation Framework, a complete Python offensive security toolkit to generate staged obfuscated payloads.
+Python Obfuscation Framework (pof), a complete Python offensive security toolkit to generate staged obfuscated payloads.
 
 pof will allow you to:
 
