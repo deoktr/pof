@@ -198,19 +198,19 @@ pip install python-obfuscation-framework
 ### Docker
 
 ```bash
-docker run --rm ghcr.io/deoktr/pof:latest --help
+docker run --rm ghcr.io/deoktr/python-obfuscation-framework:latest --help
 ```
 
 Run inside Docker from a local file `in.py`:
 
 ```bash
-docker run --rm -v $(pwd):/tmp -w /tmp ghcr.io/deoktr/pof:latest in.py -o out.py
+docker run --rm -v $(pwd):/tmp -w /tmp ghcr.io/deoktr/python-obfuscation-framework:latest in.py -o out.py
 ```
 
 Or pipe input and output:
 
 ```bash
-cat in.py | docker run --rm -i ghcr.io/deoktr/pof:latest > out.py
+cat in.py | docker run --rm -i ghcr.io/deoktr/python-obfuscation-framework:latest > out.py
 ```
 
 ## Usage
