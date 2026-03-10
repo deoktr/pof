@@ -6,7 +6,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: pof
+  IMAGE_NAME: ${{ github.repository }}
 
 permissions:
   contents: read
